@@ -23,10 +23,7 @@ public class Main {
             public void run() {
 
                 try {
-//                    AnalysteInterface analysteInterface = new AnalysteInterface("Analyseur de titres boursiers", "BBD.B", "Bombardier Inc.");
-//                    analysteInterface.pack();
-//                    RefineryUtilities.centerFrameOnScreen(analysteInterface);
-//                    analysteInterface.setVisible(true);
+
                     new InterfaceAnalyseur().setVisible(true);
                 } catch (Exception exception) {
 
