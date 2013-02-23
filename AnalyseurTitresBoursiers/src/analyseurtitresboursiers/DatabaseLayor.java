@@ -47,7 +47,7 @@ public class DatabaseLayor {
         
     }
     
-    public ArrayList<TitreBoursier> obtenirHistorique(String symbol, Date Debut) throws IOException, MalformedURLException, ParseException{
+    public ArrayList<TitreBoursier> obtenirHistorique(String symbol, Date debut) throws IOException, MalformedURLException, ParseException{
         
         ArrayList<TitreBoursier> historique = new ArrayList<>();
      
@@ -79,7 +79,7 @@ public class DatabaseLayor {
                 }          
             } else {
                 // No data in Local DataBase
-                historique = YahooFinance.getValeurFermeture(symbol);
+                historique = YahooFinance.getValeurFermeture(symbol,debut);
                
             }             
       

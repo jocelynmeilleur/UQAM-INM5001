@@ -320,17 +320,21 @@ public class InterfaceAnalyseur extends javax.swing.JFrame {
                  debut = gc.getTime();   
         }
         
+          System.out.println(debut);
+          
         ArrayList<TitreBoursier> historique = null;
         try {
-            historique = YahooFinance.getValeurFermeture(jTextTitre.getText());
+            historique = YahooFinance.getValeurFermeture(jTextTitre.getText(),debut);
         } catch (MalformedURLException ex) {
             Logger.getLogger(InterfaceAnalyseur.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException | ParseException ex) {
             Logger.getLogger(InterfaceAnalyseur.class.getName()).log(Level.SEVERE, null, ex);
         }
      
-        System.out.println(debut);
+      
         System.out.println(historique.size());
+        System.out.println(historique);
+        System.out.println(historique.get(0));
         
         
         
@@ -377,7 +381,7 @@ public class InterfaceAnalyseur extends javax.swing.JFrame {
         
         try {
             // TODO add your handling code here:
-            historique = YahooFinance.getValeurFermeture(jTextTitre.getText());
+            historique = YahooFinance.getValeurFermeture(jTextTitre.getText(), new Date());
         } catch (MalformedURLException ex) {
             Logger.getLogger(InterfaceAnalyseur.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException | ParseException ex) {
