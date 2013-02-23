@@ -12,7 +12,7 @@ import java.net.URL;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
+
 
 /**
  *
@@ -21,7 +21,7 @@ import java.util.Date;
 public class YahooFinance {
     
     
-    public static ArrayList<TitreBoursier> getValeurFermeture(String symbol, Date debut) throws MalformedURLException, IOException, ParseException{
+    public static ArrayList<TitreBoursier> getValeurFermeture(String symbol) throws MalformedURLException, IOException, ParseException{
         
             URL url;
             BufferedReader reader;
@@ -40,24 +40,8 @@ public class YahooFinance {
                     
             //url = new URL("http://ichart.finance.yahoo.com/table.csv?s=" + ticker + "&a=06&b=9&c=1996&d=06&e=20&f=2010&g=d");
            
-            SimpleDateFormat sdf =new SimpleDateFormat("MM");
-            String a = sdf.format(debut);
-            sdf.applyPattern("dd");
-            String b = sdf.format(debut);
-            sdf.applyPattern("YYYY");
-            String c = sdf.format(debut);
-            Date aujourdhui = new Date();
-            
-            sdf.applyPattern("MM");
-            String d = sdf.format(aujourdhui);
-            sdf.applyPattern("dd");
-            String e = sdf.format(aujourdhui);
-            sdf.applyPattern("YYYY");
-            String f = sdf.format(aujourdhui);
-                        
-            String urlDate = "&a=" + a + "&b=" + b + "&c=" + c + "&d=" + d + "&e=" + e + "&f=" + f;
-
-            url = new URL(Main.config.getUrlHistoriqueTitres() + symbol + urlDate);
+     
+            url = new URL(Main.config.getUrlHistoriqueTitres() + symbol );
             
             System.out.println(url);
             

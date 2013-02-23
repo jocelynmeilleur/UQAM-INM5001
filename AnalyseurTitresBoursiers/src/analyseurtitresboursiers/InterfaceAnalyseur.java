@@ -8,6 +8,7 @@ import java.awt.Color;
 import java.awt.Font;
 import java.io.IOException;
 import java.net.MalformedURLException;
+import java.sql.SQLException;
 import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -69,8 +70,8 @@ public class InterfaceAnalyseur extends javax.swing.JFrame {
         jTabbedPane1 = new javax.swing.JTabbedPane();
         panneauAnalyse = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
+        jTextDesc = new javax.swing.JTextField();
+        jButtonAnalyser = new javax.swing.JButton();
         labelRecommandation = new javax.swing.JLabel();
         texteRecommandation = new javax.swing.JTextField();
         prixChartPanel = new javax.swing.JPanel();
@@ -79,8 +80,9 @@ public class InterfaceAnalyseur extends javax.swing.JFrame {
         indiceChartPanel = new javax.swing.JPanel();
         indiceJFreechart = creerGrapheIndice();
         indiceChartPanel = new ChartPanel(indiceJFreechart, true, true, true, false, true);
-        jTextField2 = new javax.swing.JTextField();
-        jComboBox1 = new javax.swing.JComboBox();
+        jTextTitre = new javax.swing.JTextField();
+        jComboPeriode = new javax.swing.JComboBox();
+        jButtonTest = new javax.swing.JButton();
         panneauConfiguration = new javax.swing.JPanel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
@@ -90,13 +92,13 @@ public class InterfaceAnalyseur extends javax.swing.JFrame {
 
         jLabel1.setText("Titre Boursier");
 
-        jTextField1.setEditable(false);
-        jTextField1.setFocusable(false);
+        jTextDesc.setEditable(false);
+        jTextDesc.setFocusable(false);
 
-        jButton1.setText("Analyser");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        jButtonAnalyser.setText("Analyser");
+        jButtonAnalyser.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                jButtonAnalyserActionPerformed(evt);
             }
         });
 
@@ -127,16 +129,28 @@ public class InterfaceAnalyseur extends javax.swing.JFrame {
             .addGap(0, 413, Short.MAX_VALUE)
         );
 
-        jTextField2.addFocusListener(new java.awt.event.FocusAdapter() {
+        jTextTitre.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextTitreActionPerformed(evt);
+            }
+        });
+        jTextTitre.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusLost(java.awt.event.FocusEvent evt) {
-                jTextField2FocusLost(evt);
+                jTextTitreFocusLost(evt);
             }
         });
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "1 mois", "6 mois", "1 an", "5 ans", "10 ans" }));
-        jComboBox1.addActionListener(new java.awt.event.ActionListener() {
+        jComboPeriode.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "1 mois", "6 mois", "1 an", "5 ans", "10 ans" }));
+        jComboPeriode.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jComboBox1ActionPerformed(evt);
+                jComboPeriodeActionPerformed(evt);
+            }
+        });
+
+        jButtonTest.setText("jButton2");
+        jButtonTest.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonTestActionPerformed(evt);
             }
         });
 
@@ -157,12 +171,15 @@ public class InterfaceAnalyseur extends javax.swing.JFrame {
                                 .addComponent(jLabel1)
                                 .addGap(18, 18, 18)
                                 .addGroup(panneauAnalyseLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(jTextField2)
-                                    .addComponent(jComboBox1, 0, 85, Short.MAX_VALUE))
+                                    .addComponent(jTextTitre)
+                                    .addComponent(jComboPeriode, 0, 85, Short.MAX_VALUE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(panneauAnalyseLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 280, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(jTextDesc, javax.swing.GroupLayout.PREFERRED_SIZE, 280, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(panneauAnalyseLayout.createSequentialGroup()
+                                        .addComponent(jButtonAnalyser, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(82, 82, 82)
+                                        .addComponent(jButtonTest)))
                                 .addGap(0, 0, Short.MAX_VALUE))))
                     .addGroup(panneauAnalyseLayout.createSequentialGroup()
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -177,13 +194,18 @@ public class InterfaceAnalyseur extends javax.swing.JFrame {
                 .addGap(26, 26, 26)
                 .addGroup(panneauAnalyseLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jTextDesc, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTextTitre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(panneauAnalyseLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton1))
-                .addGap(34, 34, 34)
+                .addGroup(panneauAnalyseLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(panneauAnalyseLayout.createSequentialGroup()
+                        .addGroup(panneauAnalyseLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jComboPeriode, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jButtonAnalyser))
+                        .addGap(34, 34, 34))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panneauAnalyseLayout.createSequentialGroup()
+                        .addComponent(jButtonTest)
+                        .addGap(18, 18, 18)))
                 .addGroup(panneauAnalyseLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(prixChartPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(indiceChartPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -266,7 +288,7 @@ public class InterfaceAnalyseur extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void jButtonAnalyserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAnalyserActionPerformed
         // TODO add your handling code here:
         // Le titre est dans jTextField2
         // La période est dans jComboBox1
@@ -276,7 +298,7 @@ public class InterfaceAnalyseur extends javax.swing.JFrame {
         GregorianCalendar gc = new GregorianCalendar();
         gc.setTime(aujourdhui);
         
-        switch(jComboBox1.getSelectedIndex()){
+        switch(jComboPeriode.getSelectedIndex()){
             case 0:
                  gc.add(Calendar.MONTH, -1);  // 1 mois
                  debut = gc.getTime();         
@@ -300,7 +322,7 @@ public class InterfaceAnalyseur extends javax.swing.JFrame {
         
         ArrayList<TitreBoursier> historique = null;
         try {
-            historique = YahooFinance.getValeurFermeture("TOS.TO", debut);
+            historique = YahooFinance.getValeurFermeture(jTextTitre.getText());
         } catch (MalformedURLException ex) {
             Logger.getLogger(InterfaceAnalyseur.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException | ParseException ex) {
@@ -312,7 +334,7 @@ public class InterfaceAnalyseur extends javax.swing.JFrame {
         
         
         
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_jButtonAnalyserActionPerformed
 
     private void jMenu1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenu1ActionPerformed
         // TODO add your handling code here:
@@ -334,20 +356,44 @@ public class InterfaceAnalyseur extends javax.swing.JFrame {
         System.exit(0);
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
-    private void jTextField2FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextField2FocusLost
+    private void jTextTitreFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextTitreFocusLost
         try {
             // TODO add your handling code here:
-            jTextField1.setText(Main.dbAccess.getDesc(jTextField2.getText()));
+            jTextDesc.setText(Main.dbAccess.getDesc(jTextTitre.getText()));
         } catch (MalformedURLException ex) {
             Logger.getLogger(InterfaceAnalyseur.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {
             Logger.getLogger(InterfaceAnalyseur.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }//GEN-LAST:event_jTextField2FocusLost
+    }//GEN-LAST:event_jTextTitreFocusLost
 
-    private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
+    private void jComboPeriodeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboPeriodeActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jComboBox1ActionPerformed
+    }//GEN-LAST:event_jComboPeriodeActionPerformed
+
+    private void jButtonTestActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonTestActionPerformed
+   
+        ArrayList<TitreBoursier> historique = null;
+        
+        try {
+            // TODO add your handling code here:
+            historique = YahooFinance.getValeurFermeture(jTextTitre.getText());
+        } catch (MalformedURLException ex) {
+            Logger.getLogger(InterfaceAnalyseur.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException | ParseException ex) {
+            Logger.getLogger(InterfaceAnalyseur.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        try {
+            Main.dbAccess.uploadHistorique(historique);
+        } catch (SQLException ex) {
+            Logger.getLogger(InterfaceAnalyseur.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+    }//GEN-LAST:event_jButtonTestActionPerformed
+
+    private void jTextTitreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextTitreActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextTitreActionPerformed
 
 
     private static JFreeChart creerGraphePrix() {
@@ -528,15 +574,16 @@ public class InterfaceAnalyseur extends javax.swing.JFrame {
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel indiceChartPanel;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JComboBox jComboBox1;
+    private javax.swing.JButton jButtonAnalyser;
+    private javax.swing.JButton jButtonTest;
+    private javax.swing.JComboBox jComboPeriode;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JTabbedPane jTabbedPane1;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
+    private javax.swing.JTextField jTextDesc;
+    private javax.swing.JTextField jTextTitre;
     private javax.swing.JLabel labelRecommandation;
     private javax.swing.JPanel panneauAnalyse;
     private javax.swing.JPanel panneauConfiguration;

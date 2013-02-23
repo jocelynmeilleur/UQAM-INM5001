@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.sql.*;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 /**
@@ -46,7 +47,7 @@ public class DatabaseLayor {
         
     }
     
-    public ArrayList<TitreBoursier> obtenirHistorique(String symbol) throws IOException, MalformedURLException, ParseException{
+    public ArrayList<TitreBoursier> obtenirHistorique(String symbol, Date Debut) throws IOException, MalformedURLException, ParseException{
         
         ArrayList<TitreBoursier> historique = new ArrayList<>();
      
@@ -212,6 +213,39 @@ public class DatabaseLayor {
         
     }
     
+    public void uploadHistorique(ArrayList<TitreBoursier> historique) throws SQLException{
+     
+        
+            Statement stmt = connexion.createStatement();
+                   
+            String sqlStmt = "INSERT INTO Titre (symbol,description,enlot)" 
+                       + " VALUES('%symbol%','%description%','N')";
+            String sql;
+            
+                      
+            sql = sqlStmt.replace("%symbol%",historique.get(0).getTitre());
+            sql = sql.replace("%description%",historique.get(0).getDescription());
+            System.out.println(sql);
+            stmt.executeUpdate(sql,Statement.RETURN_GENERATED_KEYS);
+            ResultSet rs = stmt.getGeneratedKeys();
+            rs.next();
+            int idTitre = rs.getInt(1);
+                   
+            
+            sqlStmt = "INSERT INTO historique (fk_titre,dateFermeture,valeurFermeture)" 
+                       + " VALUES(%fk_titre%,'%dateFermeture%',%valeurFermeture%)";
+         
+            SimpleDateFormat formatter = new SimpleDateFormat("yyyy-mm-dd");
+            
+            for(int x=0;x<historique.size();x++){
+                sql = sqlStmt.replace("%fk_titre%",Integer.toString(idTitre));
+                sql = sql.replace("%dateFermeture%",formatter.format(historique.get(x).getDateFermeture()));
+                sql = sql.replace("%valeurFermeture%",Double.toString(historique.get(x).getValeurFermeture()));
+                stmt.executeUpdate(sql);
+            }
+            
+            
+    }
     
     
     
