@@ -5,14 +5,18 @@
 package analyseurtitresboursiers;
 
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.Font;
+import java.io.IOException;
+import java.net.MalformedURLException;
 import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JTextField;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
@@ -39,6 +43,7 @@ public class InterfaceAnalyseur extends javax.swing.JFrame {
     JFreeChart indiceJFreechart;
     private static AnalysteMacd analyste;
     private static TitresBoursiers tsx;
+  
 
     /**
      * Creates new form InterfaceAnalyseur
@@ -48,6 +53,7 @@ public class InterfaceAnalyseur extends javax.swing.JFrame {
         tsx = new TitresBoursiers();
         initComponents();
         updateComponents();
+  
        
     }
 
@@ -73,18 +79,21 @@ public class InterfaceAnalyseur extends javax.swing.JFrame {
         indiceChartPanel = new javax.swing.JPanel();
         indiceJFreechart = creerGrapheIndice();
         indiceChartPanel = new ChartPanel(indiceJFreechart, true, true, true, false, true);
+        jTextField2 = new javax.swing.JTextField();
+        jComboBox1 = new javax.swing.JComboBox();
         panneauConfiguration = new javax.swing.JPanel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
-        jMenu2 = new javax.swing.JMenu();
+        jMenuItem1 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jLabel1.setText("Titre Boursier");
 
-        jTextField1.setText("Description");
+        jTextField1.setEditable(false);
+        jTextField1.setFocusable(false);
 
-        jButton1.setText("OK");
+        jButton1.setText("Analyser");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
@@ -115,8 +124,21 @@ public class InterfaceAnalyseur extends javax.swing.JFrame {
         );
         indiceChartPanelLayout.setVerticalGroup(
             indiceChartPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 392, Short.MAX_VALUE)
+            .addGap(0, 413, Short.MAX_VALUE)
         );
+
+        jTextField2.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                jTextField2FocusLost(evt);
+            }
+        });
+
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "1 mois", "6 mois", "1 an", "5 ans", "10 ans" }));
+        jComboBox1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBox1ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout panneauAnalyseLayout = new javax.swing.GroupLayout(panneauAnalyse);
         panneauAnalyse.setLayout(panneauAnalyseLayout);
@@ -128,16 +150,20 @@ public class InterfaceAnalyseur extends javax.swing.JFrame {
                         .addGap(25, 25, 25)
                         .addGroup(panneauAnalyseLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(panneauAnalyseLayout.createSequentialGroup()
-                                .addComponent(jLabel1)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(83, 83, 83)
-                                .addComponent(jButton1)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                            .addGroup(panneauAnalyseLayout.createSequentialGroup()
                                 .addComponent(prixChartPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 47, Short.MAX_VALUE)
-                                .addComponent(indiceChartPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                .addComponent(indiceChartPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(panneauAnalyseLayout.createSequentialGroup()
+                                .addComponent(jLabel1)
+                                .addGap(18, 18, 18)
+                                .addGroup(panneauAnalyseLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(jTextField2)
+                                    .addComponent(jComboBox1, 0, 85, Short.MAX_VALUE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(panneauAnalyseLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 280, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(0, 0, Short.MAX_VALUE))))
                     .addGroup(panneauAnalyseLayout.createSequentialGroup()
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(labelRecommandation)
@@ -148,16 +174,20 @@ public class InterfaceAnalyseur extends javax.swing.JFrame {
         panneauAnalyseLayout.setVerticalGroup(
             panneauAnalyseLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panneauAnalyseLayout.createSequentialGroup()
-                .addGap(25, 25, 25)
+                .addGap(26, 26, 26)
                 .addGroup(panneauAnalyseLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(panneauAnalyseLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton1))
-                .addGap(60, 60, 60)
+                .addGap(34, 34, 34)
                 .addGroup(panneauAnalyseLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(prixChartPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(indiceChartPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 71, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 49, Short.MAX_VALUE)
                 .addGroup(panneauAnalyseLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(labelRecommandation)
                     .addComponent(texteRecommandation, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -179,11 +209,40 @@ public class InterfaceAnalyseur extends javax.swing.JFrame {
 
         jTabbedPane1.addTab("Configuration", panneauConfiguration);
 
-        jMenu1.setText("File");
-        jMenuBar1.add(jMenu1);
+        jMenu1.setText("Fichier");
+        jMenu1.addMenuListener(new javax.swing.event.MenuListener() {
+            public void menuCanceled(javax.swing.event.MenuEvent evt) {
+            }
+            public void menuDeselected(javax.swing.event.MenuEvent evt) {
+            }
+            public void menuSelected(javax.swing.event.MenuEvent evt) {
+                jMenu1MenuSelected(evt);
+            }
+        });
+        jMenu1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenu1ActionPerformed(evt);
+            }
+        });
 
-        jMenu2.setText("Edit");
-        jMenuBar1.add(jMenu2);
+        jMenuItem1.setText("Quitter");
+        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem1ActionPerformed(evt);
+            }
+        });
+        jMenuItem1.addMenuKeyListener(new javax.swing.event.MenuKeyListener() {
+            public void menuKeyPressed(javax.swing.event.MenuKeyEvent evt) {
+                jMenuItem1MenuKeyPressed(evt);
+            }
+            public void menuKeyReleased(javax.swing.event.MenuKeyEvent evt) {
+            }
+            public void menuKeyTyped(javax.swing.event.MenuKeyEvent evt) {
+            }
+        });
+        jMenu1.add(jMenuItem1);
+
+        jMenuBar1.add(jMenu1);
 
         setJMenuBar(jMenuBar1);
 
@@ -209,7 +268,86 @@ public class InterfaceAnalyseur extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
+        // Le titre est dans jTextField2
+        // La période est dans jComboBox1
+               
+        Date aujourdhui = new Date();
+        Date debut;
+        GregorianCalendar gc = new GregorianCalendar();
+        gc.setTime(aujourdhui);
+        
+        switch(jComboBox1.getSelectedIndex()){
+            case 0:
+                 gc.add(Calendar.MONTH, -1);  // 1 mois
+                 debut = gc.getTime();         
+                break;
+            case 1:
+                 gc.add(Calendar.MONTH, -6); // 6 mois
+                 debut = gc.getTime();    
+                break;
+            case 2:
+                 gc.add(Calendar.YEAR, -1);  // 1 an
+                 debut = gc.getTime();    
+                break;
+            case 3: 
+                 gc.add(Calendar.YEAR, -5); // 5 ans
+                 debut = gc.getTime();  
+                break;
+            default:
+                 gc.add(Calendar.YEAR, -10); // 10 ans
+                 debut = gc.getTime();   
+        }
+        
+        ArrayList<TitreBoursier> historique = null;
+        try {
+            historique = YahooFinance.getValeurFermeture("TOS.TO", debut);
+        } catch (MalformedURLException ex) {
+            Logger.getLogger(InterfaceAnalyseur.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException | ParseException ex) {
+            Logger.getLogger(InterfaceAnalyseur.class.getName()).log(Level.SEVERE, null, ex);
+        }
+     
+        System.out.println(debut);
+        System.out.println(historique.size());
+        
+        
+        
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jMenu1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenu1ActionPerformed
+        // TODO add your handling code here:
+      
+   
+    }//GEN-LAST:event_jMenu1ActionPerformed
+
+    private void jMenu1MenuSelected(javax.swing.event.MenuEvent evt) {//GEN-FIRST:event_jMenu1MenuSelected
+        // TODO add your handling code here:
+       
+    }//GEN-LAST:event_jMenu1MenuSelected
+
+    private void jMenuItem1MenuKeyPressed(javax.swing.event.MenuKeyEvent evt) {//GEN-FIRST:event_jMenuItem1MenuKeyPressed
+        // TODO add your handling code here:
+        
+    }//GEN-LAST:event_jMenuItem1MenuKeyPressed
+
+    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+        System.exit(0);
+    }//GEN-LAST:event_jMenuItem1ActionPerformed
+
+    private void jTextField2FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextField2FocusLost
+        try {
+            // TODO add your handling code here:
+            jTextField1.setText(Main.dbAccess.getDesc(jTextField2.getText()));
+        } catch (MalformedURLException ex) {
+            Logger.getLogger(InterfaceAnalyseur.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(InterfaceAnalyseur.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jTextField2FocusLost
+
+    private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jComboBox1ActionPerformed
 
 
     private static JFreeChart creerGraphePrix() {
@@ -279,7 +417,7 @@ public class InterfaceAnalyseur extends javax.swing.JFrame {
         TimeSeries emaMax = new TimeSeries("EMA Max");
         TimeSeries emaMin = new TimeSeries("EMA Min");
 
-        analyste = new AnalysteMacd(tsx.getTsx());
+        analyste = new AnalysteMacd(TitresBoursiers.getTsx());
 
         // Prix fermeture
         System.out.println("Taille de l'historique: " + analyste.getCotesBoursieres().size());
@@ -325,7 +463,7 @@ public class InterfaceAnalyseur extends javax.swing.JFrame {
         TimeSeries macd = new TimeSeries("MACD");
         TimeSeries ligneSignal = new TimeSeries("Ligne Signal");
 
-        analyste = new AnalysteMacd(tsx.getTsx());
+        analyste = new AnalysteMacd(TitresBoursiers.getTsx());
 
         // MACD
         for (int i = 0; i < analyste.getHistoriqueIndiceMacd().size(); i++) {
@@ -391,12 +529,14 @@ public class InterfaceAnalyseur extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel indiceChartPanel;
     private javax.swing.JButton jButton1;
+    private javax.swing.JComboBox jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JMenu jMenu1;
-    private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTextField jTextField1;
+    private javax.swing.JTextField jTextField2;
     private javax.swing.JLabel labelRecommandation;
     private javax.swing.JPanel panneauAnalyse;
     private javax.swing.JPanel panneauConfiguration;

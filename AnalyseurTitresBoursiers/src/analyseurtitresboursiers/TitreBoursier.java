@@ -59,5 +59,10 @@ public class TitreBoursier {
     public void setValeurFermeture(double valeurFermeture) {
         this.valeurFermeture = valeurFermeture;
     }
-    
+       @Override
+    public String toString(){
+        
+        return(titre + "," + description + "," + dateFermeture + "," + valeurFermeture);
+        
+    }
 }

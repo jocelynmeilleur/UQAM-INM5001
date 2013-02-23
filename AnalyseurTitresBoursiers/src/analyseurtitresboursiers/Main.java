@@ -4,8 +4,6 @@
  */
 package analyseurtitresboursiers;
 
-import org.jfree.ui.RefineryUtilities;
-
 /**
  *
  * @author jocelynm
@@ -15,11 +13,22 @@ public class Main {
     /**
      * @param args the command line arguments
      */
-    public static void main(String[] args) {
+  public static ConfigurationLayor config;
+  public static DatabaseLayor dbAccess;
+    
+    public static void main(final String[] args) {
 
-        // TODO code application logic here
+           
+       // Lire le fichier de configuration 
+        config = new ConfigurationLayor(args[0]);
+       // Connexion à la base de données
+        dbAccess = new DatabaseLayor();
+        dbAccess.setConnexionString(config.getConnexionString());
+        dbAccess.connect();
+        
         java.awt.EventQueue.invokeLater(new Runnable() {
 
+            @Override
             public void run() {
 
                 try {
@@ -30,6 +39,6 @@ public class Main {
                     System.err.println(exception.getMessage());
                 }
             }
-        });
+        }); 
     }
 }
