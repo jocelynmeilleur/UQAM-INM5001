@@ -82,7 +82,6 @@ public class InterfaceAnalyseur extends javax.swing.JFrame {
         indiceChartPanel = new ChartPanel(indiceJFreechart, true, true, true, false, true);
         jTextTitre = new javax.swing.JTextField();
         jComboPeriode = new javax.swing.JComboBox();
-        jButtonTest = new javax.swing.JButton();
         panneauConfiguration = new javax.swing.JPanel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
@@ -147,13 +146,6 @@ public class InterfaceAnalyseur extends javax.swing.JFrame {
             }
         });
 
-        jButtonTest.setText("jButton2");
-        jButtonTest.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonTestActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout panneauAnalyseLayout = new javax.swing.GroupLayout(panneauAnalyse);
         panneauAnalyse.setLayout(panneauAnalyseLayout);
         panneauAnalyseLayout.setHorizontalGroup(
@@ -176,10 +168,7 @@ public class InterfaceAnalyseur extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(panneauAnalyseLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jTextDesc, javax.swing.GroupLayout.PREFERRED_SIZE, 280, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGroup(panneauAnalyseLayout.createSequentialGroup()
-                                        .addComponent(jButtonAnalyser, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(82, 82, 82)
-                                        .addComponent(jButtonTest)))
+                                    .addComponent(jButtonAnalyser, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGap(0, 0, Short.MAX_VALUE))))
                     .addGroup(panneauAnalyseLayout.createSequentialGroup()
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -197,15 +186,10 @@ public class InterfaceAnalyseur extends javax.swing.JFrame {
                     .addComponent(jTextDesc, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jTextTitre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(panneauAnalyseLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(panneauAnalyseLayout.createSequentialGroup()
-                        .addGroup(panneauAnalyseLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jComboPeriode, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButtonAnalyser))
-                        .addGap(34, 34, 34))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panneauAnalyseLayout.createSequentialGroup()
-                        .addComponent(jButtonTest)
-                        .addGap(18, 18, 18)))
+                .addGroup(panneauAnalyseLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jComboPeriode, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButtonAnalyser))
+                .addGap(34, 34, 34)
                 .addGroup(panneauAnalyseLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(prixChartPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(indiceChartPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -372,26 +356,6 @@ public class InterfaceAnalyseur extends javax.swing.JFrame {
     private void jComboPeriodeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboPeriodeActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jComboPeriodeActionPerformed
-
-    private void jButtonTestActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonTestActionPerformed
-   
-        ArrayList<TitreBoursier> historique = null;
-        
-        try {
-            // TODO add your handling code here:
-            historique = YahooFinance.getValeurFermeture(jTextTitre.getText(), new Date());
-        } catch (MalformedURLException ex) {
-            Logger.getLogger(InterfaceAnalyseur.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IOException | ParseException ex) {
-            Logger.getLogger(InterfaceAnalyseur.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        try {
-            Main.dbAccess.uploadHistorique(historique);
-        } catch (SQLException ex) {
-            Logger.getLogger(InterfaceAnalyseur.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        
-    }//GEN-LAST:event_jButtonTestActionPerformed
 
     private void jTextTitreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextTitreActionPerformed
         // TODO add your handling code here:
@@ -577,7 +541,6 @@ public class InterfaceAnalyseur extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel indiceChartPanel;
     private javax.swing.JButton jButtonAnalyser;
-    private javax.swing.JButton jButtonTest;
     private javax.swing.JComboBox jComboPeriode;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JMenu jMenu1;
