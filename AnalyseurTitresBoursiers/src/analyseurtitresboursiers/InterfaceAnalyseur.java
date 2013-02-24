@@ -274,15 +274,36 @@ public class InterfaceAnalyseur extends javax.swing.JFrame {
 
     private void jButtonAnalyserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAnalyserActionPerformed
         // TODO add your handling code here:
-        // Le titre est dans jTextField2
-        // La période est dans jComboBox1
+        // Le titre est dans jTextTitre
+        // La période est dans jComboPeriode
                
+        Date debut;
+        debut = getDateDebut(jComboPeriode.getSelectedIndex());
+          
+        ArrayList<TitreBoursier> historique = null;
+        try {
+            historique = Main.dbAccess.obtenirHistorique(jTextTitre.getText(),debut);
+        } catch (IOException |  ParseException | SQLException ex) {
+            Logger.getLogger(InterfaceAnalyseur.class.getName()).log(Level.SEVERE, null, ex);
+        }
+       
+      
+        System.out.println(historique.size());
+        System.out.println(historique);
+        System.out.println(historique.get(0));
+        
+        
+        
+    }//GEN-LAST:event_jButtonAnalyserActionPerformed
+
+    private Date getDateDebut(int selectedCombo){
+        
         Date aujourdhui = new Date();
         Date debut;
         GregorianCalendar gc = new GregorianCalendar();
         gc.setTime(aujourdhui);
         
-        switch(jComboPeriode.getSelectedIndex()){
+        switch(selectedCombo){
             case 0:
                  gc.add(Calendar.MONTH, -1);  // 1 mois
                  debut = gc.getTime();         
@@ -304,24 +325,10 @@ public class InterfaceAnalyseur extends javax.swing.JFrame {
                  debut = gc.getTime();   
         }
         
-          System.out.println(debut);
-          
-        ArrayList<TitreBoursier> historique = null;
-        try {
-            historique = Main.dbAccess.obtenirHistorique(jTextTitre.getText(),debut);
-        } catch (IOException |  ParseException | SQLException ex) {
-            Logger.getLogger(InterfaceAnalyseur.class.getName()).log(Level.SEVERE, null, ex);
-        }
-       
-      
-        System.out.println(historique.size());
-        System.out.println(historique);
-        System.out.println(historique.get(0));
-        
-        
-        
-    }//GEN-LAST:event_jButtonAnalyserActionPerformed
-
+        return debut;
+    }
+    
+    
     private void jMenu1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenu1ActionPerformed
         // TODO add your handling code here:
       

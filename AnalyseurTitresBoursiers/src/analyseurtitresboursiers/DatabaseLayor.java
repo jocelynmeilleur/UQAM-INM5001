@@ -285,13 +285,13 @@ public class DatabaseLayor {
         String sqlStmt;
         String sql;
         int idTitre;
-        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-mm-dd");
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
         // Ajout dans la Table Titre si elle n'existe pas déjà
 
         if (!isExistTitre(symbol)) {
             // Établir la requête de base et remplacer les %éléments% dans la requête
             sqlStmt = "INSERT INTO Titre (symbol,description,histMaxDate,enlot)"
-                    + " VALUES('%symbol%','%histMaxDate%','%description%','N')";
+                    + " VALUES('%symbol%','%description%','%histMaxDate%','N')";
 
             sql = sqlStmt.replace("%symbol%", historique.get(0).getTitre());
             sql = sql.replace("%description%", historique.get(0).getDescription());
