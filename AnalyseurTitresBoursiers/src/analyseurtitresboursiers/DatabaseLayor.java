@@ -91,8 +91,6 @@ public class DatabaseLayor {
                     historique.add(titre);
                     rs.next();
                 }
-            } else {
-                historique = YahooFinance.getValeurFermeture(symbol, debut);
             }
 
 
