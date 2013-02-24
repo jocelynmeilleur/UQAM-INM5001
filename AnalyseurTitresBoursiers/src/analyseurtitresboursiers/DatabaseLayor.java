@@ -11,6 +11,7 @@ import java.text.ParseException;
 import java.util.Date;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 
 /**
  *
@@ -55,7 +56,10 @@ public class DatabaseLayor {
         // Si l'historique n'est pas dans la BD, on l'ajoute
 
         if (histMaxDate == null) {  // pas d'historique dans la BD
-            uploadHistorique(symbol, new Date("1900-01-01"));
+            Calendar cal = Calendar.getInstance();
+            cal.set(1900, 1, 1);  // On prend le maximum d'historique
+            Date minDate = cal.getTime();
+            uploadHistorique(symbol, minDate);
         } else {
             if (histMaxDate.compareTo(aujourdhui) < 0) {    // histMaxDate < aujourdhui
                 // Charger l'historique récent
@@ -213,8 +217,6 @@ public class DatabaseLayor {
         return idTitre;
    }
     
-    
-
     public String getDesc(String symbol) throws MalformedURLException, IOException, SQLException {
 
         ResultSet rs = null;

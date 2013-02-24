@@ -343,6 +343,9 @@ public class InterfaceAnalyseur extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     private void jTextTitreFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextTitreFocusLost
+       
+        // Afficher la description du titre
+        
         try {
             jTextDesc.setText(Main.dbAccess.getDesc(jTextTitre.getText()));
         } catch (MalformedURLException ex) {
