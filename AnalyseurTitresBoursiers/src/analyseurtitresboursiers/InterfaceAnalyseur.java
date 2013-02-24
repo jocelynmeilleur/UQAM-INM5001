@@ -362,13 +362,13 @@ public class InterfaceAnalyseur extends javax.swing.JFrame {
 
     private void jTextTitreFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextTitreFocusLost
         try {
-            // TODO add your handling code here:
             jTextDesc.setText(Main.dbAccess.getDesc(jTextTitre.getText()));
         } catch (MalformedURLException ex) {
             Logger.getLogger(InterfaceAnalyseur.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IOException ex) {
+        } catch (IOException | SQLException ex) {
             Logger.getLogger(InterfaceAnalyseur.class.getName()).log(Level.SEVERE, null, ex);
         }
+ 
     }//GEN-LAST:event_jTextTitreFocusLost
 
     private void jComboPeriodeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboPeriodeActionPerformed

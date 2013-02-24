@@ -47,90 +47,58 @@ public class DatabaseLayor {
         
     }
     
-    public ArrayList<TitreBoursier> obtenirHistorique(String symbol, Date debut) throws IOException, MalformedURLException, ParseException{
+    public ArrayList<TitreBoursier> obtenirHistorique(String symbol, Date debut) throws IOException, MalformedURLException, ParseException, SQLException{
         
         ArrayList<TitreBoursier> historique = new ArrayList<>();
      
-        ResultSet rs = null;
-        Statement stmt = null;
-              
-             try {
-            stmt = connexion.createStatement();
-            //rs = stmt.executeQuery("SELECT * FROM testpf");
-            // or alternatively, if you don't know ahead of time that
-            // the query will be a SELECT...
-            String sql = "SELECT * FROM titre" +
+        ResultSet rs;
+   
+        String sql = "SELECT * FROM titre" +
                " JOIN historique ON titre.idtitre = historique.fk_titre" + 
                " WHERE symbol = '" + symbol + "'";
             
-            if (stmt.execute(sql)) {
-                 rs = stmt.getResultSet();
-            }
-            // Now do something with the ResultSet ....
-            if (rs.next()){
-              while (!rs.isAfterLast()){
-                 TitreBoursier titre = new TitreBoursier();
-                 titre.setTitre(rs.getNString("symbol"));
-                 titre.setDescription(rs.getNString("description"));
-                 titre.setDateFermeture(rs.getDate("dateFermeture"));
-                 titre.setValeurFermeture(rs.getDouble("valeurFermeture"));
-                 historique.add(titre);
-                 rs.next();
-                }          
-            } else {
-                // No data in Local DataBase
-                historique = YahooFinance.getValeurFermeture(symbol,debut);
-               
-            }             
-      
-        }
-        catch (SQLException ex){
-        // handle any errors
+        rs=getResult(sql);
             
-          System.out.println("SQLException: " + ex.getMessage());
-          System.out.println("SQLState: " + ex.getSQLState());
-          System.out.println("VendorError: " + ex.getErrorCode());
-        }
-        finally {
-        // it is a good idea to release
-        // resources in a finally{} block
-        // in reverse-order of their creation
-        // if they are no-longer needed
-        if (rs != null) {
-             try {
-               rs.close();
-             } catch (SQLException sqlEx) { } // ignore
-            rs = null;
-        }
-        if (stmt != null) {
-            try {
-                 stmt.close();
-            }  catch (SQLException sqlEx) { } // ignore
-            stmt = null;
-        }
-        }
-       
-        return historique;
+            // Now do something with the ResultSet ....
+        if (rs.next()){
+           while (!rs.isAfterLast()){
+              TitreBoursier titre = new TitreBoursier();
+              titre.setTitre(rs.getNString("symbol"));
+              titre.setDescription(rs.getNString("description"));
+              titre.setDateFermeture(rs.getDate("dateFermeture"));
+              titre.setValeurFermeture(rs.getDouble("valeurFermeture"));
+              historique.add(titre);
+              rs.next();
+           }          
+         } else {
+             // No data in Local DataBase
+           historique = YahooFinance.getValeurFermeture(symbol,debut);
+              
+        }             
+     
+       return historique;
         
     }
     
-    public void getData(){
-    
+    public ResultSet getResult(String sql){
+
         ResultSet rs = null;
         Statement stmt = null;
-    
         try {
             stmt = connexion.createStatement();
             //rs = stmt.executeQuery("SELECT * FROM testpf");
             // or alternatively, if you don't know ahead of time that
             // the query will be a SELECT...
-            if (stmt.execute("SELECT * FROM titre")) {
+            if (stmt.execute(sql)) {
                  rs = stmt.getResultSet();
             }
             // Now do something with the ResultSet ....
             rs.first();
-            System.out.println( rs.getNString("symbol"));
-           
+            rs.next();
+                      
+            String  description =  "";
+            description = rs.getNString("description"); 
+                 
         }
         catch (SQLException ex){
         // handle any errors
@@ -138,76 +106,29 @@ public class DatabaseLayor {
           System.out.println("SQLState: " + ex.getSQLState());
           System.out.println("VendorError: " + ex.getErrorCode());
         }
-        finally {
-        // it is a good idea to release
-        // resources in a finally{} block
-        // in reverse-order of their creation
-        // if they are no-longer needed
-        if (rs != null) {
-             try {
-               rs.close();
-             } catch (SQLException sqlEx) { } // ignore
-            rs = null;
-        }
-        if (stmt != null) {
-            try {
-                 stmt.close();
-            }  catch (SQLException sqlEx) { } // ignore
-            stmt = null;
-        }
-        }
+
+        return rs;
         
-      
     }
     
-    public String getDesc(String symbol) throws MalformedURLException, IOException{
+     
+    public String getDesc(String symbol) throws MalformedURLException, IOException, SQLException{
         
-        ResultSet rs = null;
-        Statement stmt = null;
-        String description = "";
+        ResultSet rs;
+        String description;
         
-             try {
-            stmt = connexion.createStatement();
-            //rs = stmt.executeQuery("SELECT * FROM testpf");
-            // or alternatively, if you don't know ahead of time that
-            // the query will be a SELECT...
-            if (stmt.execute("SELECT description FROM titresBoursiers.titre where symbol = '" + symbol + "'")) {
-                 rs = stmt.getResultSet();
-            }
-            // Now do something with the ResultSet ....
+        String sql = "SELECT * FROM titre" +
+                    " WHERE symbol = '" + symbol + "'";
+            
+        rs=getResult(sql);
+        
+        // Now do something with the ResultSet ....
            if (rs.next()){
             description =  rs.getNString("description");      
            }
            else {
                description = YahooFinance.getDescFromYahoo(symbol);
            }
-         
-           
-        }
-        catch (SQLException ex){
-        // handle any errors
-          System.out.println("SQLException: " + ex.getMessage());
-          System.out.println("SQLState: " + ex.getSQLState());
-          System.out.println("VendorError: " + ex.getErrorCode());
-        }
-        finally {
-        // it is a good idea to release
-        // resources in a finally{} block
-        // in reverse-order of their creation
-        // if they are no-longer needed
-        if (rs != null) {
-             try {
-               rs.close();
-             } catch (SQLException sqlEx) { } // ignore
-            rs = null;
-        }
-        if (stmt != null) {
-            try {
-                 stmt.close();
-            }  catch (SQLException sqlEx) { } // ignore
-            stmt = null;
-        }
-        }
        
         return description;
         
@@ -218,13 +139,15 @@ public class DatabaseLayor {
         
             Statement stmt = connexion.createStatement();
                    
-            String sqlStmt = "INSERT INTO Titre (symbol,description,enlot)" 
-                       + " VALUES('%symbol%','%description%','N')";
+            String sqlStmt = "INSERT INTO Titre (symbol,description,histMaxDate,enlot)" 
+                       + " VALUES('%symbol%','%histMaxDate%','%description%','N')";
             String sql;
             
+            SimpleDateFormat formatter = new SimpleDateFormat("yyyy-mm-dd");
                       
             sql = sqlStmt.replace("%symbol%",historique.get(0).getTitre());
             sql = sql.replace("%description%",historique.get(0).getDescription());
+            sql = sql.replace("%histMaxDate%",formatter.format(historique.get(0).getDateFermeture()));
             System.out.println(sql);
             stmt.executeUpdate(sql,Statement.RETURN_GENERATED_KEYS);
             ResultSet rs = stmt.getGeneratedKeys();
@@ -235,7 +158,7 @@ public class DatabaseLayor {
             sqlStmt = "INSERT INTO historique (fk_titre,dateFermeture,valeurFermeture)" 
                        + " VALUES(%fk_titre%,'%dateFermeture%',%valeurFermeture%)";
          
-            SimpleDateFormat formatter = new SimpleDateFormat("yyyy-mm-dd");
+            
             
             for(int x=0;x<historique.size();x++){
                 sql = sqlStmt.replace("%fk_titre%",Integer.toString(idTitre));
