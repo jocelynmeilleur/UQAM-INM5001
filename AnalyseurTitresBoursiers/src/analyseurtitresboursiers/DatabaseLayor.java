@@ -167,11 +167,11 @@ public class DatabaseLayor {
         }
 
         return histMaxDate;
-   }
-    
+    }
+
     public int getIdTitre(String symbol) {
 
-        int idTitre=0;
+        int idTitre = 0;
         ResultSet rs = null;
         Statement stmt = null;
         String sql = "SELECT * FROM titresBoursiers.titre where symbol = '" + symbol + "'";
@@ -213,8 +213,8 @@ public class DatabaseLayor {
         }
 
         return idTitre;
-   }
-    
+    }
+
     public String getDesc(String symbol) throws MalformedURLException, IOException, SQLException {
 
         ResultSet rs = null;
@@ -288,36 +288,49 @@ public class DatabaseLayor {
 
         if (!isExistTitre(symbol)) {
             // Établir la requête de base et remplacer les %éléments% dans la requête
+            Calendar cal = Calendar.getInstance();
+            cal.set(1900, 1, 1);  // On prend le maximum d'historique
+            Date minDate = cal.getTime();
+
             sqlStmt = "INSERT INTO Titre (symbol,description,histMaxDate,enlot)"
                     + " VALUES('%symbol%','%description%','%histMaxDate%','N')";
 
             sql = sqlStmt.replace("%symbol%", historique.get(0).getTitre());
             sql = sql.replace("%description%", historique.get(0).getDescription());
-            sql = sql.replace("%histMaxDate%", formatter.format(historique.get(0).getDateFermeture()));
+            sql = sql.replace("%histMaxDate%", formatter.format(minDate));
             System.out.println(sql);
 
             stmt.executeUpdate(sql, Statement.RETURN_GENERATED_KEYS);
             ResultSet rs = stmt.getGeneratedKeys();
             rs.next();
             idTitre = rs.getInt(1);
-        }
-        else {
-            // Obtenir le Id de Titre pour l'ajout de la cle etrangere dans historique
+        } else {
             idTitre = getIdTitre(symbol);
         }
 
-        
         // Ajout de chacunes des valeurs de fermeture dans l'historique
-        
+        Date histMaxDate = getMaxDate(symbol);
+
         sqlStmt = "INSERT INTO historique (fk_titre,dateFermeture,valeurFermeture)"
                 + " VALUES(%fk_titre%,'%dateFermeture%',%valeurFermeture%)";
 
         for (int x = 0; x < historique.size(); x++) {
-            sql = sqlStmt.replace("%fk_titre%", Integer.toString(idTitre));
-            sql = sql.replace("%dateFermeture%", formatter.format(historique.get(x).getDateFermeture()));
-            sql = sql.replace("%valeurFermeture%", Double.toString(historique.get(x).getValeurFermeture()));
-            stmt.executeUpdate(sql);
+            if ((historique.get(x).getDateFermeture()).compareTo(histMaxDate) > 0) {
+                sql = sqlStmt.replace("%fk_titre%", Integer.toString(idTitre));
+                sql = sql.replace("%dateFermeture%", formatter.format(historique.get(x).getDateFermeture()));
+                sql = sql.replace("%valeurFermeture%", Double.toString(historique.get(x).getValeurFermeture()));
+                stmt.executeUpdate(sql);
+            }
         }
+
+        // Update le MaxDate pour le titre
+        sqlStmt = "UPDATE Titre SET histMaxDate = '%histMaxDate%' WHERE idTitre = %idTitre%";
+        sql = sqlStmt.replace("%idTitre%", String.valueOf(idTitre));
+        sql = sql.replace("%histMaxDate%", formatter.format(historique.get(0).getDateFermeture()));
+        System.out.println(sql);
+        stmt.executeUpdate(sql);
+
+
 
 
     }
