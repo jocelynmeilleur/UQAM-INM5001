@@ -273,7 +273,6 @@ public class InterfaceAnalyseur extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButtonAnalyserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAnalyserActionPerformed
-        // TODO add your handling code here:
         // Le titre est dans jTextTitre
         // La période est dans jComboPeriode
                
