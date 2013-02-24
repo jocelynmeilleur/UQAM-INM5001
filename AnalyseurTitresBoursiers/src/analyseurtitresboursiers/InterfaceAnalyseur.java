@@ -324,13 +324,11 @@ public class InterfaceAnalyseur extends javax.swing.JFrame {
           
         ArrayList<TitreBoursier> historique = null;
         try {
-            historique = YahooFinance.getValeurFermeture(jTextTitre.getText(),debut);
-        } catch (MalformedURLException ex) {
-            Logger.getLogger(InterfaceAnalyseur.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IOException | ParseException ex) {
+            historique = Main.dbAccess.obtenirHistorique(jTextTitre.getText(),debut);
+        } catch (IOException |  ParseException | SQLException ex) {
             Logger.getLogger(InterfaceAnalyseur.class.getName()).log(Level.SEVERE, null, ex);
         }
-     
+       
       
         System.out.println(historique.size());
         System.out.println(historique);

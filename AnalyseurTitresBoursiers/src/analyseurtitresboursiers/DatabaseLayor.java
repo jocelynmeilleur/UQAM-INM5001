@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.sql.*;
 import java.text.ParseException;
+import java.util.Date;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
@@ -51,54 +52,37 @@ public class DatabaseLayor {
         
         ArrayList<TitreBoursier> historique = new ArrayList<>();
      
-        ResultSet rs;
+        ResultSet rs = null;
+        Statement stmt = null;
+         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
    
         String sql = "SELECT * FROM titre" +
                " JOIN historique ON titre.idtitre = historique.fk_titre" + 
-               " WHERE symbol = '" + symbol + "'";
+               " WHERE symbol = '" + symbol + "' AND dateFermeture > '" + formatter.format(debut) + "'" ;
             
-        rs=getResult(sql);
-            
-            // Now do something with the ResultSet ....
-        if (rs.next()){
-           while (!rs.isAfterLast()){
-              TitreBoursier titre = new TitreBoursier();
-              titre.setTitre(rs.getNString("symbol"));
-              titre.setDescription(rs.getNString("description"));
-              titre.setDateFermeture(rs.getDate("dateFermeture"));
-              titre.setValeurFermeture(rs.getDouble("valeurFermeture"));
-              historique.add(titre);
-              rs.next();
-           }          
-         } else {
-             // No data in Local DataBase
-           historique = YahooFinance.getValeurFermeture(symbol,debut);
-              
-        }             
-     
-       return historique;
-        
-    }
-    
-    public ResultSet getResult(String sql){
-
-        ResultSet rs = null;
-        Statement stmt = null;
         try {
             stmt = connexion.createStatement();
-            //rs = stmt.executeQuery("SELECT * FROM testpf");
-            // or alternatively, if you don't know ahead of time that
-            // the query will be a SELECT...
+            
             if (stmt.execute(sql)) {
                  rs = stmt.getResultSet();
             }
             // Now do something with the ResultSet ....
-            rs.first();
-            rs.next();
-                      
-            String  description =  "";
-            description = rs.getNString("description"); 
-                 
+           if (rs.next()){
+                while (!rs.isAfterLast()){
+                   TitreBoursier titre = new TitreBoursier();
+                   titre.setTitre(rs.getNString("symbol"));
+                   titre.setDescription(rs.getNString("description"));
+                   titre.setDateFermeture(rs.getDate("dateFermeture"));
+                   titre.setValeurFermeture(rs.getDouble("valeurFermeture"));
+                   historique.add(titre);
+                   rs.next();
+                }
+           }
+           else {
+              historique = YahooFinance.getValeurFermeture(symbol,debut);
+           }
+         
+           
         }
         catch (SQLException ex){
         // handle any errors
@@ -106,6 +90,80 @@ public class DatabaseLayor {
           System.out.println("SQLState: " + ex.getSQLState());
           System.out.println("VendorError: " + ex.getErrorCode());
         }
+        finally {
+        // it is a good idea to release
+        // resources in a finally{} block
+        // in reverse-order of their creation
+        // if they are no-longer needed
+        if (rs != null) {
+             try {
+               rs.close();
+             } catch (SQLException sqlEx) { } // ignore
+            rs = null;
+        }
+        if (stmt != null) {
+            try {
+                 stmt.close();
+            }  catch (SQLException sqlEx) { } // ignore
+            stmt = null;
+        }
+        }
+    
+     
+       return historique;
+        
+    }
+    
+    public ResultSet getResult(String sql) throws MalformedURLException, IOException{
+
+        ResultSet rs = null;
+        Statement stmt = null;
+        String description = "";
+        
+             try {
+            stmt = connexion.createStatement();
+            //rs = stmt.executeQuery("SELECT * FROM testpf");
+            // or alternatively, if you don't know ahead of time that
+           // the query will be a SELECT...
+            
+            if (stmt.execute(sql)) {
+                 rs = stmt.getResultSet();
+            }
+            // Now do something with the ResultSet ....
+           if (rs.next()){
+            description =  rs.getNString("description");      
+           }
+           else {
+               description = YahooFinance.getDescFromYahoo("TOS.TO");
+           }
+         
+           
+        }
+        catch (SQLException ex){
+        // handle any errors
+          System.out.println("SQLException: " + ex.getMessage());
+          System.out.println("SQLState: " + ex.getSQLState());
+          System.out.println("VendorError: " + ex.getErrorCode());
+        }
+        finally {
+        // it is a good idea to release
+        // resources in a finally{} block
+        // in reverse-order of their creation
+        // if they are no-longer needed
+    /**    if (rs != null) {
+             try {
+               rs.close();
+             } catch (SQLException sqlEx) { } // ignore
+            rs = null;
+        }
+        if (stmt != null) {
+            try {
+                 stmt.close();
+            }  catch (SQLException sqlEx) { } // ignore
+            stmt = null;
+        } **/
+        }
+       
 
         return rs;
         
@@ -114,24 +172,52 @@ public class DatabaseLayor {
      
     public String getDesc(String symbol) throws MalformedURLException, IOException, SQLException{
         
-        ResultSet rs;
-        String description;
+        ResultSet rs = null;
+        Statement stmt = null;
+        String description = "";
         
-        String sql = "SELECT * FROM titre" +
-                    " WHERE symbol = '" + symbol + "'";
+             try {
+            stmt = connexion.createStatement();
             
-        rs=getResult(sql);
-        
-        // Now do something with the ResultSet ....
+            if (stmt.execute("SELECT description FROM titresBoursiers.titre where symbol = '" + symbol + "'")) {
+                 rs = stmt.getResultSet();
+            }
+            // Now do something with the ResultSet ....
            if (rs.next()){
             description =  rs.getNString("description");      
            }
            else {
                description = YahooFinance.getDescFromYahoo(symbol);
            }
+         
+           
+        }
+        catch (SQLException ex){
+        // handle any errors
+          System.out.println("SQLException: " + ex.getMessage());
+          System.out.println("SQLState: " + ex.getSQLState());
+          System.out.println("VendorError: " + ex.getErrorCode());
+        }
+        finally {
+        // it is a good idea to release
+        // resources in a finally{} block
+        // in reverse-order of their creation
+        // if they are no-longer needed
+        if (rs != null) {
+             try {
+               rs.close();
+             } catch (SQLException sqlEx) { } // ignore
+            rs = null;
+        }
+        if (stmt != null) {
+            try {
+                 stmt.close();
+            }  catch (SQLException sqlEx) { } // ignore
+            stmt = null;
+        }
+        }
        
         return description;
-        
     }
     
     public void uploadHistorique(ArrayList<TitreBoursier> historique) throws SQLException{
