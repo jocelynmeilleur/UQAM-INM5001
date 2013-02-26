@@ -36,28 +36,102 @@ import org.jfree.data.xy.XYDataset;
  * @author jocelynm
  */
 public class InterfaceAnalyseur extends javax.swing.JFrame {
-    
+
     private String description;
     private String symboleTitre;
     private String nomTitre;
     JFreeChart prixJFreechart;
     JFreeChart indiceJFreechart;
     private static AnalysteMacd analyste;
-    private static TitresBoursiers tsx;
-  
+    private TitresBoursiers listeInitialisation;
+    private static ArrayList<TitreBoursier> historique = null;
 
     /**
      * Creates new form InterfaceAnalyseur
      */
     public InterfaceAnalyseur() throws ParseException {
-        
-        tsx = new TitresBoursiers();
+
+        listeInitialisation = new TitresBoursiers();
         initComponents();
-        updateComponents();
-  
-       
+
     }
 
+    private static TimeSeries getSeriePrixFermeture(AnalysteMacd analyste) {
+        
+        TimeSeries prixFermeture = new TimeSeries("Prix fermeture");
+        
+        for (int i = 0; i < analyste.getCotesBoursieres().size(); i++) {
+
+            //TODO, s'assurer qu'il n'y a pas de doublons dans la liste sinon le graphique ne sera pas generer
+
+            //System.out.println(analyste.getCotesBoursieres().get(i).toString());
+            prixFermeture.add(new Day(analyste.getCotesBoursieres().get(i).getDate()), analyste.getCotesBoursieres().get(i).getPrixCloture());   
+        }
+        
+        return prixFermeture;
+    }
+    
+    private static TimeSeries getSerieEmaMax(AnalysteMacd analyste) {
+        
+        TimeSeries emaMax = new TimeSeries("EMA Max");
+        
+        for (int i = 0; i < analyste.getHistoriqueCoteEmaMax().size(); i++) {
+
+            //TODO, s'assurer qu'il n'y a pas de doublons dans la liste sinon le graphique ne sera pas generer
+
+            //System.out.println(analyste.getCotesBoursieres().get(i).toString());
+            emaMax.add(new Day(analyste.getHistoriqueCoteEmaMax().get(i).getDate()), analyste.getHistoriqueCoteEmaMax().get(i).getPrix());   
+        }
+        
+        return emaMax;
+    }
+    
+    private static TimeSeries getSerieEmaMin(AnalysteMacd analyste) {
+        
+        TimeSeries emaMin = new TimeSeries("EMA Min");
+        
+        for (int i = 0; i < analyste.getHistoriqueCoteEmaMin().size(); i++) {
+
+            //TODO, s'assurer qu'il n'y a pas de doublons dans la liste sinon le graphique ne sera pas generer
+
+            //System.out.println(analyste.getCotesBoursieres().get(i).toString());
+            emaMin.add(new Day(analyste.getHistoriqueCoteEmaMin().get(i).getDate()), analyste.getHistoriqueCoteEmaMin().get(i).getPrix());   
+        }
+        
+        return emaMin;
+    }
+    
+        //TimeSeries ligneSignal = new TimeSeries("Ligne Signal");
+    private static TimeSeries getSerieMacd(AnalysteMacd analyste) {
+        
+        TimeSeries macd = new TimeSeries("MACD");
+        
+        for (int i = 0; i < analyste.getHistoriqueIndiceMacd().size(); i++) {
+
+            //TODO, s'assurer qu'il n'y a pas de doublons dans la liste sinon le graphique ne sera pas generer
+
+            //System.out.println(analyste.getHistoriqueIndiceMacd().get(i).toString());
+            macd.add(new Day(analyste.getHistoriqueIndiceMacd().get(i).getDate()), analyste.getHistoriqueIndiceMacd().get(i).getIndice());
+        }
+     
+        return macd;
+    }
+    
+    private static TimeSeries getSerieLigneSignal(AnalysteMacd analyste) {
+        
+        TimeSeries ligneSignal = new TimeSeries("Ligne Signal");
+        
+        for (int i = 0; i < analyste.getHistoriqueIndiceSignal().size(); i++) {
+
+            //TODO, s'assurer qu'il n'y a pas de doublons dans la liste sinon le graphique ne sera pas generer
+
+            //System.out.println(analyste.getHistoriqueIndiceMacd().get(i).toString());
+            ligneSignal.add(new Day(analyste.getHistoriqueIndiceSignal().get(i).getDate()), analyste.getHistoriqueIndiceSignal().get(i).getIndice());
+        }
+     
+        return ligneSignal;
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -217,9 +291,9 @@ public class InterfaceAnalyseur extends javax.swing.JFrame {
 
         jMenu1.setText("Fichier");
         jMenu1.addMenuListener(new javax.swing.event.MenuListener() {
-            public void menuCanceled(javax.swing.event.MenuEvent evt) {
-            }
             public void menuDeselected(javax.swing.event.MenuEvent evt) {
+            }
+            public void menuCanceled(javax.swing.event.MenuEvent evt) {
             }
             public void menuSelected(javax.swing.event.MenuEvent evt) {
                 jMenu1MenuSelected(evt);
@@ -275,73 +349,100 @@ public class InterfaceAnalyseur extends javax.swing.JFrame {
     private void jButtonAnalyserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAnalyserActionPerformed
         // Le titre est dans jTextTitre
         // La période est dans jComboPeriode
-               
+
+        XYDataset data;
+        TimeSeriesCollection dataset;
+
         Date debut;
         debut = getDateDebut(jComboPeriode.getSelectedIndex());
-          
-        ArrayList<TitreBoursier> historique = null;
+
         try {
-            historique = Main.dbAccess.obtenirHistorique(jTextTitre.getText(),debut);
-        } catch (IOException |  ParseException | SQLException ex) {
+            historique = Main.dbAccess.obtenirHistorique(jTextTitre.getText(), debut);
+            analyste = new AnalysteMacd(historique);
+
+            XYPlot prixPlot = (XYPlot) prixJFreechart.getPlot();
+            data = prixPlot.getDataset();
+            dataset = (TimeSeriesCollection) data;
+            dataset.removeSeries(2);
+            dataset.removeSeries(1);
+            dataset.removeSeries(0);
+
+            System.out.println("Taille de l'historique: " + analyste.getCotesBoursieres().size());
+            
+            // Prix fermeture
+            dataset.addSeries(getSeriePrixFermeture(analyste));
+
+            // EMA Max
+            dataset.addSeries(getSerieEmaMax(analyste));
+
+            // EMA Min
+            dataset.addSeries(getSerieEmaMin(analyste));
+            
+            XYPlot indicePlot = (XYPlot) indiceJFreechart.getPlot();
+            data = indicePlot.getDataset();
+            dataset = (TimeSeriesCollection) data;
+            dataset.removeSeries(1);
+            dataset.removeSeries(0);
+            
+            // MACD
+            dataset.addSeries(getSerieMacd(analyste));
+            
+            //Ligne de signal
+            dataset.addSeries(getSerieLigneSignal(analyste));
+
+            updateComponents();
+
+        } catch (IOException | ParseException | SQLException ex) {
             Logger.getLogger(InterfaceAnalyseur.class.getName()).log(Level.SEVERE, null, ex);
         }
-       
-      
-        System.out.println(historique.size());
+
         System.out.println(historique);
         System.out.println(historique.get(0));
-        
-        
-        
+
     }//GEN-LAST:event_jButtonAnalyserActionPerformed
 
-    private Date getDateDebut(int selectedCombo){
-        
+    private Date getDateDebut(int selectedCombo) {
+
         Date aujourdhui = new Date();
         Date debut;
         GregorianCalendar gc = new GregorianCalendar();
         gc.setTime(aujourdhui);
-        
-        switch(selectedCombo){
+
+        switch (selectedCombo) {
             case 0:
-                 gc.add(Calendar.MONTH, -1);  // 1 mois
-                 debut = gc.getTime();         
+                gc.add(Calendar.MONTH, -1);  // 1 mois
+                debut = gc.getTime();
                 break;
             case 1:
-                 gc.add(Calendar.MONTH, -6); // 6 mois
-                 debut = gc.getTime();    
+                gc.add(Calendar.MONTH, -6); // 6 mois
+                debut = gc.getTime();
                 break;
             case 2:
-                 gc.add(Calendar.YEAR, -1);  // 1 an
-                 debut = gc.getTime();    
+                gc.add(Calendar.YEAR, -1);  // 1 an
+                debut = gc.getTime();
                 break;
-            case 3: 
-                 gc.add(Calendar.YEAR, -5); // 5 ans
-                 debut = gc.getTime();  
+            case 3:
+                gc.add(Calendar.YEAR, -5); // 5 ans
+                debut = gc.getTime();
                 break;
             default:
-                 gc.add(Calendar.YEAR, -10); // 10 ans
-                 debut = gc.getTime();   
+                gc.add(Calendar.YEAR, -10); // 10 ans
+                debut = gc.getTime();
         }
-        
+
         return debut;
     }
-    
-    
+
     private void jMenu1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenu1ActionPerformed
         // TODO add your handling code here:
-      
-   
     }//GEN-LAST:event_jMenu1ActionPerformed
 
     private void jMenu1MenuSelected(javax.swing.event.MenuEvent evt) {//GEN-FIRST:event_jMenu1MenuSelected
         // TODO add your handling code here:
-       
     }//GEN-LAST:event_jMenu1MenuSelected
 
     private void jMenuItem1MenuKeyPressed(javax.swing.event.MenuKeyEvent evt) {//GEN-FIRST:event_jMenuItem1MenuKeyPressed
         // TODO add your handling code here:
-        
     }//GEN-LAST:event_jMenuItem1MenuKeyPressed
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
@@ -349,9 +450,9 @@ public class InterfaceAnalyseur extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     private void jTextTitreFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextTitreFocusLost
-       
+
         // Afficher la description du titre
-        
+
         try {
             jTextDesc.setText(Main.dbAccess.getDesc(jTextTitre.getText()));
         } catch (MalformedURLException ex) {
@@ -359,7 +460,7 @@ public class InterfaceAnalyseur extends javax.swing.JFrame {
         } catch (IOException | SQLException ex) {
             Logger.getLogger(InterfaceAnalyseur.class.getName()).log(Level.SEVERE, null, ex);
         }
- 
+
     }//GEN-LAST:event_jTextTitreFocusLost
 
     private void jComboPeriodeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboPeriodeActionPerformed
@@ -369,7 +470,6 @@ public class InterfaceAnalyseur extends javax.swing.JFrame {
     private void jTextTitreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextTitreActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextTitreActionPerformed
-
 
     private static JFreeChart creerGraphePrix() {
 
@@ -434,46 +534,17 @@ public class InterfaceAnalyseur extends javax.swing.JFrame {
     private static XYDataset creerDatasetPrix() throws ParseException {
 
         final TimeSeriesCollection dataset = new TimeSeriesCollection();
-        TimeSeries prixFermeture = new TimeSeries("Prix fermeture");
-        TimeSeries emaMax = new TimeSeries("EMA Max");
-        TimeSeries emaMin = new TimeSeries("EMA Min");
 
-        analyste = new AnalysteMacd(TitresBoursiers.getTsx());
-
+        analyste = new AnalysteMacd(TitresBoursiers.getListeInitialisation());
+        
         // Prix fermeture
-        System.out.println("Taille de l'historique: " + analyste.getCotesBoursieres().size());
-
-        for (int i = 0; i < analyste.getCotesBoursieres().size(); i++) {
-
-            //TODO, s'assurer qu'il n'y a pas de doublons dans la liste sinon le graphique ne sera pas generer
-
-            System.out.println(analyste.getCotesBoursieres().get(i).toString());
-            prixFermeture.add(new Day(analyste.getCotesBoursieres().get(i).getDate()), analyste.getCotesBoursieres().get(i).getPrixCloture());
-        }
-
-        dataset.addSeries(prixFermeture);
+        dataset.addSeries(getSeriePrixFermeture(analyste));
 
         // EMA Max
-        for (int i = 0; i < analyste.getHistoriqueCoteEmaMax().size(); i++) {
-
-            //TODO, s'assurer qu'il n'y a pas de doublons dans la liste sinon le graphique ne sera pas generer
-
-            System.out.println(analyste.getHistoriqueCoteEmaMax().get(i).toString());
-            emaMax.add(new Day(analyste.getHistoriqueCoteEmaMax().get(i).getDate()), analyste.getHistoriqueCoteEmaMax().get(i).getPrix());
-        }
-
-        dataset.addSeries(emaMax);
+        dataset.addSeries(getSerieEmaMax(analyste));
 
         // EMA Min
-        for (int i = 0; i < analyste.getHistoriqueCoteEmaMin().size(); i++) {
-
-            //TODO, s'assurer qu'il n'y a pas de doublons dans la liste sinon le graphique ne sera pas generer
-
-            System.out.println(analyste.getHistoriqueCoteEmaMin().get(i).toString());
-            emaMin.add(new Day(analyste.getHistoriqueCoteEmaMin().get(i).getDate()), analyste.getHistoriqueCoteEmaMin().get(i).getPrix());
-        }
-
-        dataset.addSeries(emaMin);
+        dataset.addSeries(getSerieEmaMin(analyste));
 
         return dataset;
     }
@@ -481,38 +552,20 @@ public class InterfaceAnalyseur extends javax.swing.JFrame {
     private static XYDataset creerDatasetIndice() throws ParseException {
 
         final TimeSeriesCollection dataset = new TimeSeriesCollection();
-        TimeSeries macd = new TimeSeries("MACD");
-        TimeSeries ligneSignal = new TimeSeries("Ligne Signal");
 
-        analyste = new AnalysteMacd(TitresBoursiers.getTsx());
+        analyste = new AnalysteMacd(TitresBoursiers.getListeInitialisation());
 
         // MACD
-        for (int i = 0; i < analyste.getHistoriqueIndiceMacd().size(); i++) {
-
-            //TODO, s'assurer qu'il n'y a pas de doublons dans la liste sinon le graphique ne sera pas generer
-
-            System.out.println(analyste.getHistoriqueIndiceMacd().get(i).toString());
-            macd.add(new Day(analyste.getHistoriqueIndiceMacd().get(i).getDate()), analyste.getHistoriqueIndiceMacd().get(i).getIndice());
-        }
-
-        dataset.addSeries(macd);
+        dataset.addSeries(getSerieMacd(analyste));
 
         // Ligne Signal
-        for (int i = 0; i < analyste.getHistoriqueIndiceSignal().size(); i++) {
-
-            //TODO, s'assurer qu'il n'y a pas de doublons dans la liste sinon le graphique ne sera pas generer
-
-            System.out.println(analyste.getHistoriqueIndiceSignal().get(i).toString());
-            ligneSignal.add(new Day(analyste.getHistoriqueIndiceSignal().get(i).getDate()), analyste.getHistoriqueIndiceSignal().get(i).getIndice());
-        }
-
-        dataset.addSeries(ligneSignal);
+        dataset.addSeries(getSerieLigneSignal(analyste));
 
         return dataset;
     }
-    
+
     private void updateComponents() {
-        
+
         System.out.println("estAchatInteractif() " + analyste.estAchatInteractif());
 
         if (analyste.estAchatInteractif()) {
@@ -527,7 +580,7 @@ public class InterfaceAnalyseur extends javax.swing.JFrame {
                 Font font = new Font("Verdana", Font.BOLD, 12);
                 texteRecommandation.setFont(font);
                 texteRecommandation.setForeground(Color.WHITE);
-                texteRecommandation.setBackground(new Color(224,217,27));
+                texteRecommandation.setBackground(new Color(224, 217, 27));
                 texteRecommandation.setText("GARDE");
             } else if (analyste.estNeutreInteractif()) {
                 Font font = new Font("Verdana", Font.BOLD, 12);
@@ -544,9 +597,8 @@ public class InterfaceAnalyseur extends javax.swing.JFrame {
             }
         }
 
-        
+
     }
-    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel indiceChartPanel;
     private javax.swing.JButton jButtonAnalyser;

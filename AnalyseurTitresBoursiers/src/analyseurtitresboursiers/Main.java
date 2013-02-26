@@ -32,7 +32,6 @@ public class Main {
             public void run() {
 
                 try {
-
                     new InterfaceAnalyseur().setVisible(true);
                 } catch (Exception exception) {
 

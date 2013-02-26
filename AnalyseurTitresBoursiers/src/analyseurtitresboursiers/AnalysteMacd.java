@@ -7,7 +7,6 @@ package analyseurtitresboursiers;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.StringTokenizer;
 
 /**
  *
@@ -27,19 +26,9 @@ public class AnalysteMacd {
 
     public AnalysteMacd(ArrayList<TitreBoursier> liste) {
         
-        String date = "";
-        String prixFermeture = "";
-        
         historiqueCoteBoursiere = new GestionHistorique();
        
         for (TitreBoursier coteBoursiere : liste) {
- 
-//            StringTokenizer st = new StringTokenizer(coteBoursiere, "=:"); 
-//            while(st.hasMoreTokens()) { 
-//                date = st.nextToken(); 
-//                prixFermeture = st.nextToken(); 
-//                //System.out.println(date + "\t" + prixFermeture);  
-//            }
             
             try {
                 CoteBoursiere cote = new CoteBoursiere(coteBoursiere.getDateFermeture(), coteBoursiere.getValeurFermeture());
