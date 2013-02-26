@@ -4,12 +4,14 @@
  */
 package analyseurtitresboursiers;
 
+import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Font;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.sql.SQLException;
 import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -22,7 +24,9 @@ import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.axis.NumberAxis;
+import org.jfree.chart.labels.StandardXYItemLabelGenerator;
 import org.jfree.chart.labels.StandardXYToolTipGenerator;
+import org.jfree.chart.labels.XYItemLabelGenerator;
 import org.jfree.chart.plot.XYPlot;
 import org.jfree.chart.renderer.xy.XYBarRenderer;
 import org.jfree.chart.renderer.xy.XYItemRenderer;
@@ -359,15 +363,15 @@ public class InterfaceAnalyseur extends javax.swing.JFrame {
         try {
             historique = Main.dbAccess.obtenirHistorique(jTextTitre.getText(), debut);
             analyste = new AnalysteMacd(historique);
+            System.out.println("Taille de l'historique: " + historique.size());
+            System.out.println("Taille de l'analyste: " + analyste.getCotesBoursieres().size());
 
             XYPlot prixPlot = (XYPlot) prixJFreechart.getPlot();
             data = prixPlot.getDataset();
             dataset = (TimeSeriesCollection) data;
             dataset.removeSeries(2);
             dataset.removeSeries(1);
-            dataset.removeSeries(0);
-
-            System.out.println("Taille de l'historique: " + analyste.getCotesBoursieres().size());
+            dataset.removeSeries(0);           
             
             // Prix fermeture
             dataset.addSeries(getSeriePrixFermeture(analyste));
@@ -480,19 +484,34 @@ public class InterfaceAnalyseur extends javax.swing.JFrame {
 
             String s = "Prix";
             jfreechart = ChartFactory.createTimeSeriesChart(s, "date", "prix", xydataset, false, true, false);
+            
             XYPlot xyplot = (XYPlot) jfreechart.getPlot();
             NumberAxis numberaxis = (NumberAxis) xyplot.getRangeAxis();
-            numberaxis.setLowerMargin(0.40000000000000002D);
+            numberaxis.setUpperMargin(.05); // Distance de $.05 entre la + grande valeur et la fin du tableau
+            numberaxis.setLowerMargin(.05);
+            
             DecimalFormat decimalformat = new DecimalFormat("00.00");
             numberaxis.setNumberFormatOverride(decimalformat);
+          
             XYItemRenderer xyitemrenderer = xyplot.getRenderer();
+            //Prix
+            xyitemrenderer.setSeriesStroke(0, new BasicStroke(1.5f));  // Set line thickness
+            xyitemrenderer.setSeriesPaint(0, Color.BLACK);             // Set line color
+            //Ema Max
+            xyitemrenderer.setSeriesStroke(1, new BasicStroke(1.0f));  
+            xyitemrenderer.setSeriesPaint(1, Color.DARK_GRAY);
+            //Ema Max
+            xyitemrenderer.setSeriesStroke(2, new BasicStroke(1.0f)); 
+            xyitemrenderer.setSeriesPaint(2, Color.GRAY);
+                       
+            /*  
             xyitemrenderer.setBaseToolTipGenerator(new StandardXYToolTipGenerator("{0}: ({1}, {2})", new SimpleDateFormat("d-MMM-yyyy"), new DecimalFormat("0.00")));
-
             xyplot.mapDatasetToRangeAxis(1, 1);
             XYBarRenderer xybarrenderer = new XYBarRenderer(0.20000000000000001D);
             xybarrenderer.setBaseToolTipGenerator(new StandardXYToolTipGenerator("{0}: ({1}, {2})", new SimpleDateFormat("d-MMM-yyyy"), new DecimalFormat("0,000.00")));
             xyplot.setRenderer(1, xybarrenderer);
-
+            */
+                      
         } catch (ParseException exception) {
 
             System.err.println(exception.getMessage());
@@ -510,18 +529,30 @@ public class InterfaceAnalyseur extends javax.swing.JFrame {
 
             String s = "Indice";
             jfreechart = ChartFactory.createTimeSeriesChart(s, "date", "indice", xydataset, false, true, false);
+            
             XYPlot xyplot = (XYPlot) jfreechart.getPlot();
             NumberAxis numberaxis = (NumberAxis) xyplot.getRangeAxis();
-            numberaxis.setLowerMargin(0.40000000000000002D);
+            numberaxis.setUpperMargin(.05); // Distance de $.05 entre la + grande valeur et la fin du tableau
+            numberaxis.setLowerMargin(.05);
+            
             DecimalFormat decimalformat = new DecimalFormat("00.00");
             numberaxis.setNumberFormatOverride(decimalformat);
+            
             XYItemRenderer xyitemrenderer = xyplot.getRenderer();
+            //Macd
+            xyitemrenderer.setSeriesStroke(1, new BasicStroke(1.0f));  
+            xyitemrenderer.setSeriesPaint(1, Color.BLUE);
+            //Ligne de signal
+            xyitemrenderer.setSeriesStroke(2, new BasicStroke(1.0f)); 
+            xyitemrenderer.setSeriesPaint(2, Color.RED);
+            
+            /*
             xyitemrenderer.setBaseToolTipGenerator(new StandardXYToolTipGenerator("{0}: ({1}, {2})", new SimpleDateFormat("d-MMM-yyyy"), new DecimalFormat("0.00")));
-
             xyplot.mapDatasetToRangeAxis(1, 1);
             XYBarRenderer xybarrenderer = new XYBarRenderer(0.20000000000000001D);
             xybarrenderer.setBaseToolTipGenerator(new StandardXYToolTipGenerator("{0}: ({1}, {2})", new SimpleDateFormat("d-MMM-yyyy"), new DecimalFormat("0,000.00")));
             xyplot.setRenderer(1, xybarrenderer);
+            */
 
         } catch (ParseException exception) {
 
