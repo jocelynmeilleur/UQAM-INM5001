@@ -28,10 +28,14 @@ public class TitresBoursiers {
             String patronDate = "yyyy-MM-dd";
             SimpleDateFormat format = new SimpleDateFormat(patronDate);
 
+            dateFermeture = format.parse("1971-01-01");
+            titreBoursier = new TitreBoursier(titre, description, dateFermeture, 0.0);
+            listeTitresBouriers.add(titreBoursier);
+/*
             dateFermeture = format.parse("2012-01-01");
             titreBoursier = new TitreBoursier(titre, description, dateFermeture, 25.0);
             listeTitresBouriers.add(titreBoursier);
-
+         
             dateFermeture = format.parse("2012-01-02");
             titreBoursier = new TitreBoursier(titre, description, dateFermeture, 24.875);
             listeTitresBouriers.add(titreBoursier);
@@ -187,7 +191,7 @@ public class TitresBoursiers {
             dateFermeture = format.parse("2012-02-09");
             titreBoursier = new TitreBoursier(titre, description, dateFermeture, 28.8);
             listeTitresBouriers.add(titreBoursier);
-            
+*/            
             System.out.println("Taille " + listeTitresBouriers.size());
 
         } catch (ParseException exception) {
