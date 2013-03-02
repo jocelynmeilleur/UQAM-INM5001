@@ -5,8 +5,10 @@
 package analyseurtitresboursiers;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import java.io.BufferedReader;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 
 /**
@@ -21,10 +23,12 @@ public class ConfigurationLayor {
    private String connexionString;
    private String smtpServer;
    private String courrielDestinataire;
-
+   private String fichierConfig;
    
     public ConfigurationLayor(String fichierConfig){
         
+        this.fichierConfig = fichierConfig;
+                
        try {
 		BufferedReader br = new BufferedReader(
 			new FileReader(fichierConfig));
@@ -35,6 +39,7 @@ public class ConfigurationLayor {
            connexionString = configuration.getConnexionString();
            smtpServer      = configuration.getSmtpServer();
            courrielDestinataire = configuration.getCourrielDestinataire();
+           
 
 	} catch (IOException e) {
 		e.printStackTrace();
@@ -82,6 +87,29 @@ public class ConfigurationLayor {
     public void setUrlDescTitre(String urlDescTitre) {
         this.urlDescTitre = urlDescTitre;
     }  
+    
+    public void saveConfig(){
+        
+        configuration.setCourrielDestinataire(courrielDestinataire);
+        configuration.setUrlHistoriqueTitres(urlHistoriqueTitres);
+        configuration.setUrlDescTitre(urlDescTitre);
+        configuration.setConnexionString(connexionString);
+        configuration.setSmtpServer(smtpServer);
+        
+         Gson gson = new GsonBuilder().setPrettyPrinting().create();
+            String json = gson.toJson(configuration);
+
+            try {
+            try (FileWriter writer = new FileWriter(fichierConfig)) {
+                writer.write(json);
+            }
+
+            } catch (IOException e) {
+                e.printStackTrace();
+                throw new UnsupportedOperationException("Not yet implemented");
+            }
+              
+    }
        
     }
     
