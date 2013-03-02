@@ -72,7 +72,8 @@ public class DatabaseLayor {
 
         String sql = "SELECT * FROM titre"
                 + " JOIN historique ON titre.idtitre = historique.fk_titre"
-                + " WHERE symbol = '" + symbol + "' AND dateFermeture > '" + formatter.format(debut) + "'";
+                + " WHERE symbol = '" + symbol + "' AND dateFermeture > '" + formatter.format(debut) + "'"
+                + " ORDER by dateFermeture";
 
         try {
             stmt = connexion.createStatement();

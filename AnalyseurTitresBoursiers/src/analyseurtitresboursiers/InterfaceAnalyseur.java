@@ -224,6 +224,9 @@ public class InterfaceAnalyseur extends javax.swing.JFrame {
             }
         });
         jTextTitre.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                jTextTitreFocusGained(evt);
+            }
             public void focusLost(java.awt.event.FocusEvent evt) {
                 jTextTitreFocusLost(evt);
             }
@@ -548,6 +551,9 @@ public class InterfaceAnalyseur extends javax.swing.JFrame {
 
         try {
             jTextDesc.setText(Main.dbAccess.getDesc(jTextTitre.getText()));
+            if (jTextDesc.getText().contains("N/A")){
+                jButtonAnalyser.setEnabled(false);
+            }
         } catch (MalformedURLException ex) {
             Logger.getLogger(InterfaceAnalyseur.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException | SQLException ex) {
@@ -577,6 +583,11 @@ public class InterfaceAnalyseur extends javax.swing.JFrame {
           
         
     }//GEN-LAST:event_jButtonSaveConfigActionPerformed
+
+    private void jTextTitreFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextTitreFocusGained
+        // TODO add your handling code here:
+        jButtonAnalyser.setEnabled(true);
+    }//GEN-LAST:event_jTextTitreFocusGained
 
     private static JFreeChart creerGraphePrix() {
 

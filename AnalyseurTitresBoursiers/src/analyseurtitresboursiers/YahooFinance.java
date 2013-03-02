@@ -82,8 +82,16 @@ public class YahooFinance {
                           
             url = new URL(Main.config.getUrlDescTitre() + symbol);
             reader = new BufferedReader(new InputStreamReader(url.openStream()));
-    
-            return(reader.readLine().replace("\"", ""));
+            String delims = "[,]+";
+            String[] champs = reader.readLine().split(delims);
+            if (champs[1].contains("N/A")){
+               return("N/A");
+            }
+            else {
+                return(champs[0].replace("\"", ""));
+            }
+            
+            
         
             
             
