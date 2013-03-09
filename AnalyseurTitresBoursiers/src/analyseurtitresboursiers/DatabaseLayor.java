@@ -8,10 +8,10 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.sql.*;
 import java.text.ParseException;
-import java.util.Date;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 
 /**
  *
@@ -44,6 +44,66 @@ public class DatabaseLayor {
 
     }
 
+        public ArrayList<TitreBoursier> obtenirTitreEnLot() throws IOException, MalformedURLException, ParseException, SQLException {
+
+            // Retourne une collection des titres à traiter en lot
+            // i.e. ceux dont enLot = "O"
+            
+            
+        ArrayList<TitreBoursier> titresEnLot = new ArrayList<>();
+
+        ResultSet rs = null;
+        Statement stmt = null;
+
+        String sql = "SELECT * FROM titre where Enlot = 'O'";
+ 
+        try {
+            stmt = connexion.createStatement();
+
+            if (stmt.execute(sql)) {
+                rs = stmt.getResultSet();
+            }
+            // Now do something with the ResultSet ....
+            if (rs.next()) {
+                while (!rs.isAfterLast()) {
+                    TitreBoursier titre = new TitreBoursier();
+                    titre.setTitre(rs.getNString("symbol"));
+                    titre.setDescription(rs.getNString("description"));
+                    titresEnLot.add(titre);
+                    rs.next();
+                }
+            }
+
+
+        } catch (SQLException ex) {
+            // handle any errors
+            System.out.println("SQLException: " + ex.getMessage());
+            System.out.println("SQLState: " + ex.getSQLState());
+            System.out.println("VendorError: " + ex.getErrorCode());
+        } finally {
+            // it is a good idea to release
+            // resources in a finally{} block
+            // in reverse-order of their creation
+            // if they are no-longer needed
+            if (rs != null) {
+                try {
+                    rs.close();
+                } catch (SQLException sqlEx) {
+                } // ignore
+            }
+            if (stmt != null) {
+                try {
+                    stmt.close();
+                } catch (SQLException sqlEx) {
+                } // ignore
+            }
+        }
+
+        return titresEnLot;
+
+    }
+    
+    
     public ArrayList<TitreBoursier> obtenirHistorique(String symbol, Date debut) throws IOException, MalformedURLException, ParseException, SQLException {
 
         ArrayList<TitreBoursier> historique = new ArrayList<>();
