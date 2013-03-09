@@ -44,6 +44,10 @@ public class BatchAnalyseur {
             recommendationsAchat.add("POW.TO");
         } 
         
+        if (analyste.estVenteBatch()) {
+            recommendationsVente.add("POW.TO");
+        } 
+        
     }
     
     public List<String> getRecommandationsAchat() {

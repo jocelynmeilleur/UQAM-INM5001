@@ -52,6 +52,7 @@ public class Main {
             try {
                 batch.traiter();
                 System.out.println("Taille des recommandations ACHAT: " + batch.getRecommandationsAchat().size());
+                System.out.println("Taille des recommandations VENTE: " + batch.getRecommandationsVente().size());
             } catch (Exception exception) {
                 System.err.println(exception.getMessage());
             }

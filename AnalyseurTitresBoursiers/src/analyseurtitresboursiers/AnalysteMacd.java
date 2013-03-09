@@ -159,6 +159,19 @@ public class AnalysteMacd {
         return decision;
     }
     
+    public boolean estVenteBatch() {
+        
+        boolean decision = false;
+                
+        if (0 > this.getDivergenceDernier()) {
+            if (0 <= getDivergenceAvantDernier()) {
+                decision = true;
+            } 
+        }
+        
+        return decision;
+    }
+    
     public boolean estAchatInteractif() {
         
         boolean decision = false;
