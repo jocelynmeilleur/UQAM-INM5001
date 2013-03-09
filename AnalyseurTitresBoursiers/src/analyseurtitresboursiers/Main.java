@@ -13,31 +13,64 @@ public class Main {
     /**
      * @param args the command line arguments
      */
-  public static ConfigurationLayor config;
-  public static DatabaseLayor dbAccess;
-    
+    public static ConfigurationLayor config;
+    public static DatabaseLayor dbAccess;
+
     public static void main(final String[] args) {
 
-           
-       // Lire le fichier de configuration 
-        config = new ConfigurationLayor(args[0]);
-       // Connexion à la base de données
+        boolean modeBatch = false;
+        String cfg = "";
+
+        int i = 0;
+        while (i < args.length) {
+            String arg;
+            arg = args[i];
+
+            if (arg.equals("-batch")) {
+                System.out.println("set batch mode on");
+                modeBatch = true;
+            }
+
+            if (arg.equals("-cfg")) {
+                System.out.println("lire fichier de config");
+                cfg = args[i + 1];
+            }
+
+            i++;
+        }
+
+        // Lire le fichier de configuration 
+        //config = new ConfigurationLayor(args[0]);
+        config = new ConfigurationLayor(cfg);
+        // Connexion à la base de données
         dbAccess = new DatabaseLayor();
         dbAccess.setConnexionString(config.getConnexionString());
         dbAccess.connect();
-        
-        java.awt.EventQueue.invokeLater(new Runnable() {
 
-            @Override
-            public void run() {
-
-                try {
-                    new InterfaceAnalyseur().setVisible(true);
-                } catch (Exception exception) {
-
-                    System.err.println(exception.getMessage());
-                }
+        if (modeBatch) {
+            System.out.println("Démarrage du batch");
+            System.out.println("Attendre 5 secondes...");
+            try {
+                Thread.sleep(5 * 1000);
+            } catch (Exception exception) {
+                System.err.println(exception.getMessage());
             }
-        }); 
+ 
+        } else {
+            java.awt.EventQueue.invokeLater(new Runnable() {
+
+                @Override
+                public void run() {
+
+                    try {
+                        new InterfaceAnalyseur().setVisible(true);
+                    } catch (Exception exception) {
+
+                        System.err.println(exception.getMessage());
+                    }
+                }
+            });
+        }
+
     }
 }
