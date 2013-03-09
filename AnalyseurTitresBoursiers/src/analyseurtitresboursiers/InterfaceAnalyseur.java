@@ -62,55 +62,55 @@ public class InterfaceAnalyseur extends javax.swing.JFrame {
     }
 
     private static TimeSeries getSeriePrixFermeture(AnalysteMacd analyste) {
-        
+
         TimeSeries prixFermeture = new TimeSeries("Prix fermeture");
-        
+
         for (int i = 0; i < analyste.getCotesBoursieres().size(); i++) {
 
             //TODO, s'assurer qu'il n'y a pas de doublons dans la liste sinon le graphique ne sera pas generer
 
             //System.out.println(analyste.getCotesBoursieres().get(i).toString());
-            prixFermeture.add(new Day(analyste.getCotesBoursieres().get(i).getDate()), analyste.getCotesBoursieres().get(i).getPrixCloture());   
+            prixFermeture.add(new Day(analyste.getCotesBoursieres().get(i).getDate()), analyste.getCotesBoursieres().get(i).getPrixCloture());
         }
-        
+
         return prixFermeture;
     }
-    
+
     private static TimeSeries getSerieEmaMax(AnalysteMacd analyste) {
-        
+
         TimeSeries emaMax = new TimeSeries("EMA Max");
-        
+
         for (int i = 0; i < analyste.getHistoriqueCoteEmaMax().size(); i++) {
 
             //TODO, s'assurer qu'il n'y a pas de doublons dans la liste sinon le graphique ne sera pas generer
 
             //System.out.println(analyste.getCotesBoursieres().get(i).toString());
-            emaMax.add(new Day(analyste.getHistoriqueCoteEmaMax().get(i).getDate()), analyste.getHistoriqueCoteEmaMax().get(i).getPrix());   
+            emaMax.add(new Day(analyste.getHistoriqueCoteEmaMax().get(i).getDate()), analyste.getHistoriqueCoteEmaMax().get(i).getPrix());
         }
-        
+
         return emaMax;
     }
-    
+
     private static TimeSeries getSerieEmaMin(AnalysteMacd analyste) {
-        
+
         TimeSeries emaMin = new TimeSeries("EMA Min");
-        
+
         for (int i = 0; i < analyste.getHistoriqueCoteEmaMin().size(); i++) {
 
             //TODO, s'assurer qu'il n'y a pas de doublons dans la liste sinon le graphique ne sera pas generer
 
             //System.out.println(analyste.getCotesBoursieres().get(i).toString());
-            emaMin.add(new Day(analyste.getHistoriqueCoteEmaMin().get(i).getDate()), analyste.getHistoriqueCoteEmaMin().get(i).getPrix());   
+            emaMin.add(new Day(analyste.getHistoriqueCoteEmaMin().get(i).getDate()), analyste.getHistoriqueCoteEmaMin().get(i).getPrix());
         }
-        
+
         return emaMin;
     }
-    
-        //TimeSeries ligneSignal = new TimeSeries("Ligne Signal");
+
+    //TimeSeries ligneSignal = new TimeSeries("Ligne Signal");
     private static TimeSeries getSerieMacd(AnalysteMacd analyste) {
-        
+
         TimeSeries macd = new TimeSeries("MACD");
-        
+
         for (int i = 0; i < analyste.getHistoriqueIndiceMacd().size(); i++) {
 
             //TODO, s'assurer qu'il n'y a pas de doublons dans la liste sinon le graphique ne sera pas generer
@@ -118,14 +118,14 @@ public class InterfaceAnalyseur extends javax.swing.JFrame {
             //System.out.println(analyste.getHistoriqueIndiceMacd().get(i).toString());
             macd.add(new Day(analyste.getHistoriqueIndiceMacd().get(i).getDate()), analyste.getHistoriqueIndiceMacd().get(i).getIndice());
         }
-     
+
         return macd;
     }
-    
+
     private static TimeSeries getSerieLigneSignal(AnalysteMacd analyste) {
-        
+
         TimeSeries ligneSignal = new TimeSeries("Ligne Signal");
-        
+
         for (int i = 0; i < analyste.getHistoriqueIndiceSignal().size(); i++) {
 
             //TODO, s'assurer qu'il n'y a pas de doublons dans la liste sinon le graphique ne sera pas generer
@@ -133,10 +133,10 @@ public class InterfaceAnalyseur extends javax.swing.JFrame {
             //System.out.println(analyste.getHistoriqueIndiceMacd().get(i).toString());
             ligneSignal.add(new Day(analyste.getHistoriqueIndiceSignal().get(i).getDate()), analyste.getHistoriqueIndiceSignal().get(i).getIndice());
         }
-     
+
         return ligneSignal;
     }
-    
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -174,6 +174,11 @@ public class InterfaceAnalyseur extends javax.swing.JFrame {
         jTextCourriel = new javax.swing.JTextField();
         jButtonSaveConfig = new javax.swing.JButton();
         jButtonTestMail = new javax.swing.JButton();
+        jPanel1 = new javax.swing.JPanel();
+        jLabel7 = new javax.swing.JLabel();
+        jTextTitreEnLot = new javax.swing.JTextField();
+        jTextTitreEnLotDesc = new javax.swing.JTextField();
+        jButtonAjouter = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
@@ -385,6 +390,51 @@ public class InterfaceAnalyseur extends javax.swing.JFrame {
 
         jTabbedPane1.addTab("Configuration", panneauConfiguration);
 
+        jLabel7.setText("Titre boursier");
+
+        jTextTitreEnLot.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                jTextTitreEnLotFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                jTextTitreEnLotFocusLost(evt);
+            }
+        });
+
+        jTextTitreEnLotDesc.setEditable(false);
+
+        jButtonAjouter.setText("Ajouter");
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(24, 24, 24)
+                .addComponent(jLabel7)
+                .addGap(18, 18, 18)
+                .addComponent(jTextTitreEnLot, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jButtonAjouter)
+                    .addComponent(jTextTitreEnLotDesc, javax.swing.GroupLayout.PREFERRED_SIZE, 281, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(753, Short.MAX_VALUE))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(24, 24, 24)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTextTitreEnLot, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTextTitreEnLotDesc, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButtonAjouter)
+                .addContainerGap(539, Short.MAX_VALUE))
+        );
+
+        jTabbedPane1.addTab("Titres en lot", jPanel1);
+
         jMenu1.setText("Fichier");
         jMenu1.addMenuListener(new javax.swing.event.MenuListener() {
             public void menuCanceled(javax.swing.event.MenuEvent evt) {
@@ -442,18 +492,18 @@ public class InterfaceAnalyseur extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void setConfigTab(){
-        
+    private void setConfigTab() {
+
         // Populer les valeurs des champs de configuration
-        
-          jTextUrlHist.setText(Main.config.getUrlHistoriqueTitres());
-          jTextUrlDesc.setText(Main.config.getUrlDescTitre());
-          jTextConnBD.setText(Main.config.getConnexionString());
-          jTextSMTP.setText(Main.config.getSmtpServer());
-          jTextCourriel.setText(Main.config.getCourrielDestinataire());
-         
+
+        jTextUrlHist.setText(Main.config.getUrlHistoriqueTitres());
+        jTextUrlDesc.setText(Main.config.getUrlDescTitre());
+        jTextConnBD.setText(Main.config.getConnexionString());
+        jTextSMTP.setText(Main.config.getSmtpServer());
+        jTextCourriel.setText(Main.config.getCourrielDestinataire());
+
     }
-    
+
     private void jButtonAnalyserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAnalyserActionPerformed
         // Le titre est dans jTextTitre
         // La période est dans jComboPeriode
@@ -475,8 +525,8 @@ public class InterfaceAnalyseur extends javax.swing.JFrame {
             dataset = (TimeSeriesCollection) data;
             dataset.removeSeries(2);
             dataset.removeSeries(1);
-            dataset.removeSeries(0);           
-            
+            dataset.removeSeries(0);
+
             // Prix fermeture
             dataset.addSeries(getSeriePrixFermeture(analyste));
 
@@ -485,16 +535,16 @@ public class InterfaceAnalyseur extends javax.swing.JFrame {
 
             // EMA Min
             dataset.addSeries(getSerieEmaMin(analyste));
-            
+
             XYPlot indicePlot = (XYPlot) indiceJFreechart.getPlot();
             data = indicePlot.getDataset();
             dataset = (TimeSeriesCollection) data;
             dataset.removeSeries(1);
             dataset.removeSeries(0);
-            
+
             // MACD
             dataset.addSeries(getSerieMacd(analyste));
-            
+
             //Ligne de signal
             dataset.addSeries(getSerieLigneSignal(analyste));
 
@@ -560,18 +610,20 @@ public class InterfaceAnalyseur extends javax.swing.JFrame {
     private void jTextTitreFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextTitreFocusLost
 
         // Afficher la description du titre
+        if (!jTextTitre.getText().isEmpty()) {
 
-        try {
-            jTextDesc.setText(Main.dbAccess.getDesc(jTextTitre.getText()));
-            if (jTextDesc.getText().contains("N/A")){
-                jButtonAnalyser.setEnabled(false);
+
+            try {
+                jTextDesc.setText(Main.dbAccess.getDesc(jTextTitre.getText()));
+                if (jTextDesc.getText().contains("N/A")) {
+                    jButtonAnalyser.setEnabled(false);
+                }
+            } catch (MalformedURLException ex) {
+                Logger.getLogger(InterfaceAnalyseur.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (IOException | SQLException ex) {
+                Logger.getLogger(InterfaceAnalyseur.class.getName()).log(Level.SEVERE, null, ex);
             }
-        } catch (MalformedURLException ex) {
-            Logger.getLogger(InterfaceAnalyseur.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IOException | SQLException ex) {
-            Logger.getLogger(InterfaceAnalyseur.class.getName()).log(Level.SEVERE, null, ex);
         }
-
     }//GEN-LAST:event_jTextTitreFocusLost
 
     private void jComboPeriodeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboPeriodeActionPerformed
@@ -583,17 +635,17 @@ public class InterfaceAnalyseur extends javax.swing.JFrame {
     }//GEN-LAST:event_jTextTitreActionPerformed
 
     private void jButtonSaveConfigActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSaveConfigActionPerformed
-        
+
         Main.config.setUrlHistoriqueTitres(jTextUrlHist.getText());
         Main.config.setUrlDescTitre(jTextUrlDesc.getText());
         Main.config.setConnexionString(jTextConnBD.getText());
         Main.config.setSmtpServer(jTextSMTP.getText());
         Main.config.setCourrielDestinataire(jTextCourriel.getText());
         Main.config.saveConfig();
-        
-        javax.swing.JOptionPane.showMessageDialog(null,"Configuration sauvegardée"); 
-          
-        
+
+        javax.swing.JOptionPane.showMessageDialog(null, "Configuration sauvegardée");
+
+
     }//GEN-LAST:event_jButtonSaveConfigActionPerformed
 
     private void jTextTitreFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextTitreFocusGained
@@ -606,6 +658,30 @@ public class InterfaceAnalyseur extends javax.swing.JFrame {
         MailLayor.send("sujet message", "Ceci est le corps du message");
     }//GEN-LAST:event_jButtonTestMailActionPerformed
 
+    private void jTextTitreEnLotFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextTitreEnLotFocusGained
+        // TODO add your handling code here:
+        jButtonAjouter.setEnabled(true);
+    }//GEN-LAST:event_jTextTitreEnLotFocusGained
+
+    private void jTextTitreEnLotFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextTitreEnLotFocusLost
+        // TODO add your handling code here:
+        // Afficher la description du titre
+        if (!jTextTitreEnLot.getText().isEmpty()) {
+
+
+            try {
+                jTextTitreEnLotDesc.setText(Main.dbAccess.getDesc(jTextTitreEnLot.getText()));
+                if (jTextTitreEnLotDesc.getText().contains("N/A")) {
+                    jButtonAjouter.setEnabled(false);
+                }
+            } catch (MalformedURLException ex) {
+                Logger.getLogger(InterfaceAnalyseur.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (IOException | SQLException ex) {
+                Logger.getLogger(InterfaceAnalyseur.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }//GEN-LAST:event_jTextTitreEnLotFocusLost
+
     private static JFreeChart creerGraphePrix() {
 
         JFreeChart jfreechart = null;
@@ -615,34 +691,38 @@ public class InterfaceAnalyseur extends javax.swing.JFrame {
 
             String s = "Prix";
             jfreechart = ChartFactory.createTimeSeriesChart(s, "date", "prix", xydataset, false, true, false);
-            
+
             XYPlot xyplot = (XYPlot) jfreechart.getPlot();
             NumberAxis numberaxis = (NumberAxis) xyplot.getRangeAxis();
             numberaxis.setUpperMargin(.05); // Distance de $.05 entre la + grande valeur et la fin du tableau
             numberaxis.setLowerMargin(.05);
-            
+
             DecimalFormat decimalformat = new DecimalFormat("00.00");
             numberaxis.setNumberFormatOverride(decimalformat);
-          
+
             XYItemRenderer xyitemrenderer = xyplot.getRenderer();
             //Prix
             xyitemrenderer.setSeriesStroke(0, new BasicStroke(1.5f));  // Set line thickness
             xyitemrenderer.setSeriesPaint(0, Color.BLACK);             // Set line color
             //Ema Max
-            xyitemrenderer.setSeriesStroke(1, new BasicStroke(1.0f));  
+            xyitemrenderer.setSeriesStroke(1, new BasicStroke(1.0f));
             xyitemrenderer.setSeriesPaint(1, Color.DARK_GRAY);
             //Ema Max
-            xyitemrenderer.setSeriesStroke(2, new BasicStroke(1.0f)); 
+            xyitemrenderer.setSeriesStroke(2, new BasicStroke(1.0f));
             xyitemrenderer.setSeriesPaint(2, Color.GRAY);
-                       
-            /*  
-            xyitemrenderer.setBaseToolTipGenerator(new StandardXYToolTipGenerator("{0}: ({1}, {2})", new SimpleDateFormat("d-MMM-yyyy"), new DecimalFormat("0.00")));
-            xyplot.mapDatasetToRangeAxis(1, 1);
-            XYBarRenderer xybarrenderer = new XYBarRenderer(0.20000000000000001D);
-            xybarrenderer.setBaseToolTipGenerator(new StandardXYToolTipGenerator("{0}: ({1}, {2})", new SimpleDateFormat("d-MMM-yyyy"), new DecimalFormat("0,000.00")));
-            xyplot.setRenderer(1, xybarrenderer);
-            */
-                      
+
+            /*
+             * xyitemrenderer.setBaseToolTipGenerator(new
+             * StandardXYToolTipGenerator("{0}: ({1}, {2})", new
+             * SimpleDateFormat("d-MMM-yyyy"), new DecimalFormat("0.00")));
+             * xyplot.mapDatasetToRangeAxis(1, 1); XYBarRenderer xybarrenderer =
+             * new XYBarRenderer(0.20000000000000001D);
+             * xybarrenderer.setBaseToolTipGenerator(new
+             * StandardXYToolTipGenerator("{0}: ({1}, {2})", new
+             * SimpleDateFormat("d-MMM-yyyy"), new DecimalFormat("0,000.00")));
+             * xyplot.setRenderer(1, xybarrenderer);
+             */
+
         } catch (ParseException exception) {
 
             System.err.println(exception.getMessage());
@@ -660,30 +740,34 @@ public class InterfaceAnalyseur extends javax.swing.JFrame {
 
             String s = "Indice";
             jfreechart = ChartFactory.createTimeSeriesChart(s, "date", "indice", xydataset, false, true, false);
-            
+
             XYPlot xyplot = (XYPlot) jfreechart.getPlot();
             NumberAxis numberaxis = (NumberAxis) xyplot.getRangeAxis();
             numberaxis.setUpperMargin(.05); // Distance de $.05 entre la + grande valeur et la fin du tableau
             numberaxis.setLowerMargin(.05);
-            
+
             DecimalFormat decimalformat = new DecimalFormat("00.00");
             numberaxis.setNumberFormatOverride(decimalformat);
-            
+
             XYItemRenderer xyitemrenderer = xyplot.getRenderer();
             //Macd
-            xyitemrenderer.setSeriesStroke(1, new BasicStroke(1.0f));  
+            xyitemrenderer.setSeriesStroke(1, new BasicStroke(1.0f));
             xyitemrenderer.setSeriesPaint(1, Color.BLUE);
             //Ligne de signal
-            xyitemrenderer.setSeriesStroke(2, new BasicStroke(1.0f)); 
+            xyitemrenderer.setSeriesStroke(2, new BasicStroke(1.0f));
             xyitemrenderer.setSeriesPaint(2, Color.RED);
-            
+
             /*
-            xyitemrenderer.setBaseToolTipGenerator(new StandardXYToolTipGenerator("{0}: ({1}, {2})", new SimpleDateFormat("d-MMM-yyyy"), new DecimalFormat("0.00")));
-            xyplot.mapDatasetToRangeAxis(1, 1);
-            XYBarRenderer xybarrenderer = new XYBarRenderer(0.20000000000000001D);
-            xybarrenderer.setBaseToolTipGenerator(new StandardXYToolTipGenerator("{0}: ({1}, {2})", new SimpleDateFormat("d-MMM-yyyy"), new DecimalFormat("0,000.00")));
-            xyplot.setRenderer(1, xybarrenderer);
-            */
+             * xyitemrenderer.setBaseToolTipGenerator(new
+             * StandardXYToolTipGenerator("{0}: ({1}, {2})", new
+             * SimpleDateFormat("d-MMM-yyyy"), new DecimalFormat("0.00")));
+             * xyplot.mapDatasetToRangeAxis(1, 1); XYBarRenderer xybarrenderer =
+             * new XYBarRenderer(0.20000000000000001D);
+             * xybarrenderer.setBaseToolTipGenerator(new
+             * StandardXYToolTipGenerator("{0}: ({1}, {2})", new
+             * SimpleDateFormat("d-MMM-yyyy"), new DecimalFormat("0,000.00")));
+             * xyplot.setRenderer(1, xybarrenderer);
+             */
 
         } catch (ParseException exception) {
 
@@ -698,7 +782,7 @@ public class InterfaceAnalyseur extends javax.swing.JFrame {
         final TimeSeriesCollection dataset = new TimeSeriesCollection();
 
         analyste = new AnalysteMacd(TitresBoursiers.getListeInitialisation());
-        
+
         // Prix fermeture
         dataset.addSeries(getSeriePrixFermeture(analyste));
 
@@ -759,11 +843,12 @@ public class InterfaceAnalyseur extends javax.swing.JFrame {
             }
         }
 
-    
-        
+
+
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel indiceChartPanel;
+    private javax.swing.JButton jButtonAjouter;
     private javax.swing.JButton jButtonAnalyser;
     private javax.swing.JButton jButtonSaveConfig;
     private javax.swing.JButton jButtonTestMail;
@@ -774,15 +859,19 @@ public class InterfaceAnalyseur extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTextField jTextConnBD;
     private javax.swing.JTextField jTextCourriel;
     private javax.swing.JTextField jTextDesc;
     private javax.swing.JTextField jTextSMTP;
     private javax.swing.JTextField jTextTitre;
+    private javax.swing.JTextField jTextTitreEnLot;
+    private javax.swing.JTextField jTextTitreEnLotDesc;
     private javax.swing.JTextField jTextUrlDesc;
     private javax.swing.JTextField jTextUrlHist;
     private javax.swing.JLabel labelRecommandation;
