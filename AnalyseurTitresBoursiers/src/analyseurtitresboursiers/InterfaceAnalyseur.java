@@ -153,12 +153,6 @@ public class InterfaceAnalyseur extends javax.swing.JFrame {
         jButtonAnalyser = new javax.swing.JButton();
         labelRecommandation = new javax.swing.JLabel();
         texteRecommandation = new javax.swing.JTextField();
-        prixChartPanel = new javax.swing.JPanel();
-        prixJFreechart = creerGraphePrix();
-        prixChartPanel = new ChartPanel(prixJFreechart, true, true, true, false, true);
-        indiceChartPanel = new javax.swing.JPanel();
-        indiceJFreechart = creerGrapheIndice();
-        indiceChartPanel = new ChartPanel(indiceJFreechart, true, true, true, false, true);
         jTextTitre = new javax.swing.JTextField();
         jComboPeriode = new javax.swing.JComboBox();
         panneauConfiguration = new javax.swing.JPanel();
@@ -202,28 +196,6 @@ public class InterfaceAnalyseur extends javax.swing.JFrame {
         texteRecommandation.setBackground(new java.awt.Color(204, 204, 204));
         texteRecommandation.setColumns(20);
 
-        javax.swing.GroupLayout prixChartPanelLayout = new javax.swing.GroupLayout(prixChartPanel);
-        prixChartPanel.setLayout(prixChartPanelLayout);
-        prixChartPanelLayout.setHorizontalGroup(
-            prixChartPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 565, Short.MAX_VALUE)
-        );
-        prixChartPanelLayout.setVerticalGroup(
-            prixChartPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 392, Short.MAX_VALUE)
-        );
-
-        javax.swing.GroupLayout indiceChartPanelLayout = new javax.swing.GroupLayout(indiceChartPanel);
-        indiceChartPanel.setLayout(indiceChartPanelLayout);
-        indiceChartPanelLayout.setHorizontalGroup(
-            indiceChartPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 565, Short.MAX_VALUE)
-        );
-        indiceChartPanelLayout.setVerticalGroup(
-            indiceChartPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 413, Short.MAX_VALUE)
-        );
-
         jTextTitre.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextTitreActionPerformed(evt);
@@ -253,22 +225,16 @@ public class InterfaceAnalyseur extends javax.swing.JFrame {
                 .addGroup(panneauAnalyseLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(panneauAnalyseLayout.createSequentialGroup()
                         .addGap(25, 25, 25)
+                        .addComponent(jLabel1)
+                        .addGap(18, 18, 18)
+                        .addGroup(panneauAnalyseLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jTextTitre)
+                            .addComponent(jComboPeriode, 0, 85, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(panneauAnalyseLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(panneauAnalyseLayout.createSequentialGroup()
-                                .addComponent(prixChartPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 47, Short.MAX_VALUE)
-                                .addComponent(indiceChartPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(panneauAnalyseLayout.createSequentialGroup()
-                                .addComponent(jLabel1)
-                                .addGap(18, 18, 18)
-                                .addGroup(panneauAnalyseLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(jTextTitre)
-                                    .addComponent(jComboPeriode, 0, 85, Short.MAX_VALUE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(panneauAnalyseLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jTextDesc, javax.swing.GroupLayout.PREFERRED_SIZE, 280, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jButtonAnalyser, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(0, 0, Short.MAX_VALUE))))
+                            .addComponent(jTextDesc, javax.swing.GroupLayout.PREFERRED_SIZE, 280, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jButtonAnalyser, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 724, Short.MAX_VALUE))
                     .addGroup(panneauAnalyseLayout.createSequentialGroup()
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(labelRecommandation)
@@ -288,11 +254,7 @@ public class InterfaceAnalyseur extends javax.swing.JFrame {
                 .addGroup(panneauAnalyseLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jComboPeriode, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButtonAnalyser))
-                .addGap(34, 34, 34)
-                .addGroup(panneauAnalyseLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(prixChartPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(indiceChartPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 49, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 496, Short.MAX_VALUE)
                 .addGroup(panneauAnalyseLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(labelRecommandation)
                     .addComponent(texteRecommandation, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -834,7 +796,6 @@ public class InterfaceAnalyseur extends javax.swing.JFrame {
         
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JPanel indiceChartPanel;
     private javax.swing.JButton jButtonAjouter;
     private javax.swing.JButton jButtonAnalyser;
     private javax.swing.JButton jButtonSaveConfig;
@@ -864,7 +825,6 @@ public class InterfaceAnalyseur extends javax.swing.JFrame {
     private javax.swing.JLabel labelRecommandation;
     private javax.swing.JPanel panneauAnalyse;
     private javax.swing.JPanel panneauConfiguration;
-    private javax.swing.JPanel prixChartPanel;
     private javax.swing.JTextField texteRecommandation;
     // End of variables declaration//GEN-END:variables
 }
