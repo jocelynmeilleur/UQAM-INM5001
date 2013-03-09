@@ -90,18 +90,27 @@
                       <Group type="103" groupAlignment="1" attributes="0">
                           <Group type="102" attributes="0">
                               <EmptySpace min="-2" pref="25" max="-2" attributes="0"/>
-                              <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace type="separate" max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                  <Component id="jTextTitre" max="32767" attributes="0"/>
-                                  <Component id="jComboPeriode" pref="85" max="32767" attributes="0"/>
-                              </Group>
-                              <EmptySpace max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="jTextDesc" min="-2" pref="280" max="-2" attributes="0"/>
-                                  <Component id="jButtonAnalyser" min="-2" pref="89" max="-2" attributes="0"/>
+                                  <Group type="102" attributes="0">
+                                      <Component id="prixChartPanel" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace pref="47" max="32767" attributes="0"/>
+                                      <Component id="indiceChartPanel" min="-2" max="-2" attributes="0"/>
+                                  </Group>
+                                  <Group type="102" alignment="0" attributes="0">
+                                      <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                          <Component id="jTextTitre" max="32767" attributes="0"/>
+                                          <Component id="jComboPeriode" pref="85" max="32767" attributes="0"/>
+                                      </Group>
+                                      <EmptySpace max="-2" attributes="0"/>
+                                      <Group type="103" groupAlignment="0" attributes="0">
+                                          <Component id="jTextDesc" min="-2" pref="280" max="-2" attributes="0"/>
+                                          <Component id="jButtonAnalyser" min="-2" pref="89" max="-2" attributes="0"/>
+                                      </Group>
+                                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                                  </Group>
                               </Group>
-                              <EmptySpace min="0" pref="724" max="32767" attributes="0"/>
                           </Group>
                           <Group type="102" attributes="0">
                               <EmptySpace max="32767" attributes="0"/>
@@ -128,7 +137,12 @@
                           <Component id="jComboPeriode" min="-2" max="-2" attributes="0"/>
                           <Component id="jButtonAnalyser" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace pref="496" max="32767" attributes="0"/>
+                      <EmptySpace min="-2" pref="34" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="prixChartPanel" min="-2" max="-2" attributes="0"/>
+                          <Component id="indiceChartPanel" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace pref="49" max="32767" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="labelRecommandation" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="texteRecommandation" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -171,6 +185,42 @@
                 <Property name="columns" type="int" value="20"/>
               </Properties>
             </Component>
+            <Container class="javax.swing.JPanel" name="prixChartPanel">
+              <AuxValues>
+                <AuxValue name="JavaCodeGenerator_CreateCodePost" type="java.lang.String" value="prixJFreechart = creerGraphePrix();&#xd;&#xa;prixChartPanel = new ChartPanel(prixJFreechart, true, true, true, false, true);"/>
+              </AuxValues>
+
+              <Layout>
+                <DimensionLayout dim="0">
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <EmptySpace min="0" pref="565" max="32767" attributes="0"/>
+                  </Group>
+                </DimensionLayout>
+                <DimensionLayout dim="1">
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <EmptySpace min="0" pref="392" max="32767" attributes="0"/>
+                  </Group>
+                </DimensionLayout>
+              </Layout>
+            </Container>
+            <Container class="javax.swing.JPanel" name="indiceChartPanel">
+              <AuxValues>
+                <AuxValue name="JavaCodeGenerator_CreateCodePost" type="java.lang.String" value="indiceJFreechart = creerGrapheIndice();&#xd;&#xa;indiceChartPanel = new ChartPanel(indiceJFreechart, true, true, true, false, true);"/>
+              </AuxValues>
+
+              <Layout>
+                <DimensionLayout dim="0">
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <EmptySpace min="0" pref="565" max="32767" attributes="0"/>
+                  </Group>
+                </DimensionLayout>
+                <DimensionLayout dim="1">
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <EmptySpace min="0" pref="413" max="32767" attributes="0"/>
+                  </Group>
+                </DimensionLayout>
+              </Layout>
+            </Container>
             <Component class="javax.swing.JTextField" name="jTextTitre">
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jTextTitreActionPerformed"/>
