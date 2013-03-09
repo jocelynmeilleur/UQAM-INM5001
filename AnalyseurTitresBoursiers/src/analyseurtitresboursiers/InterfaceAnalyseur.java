@@ -392,6 +392,15 @@ public class InterfaceAnalyseur extends javax.swing.JFrame {
 
         jLabel7.setText("Titre boursier");
 
+        jTextTitreEnLot.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                jTextTitreEnLotFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                jTextTitreEnLotFocusLost(evt);
+            }
+        });
+
         jTextTitreEnLotDesc.setEditable(false);
 
         jButtonAjouter.setText("Ajouter");
@@ -646,6 +655,27 @@ public class InterfaceAnalyseur extends javax.swing.JFrame {
         // TODO add your handling code here:
         MailLayor.send("sujet message", "Ceci est le corps du message");
     }//GEN-LAST:event_jButtonTestMailActionPerformed
+
+    private void jTextTitreEnLotFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextTitreEnLotFocusGained
+        // TODO add your handling code here:
+        jButtonAjouter.setEnabled(true);
+    }//GEN-LAST:event_jTextTitreEnLotFocusGained
+
+    private void jTextTitreEnLotFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextTitreEnLotFocusLost
+        // TODO add your handling code here:
+              // Afficher la description du titre
+
+        try {
+            jTextTitreEnLotDesc.setText(Main.dbAccess.getDesc(jTextTitreEnLot.getText()));
+            if (jTextTitreEnLotDesc.getText().contains("N/A")){
+                jButtonAjouter.setEnabled(false);
+            }
+        } catch (MalformedURLException ex) {
+            Logger.getLogger(InterfaceAnalyseur.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException | SQLException ex) {
+            Logger.getLogger(InterfaceAnalyseur.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jTextTitreEnLotFocusLost
 
     private static JFreeChart creerGraphePrix() {
 
