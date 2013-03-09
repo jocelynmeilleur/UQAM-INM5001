@@ -48,8 +48,14 @@ public class Main {
         dbAccess.connect();
 
         if (modeBatch) {
-            System.out.println("Démarrage du batch");
-            System.out.println("Attendre 5 secondes...");
+            BatchAnalyseur batch = new BatchAnalyseur(dbAccess);
+            try {
+                batch.traiter();
+                System.out.println("Taille des recommandations ACHAT: " + batch.getRecommandationsAchat().size());
+            } catch (Exception exception) {
+                System.err.println(exception.getMessage());
+            }
+            
             try {
                 Thread.sleep(5 * 1000);
             } catch (Exception exception) {
