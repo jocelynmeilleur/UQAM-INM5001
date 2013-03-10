@@ -16,46 +16,81 @@ import java.util.*;
  */
 public class BatchAnalyseur {
     
-    private List<String> recommendationsAchat = new ArrayList();
-    private List<String> recommendationsVente = new ArrayList();
+    private final static String MSG_HEADER = "Bonjour, \nVoici votre rapport quotidien\n\n";
+    private final static String MSG_ACHAT = "Recommandations ACHAT:\n";
+    private final static String MSG_VENTE = "Recommandations VENTE:\n";
+    private final static String MSG_SAUT_SECTION = "\n\n";
+    private final static String MSG_FOOTER = "\u00a9 Forest/Meilleur - 2013";
+    
+    private List<TitreBoursier> recommendationsAchat = new ArrayList();
+    private List<TitreBoursier> recommendationsVente = new ArrayList();
     
     private DatabaseLayor databaseLayor;
     
 
-    public BatchAnalyseur(DatabaseLayor databaseLayor) {
-        
+    public BatchAnalyseur(DatabaseLayor databaseLayor) {    
         this.databaseLayor = databaseLayor;
-        System.out.println("C'est parti pour l'analyse en batch");
     }
     
     public void traiter() throws IOException, MalformedURLException, ParseException, SQLException {
         
-        Date debut;
         GregorianCalendar gc = new GregorianCalendar();
         gc.add(Calendar.MONTH, -6);
-        debut = gc.getTime();
+        Date debut = gc.getTime();
         
         ArrayList<TitreBoursier> historique = this.databaseLayor.obtenirHistorique("POW.TO", debut);
         AnalysteMacd analyste = new AnalysteMacd(historique);
-        System.out.println("Taille de l'historique: " + historique.size());
-        System.out.println("Taille de l'analyste: " + analyste.getCotesBoursieres().size());
+        //System.out.println("Taille de l'historique: " + historique.size());
+        //System.out.println("Taille de l'analyste: " + analyste.getCotesBoursieres().size());
+        TitreBoursier titreBoursier = historique.get(historique.size() - 1);
         
         if (analyste.estAchatBatch()) {
-            recommendationsAchat.add("POW.TO");
+            recommendationsAchat.add(titreBoursier);
         } 
         
         if (analyste.estVenteBatch()) {
-            recommendationsVente.add("POW.TO");
-        } 
-        
+            recommendationsVente.add(titreBoursier);
+        }  
     }
     
-    public List<String> getRecommandationsAchat() {
+    public List<TitreBoursier> getRecommandationsAchat() {
         return recommendationsAchat;
     }
     
-    public List<String> getRecommandationsVente() {
+    public List<TitreBoursier> getRecommandationsVente() {
         return recommendationsVente;
+    }
+    
+    public void envoyerCourriel(String titre) {
+        
+        String msgBody = "";
+        
+//        System.out.println("Taille des recommandations ACHAT: " + this.getRecommandationsAchat().size());
+//        System.out.println("Taille des recommandations VENTE: " + this.getRecommandationsVente().size());
+        msgBody = msgBody + MSG_HEADER;
+        
+        msgBody = msgBody + MSG_ACHAT;
+        
+        for (TitreBoursier titreBoursier : this.getRecommandationsAchat()) {
+            String msg = String.format("%s (%s): %.2f$ | %s", titreBoursier.getTitre(), titreBoursier.getDescription(), titreBoursier.getValeurFermeture(), titreBoursier.getDateFermeture()); 
+            msgBody = msgBody +  msg;
+        }
+        
+        msgBody = msgBody + MSG_SAUT_SECTION;
+        
+        msgBody = msgBody + MSG_VENTE;
+        
+        for (TitreBoursier titreBoursier : this.getRecommandationsVente()) {
+            String msg = String.format("%s (%s): %.2f$ | %s", titreBoursier.getTitre(), titreBoursier.getDescription(), titreBoursier.getValeurFermeture(), titreBoursier.getDateFermeture()); 
+            msgBody = msgBody +  msg;
+        }
+        
+        msgBody = msgBody + MSG_SAUT_SECTION;
+        
+        msgBody = msgBody + MSG_FOOTER;
+
+        MailLayor.send(titre, msgBody);
+        //System.out.println(titre + "\n" + msgBody);
     }
     
 }
