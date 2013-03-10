@@ -77,7 +77,7 @@ public class Main {
                 public void run() {
 
                     try {
-                        new InterfaceAnalyseur().setVisible(true);
+                        new InterfaceAnalyseur(dbAccess).setVisible(true);
                     } catch (Exception exception) {
 
                         System.err.println(exception.getMessage());

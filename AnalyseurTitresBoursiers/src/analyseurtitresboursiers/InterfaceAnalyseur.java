@@ -49,16 +49,16 @@ public class InterfaceAnalyseur extends javax.swing.JFrame {
     private static AnalysteMacd analyste;
     private TitresBoursiers listeInitialisation;
     private static ArrayList<TitreBoursier> historique = null;
+    private DatabaseLayor databaseLayor;
 
     /**
      * Creates new form InterfaceAnalyseur
      */
-    public InterfaceAnalyseur() throws ParseException {
-
+    public InterfaceAnalyseur(DatabaseLayor databaseLayor) throws ParseException {
+        this.databaseLayor = databaseLayor;
         listeInitialisation = new TitresBoursiers();
         initComponents();
         setConfigTab();
-
     }
 
     private static TimeSeries getSeriePrixFermeture(AnalysteMacd analyste) {
@@ -567,7 +567,7 @@ public class InterfaceAnalyseur extends javax.swing.JFrame {
         debut = getDateDebut(jComboPeriode.getSelectedIndex());
 
         try {
-            historique = Main.dbAccess.obtenirHistorique(jTextTitre.getText(), debut);
+            historique = this.databaseLayor.obtenirHistorique(jTextTitre.getText(), debut);
             analyste = new AnalysteMacd(historique);
             System.out.println("Taille de l'historique: " + historique.size());
             System.out.println("Taille de l'analyste: " + analyste.getCotesBoursieres().size());
@@ -665,7 +665,7 @@ public class InterfaceAnalyseur extends javax.swing.JFrame {
 
 
             try {
-                jTextDesc.setText(Main.dbAccess.getDesc(jTextTitre.getText()));
+                jTextDesc.setText(this.databaseLayor.getDesc(jTextTitre.getText()));
                 if (jTextDesc.getText().contains("N/A")) {
                     jButtonAnalyser.setEnabled(false);
                 }
@@ -721,7 +721,7 @@ public class InterfaceAnalyseur extends javax.swing.JFrame {
 
 
             try {
-                jTextTitreEnLotDesc.setText(Main.dbAccess.getDesc(jTextTitreEnLot.getText()));
+                jTextTitreEnLotDesc.setText(this.databaseLayor.getDesc(jTextTitreEnLot.getText()));
                 if (jTextTitreEnLotDesc.getText().contains("N/A")) {
                     jButtonAjouter.setEnabled(false);
                 }
