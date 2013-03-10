@@ -4,6 +4,10 @@
  */
 package analyseurtitresboursiers;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
+
 /**
  *
  * @author jocelynm
@@ -49,19 +53,22 @@ public class Main {
 
         if (modeBatch) {
             BatchAnalyseur batch = new BatchAnalyseur(dbAccess);
+            
             try {
                 batch.traiter();
-                System.out.println("Taille des recommandations ACHAT: " + batch.getRecommandationsAchat().size());
-                System.out.println("Taille des recommandations VENTE: " + batch.getRecommandationsVente().size());
+                Date now = new Date();
+                SimpleDateFormat sdf = new SimpleDateFormat("EEEE, d MMM yyyy", Locale.CANADA_FRENCH);
+                batch.envoyerCourriel("AnalyseurTitresBoursiers - rapport quotidien: " + sdf.format(now));
+                    
             } catch (Exception exception) {
                 System.err.println(exception.getMessage());
             }
             
-            try {
-                Thread.sleep(5 * 1000);
-            } catch (Exception exception) {
-                System.err.println(exception.getMessage());
-            }
+//            try {
+//                Thread.sleep(5 * 1000);
+//            } catch (Exception exception) {
+//                System.err.println(exception.getMessage());
+//            }
  
         } else {
             java.awt.EventQueue.invokeLater(new Runnable() {
