@@ -359,7 +359,7 @@ public class DatabaseLayor {
             sql = sqlStmt.replace("%symbol%", historique.get(0).getTitre());
             sql = sql.replace("%description%", historique.get(0).getDescription());
             sql = sql.replace("%histMaxDate%", formatter.format(minDate));
-            System.out.println(sql);
+         
 
             stmt.executeUpdate(sql, Statement.RETURN_GENERATED_KEYS);
             ResultSet rs = stmt.getGeneratedKeys();
@@ -388,7 +388,7 @@ public class DatabaseLayor {
         sqlStmt = "UPDATE Titre SET histMaxDate = '%histMaxDate%' WHERE idTitre = %idTitre%";
         sql = sqlStmt.replace("%idTitre%", String.valueOf(idTitre));
         sql = sql.replace("%histMaxDate%", formatter.format(historique.get(0).getDateFermeture()));
-        System.out.println(sql);
+     
         stmt.executeUpdate(sql);
 
 

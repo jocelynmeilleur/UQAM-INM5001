@@ -554,8 +554,7 @@ public class InterfaceAnalyseur extends javax.swing.JFrame {
             Logger.getLogger(InterfaceAnalyseur.class.getName()).log(Level.SEVERE, null, ex);
         }
 
-        System.out.println(historique);
-        System.out.println(historique.get(0));
+     
 
     }//GEN-LAST:event_jButtonAnalyserActionPerformed
 
