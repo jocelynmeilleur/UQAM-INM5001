@@ -145,7 +145,11 @@ public class InterfaceAnalyseur extends javax.swing.JFrame {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
+        bindingGroup = new org.jdesktop.beansbinding.BindingGroup();
 
+        titresboursiersPUEntityManager = java.beans.Beans.isDesignTime() ? null : javax.persistence.Persistence.createEntityManagerFactory("titresboursiersPU").createEntityManager();
+        titreQuery = java.beans.Beans.isDesignTime() ? null : titresboursiersPUEntityManager.createQuery("SELECT t FROM Titre t");
+        titreList = java.beans.Beans.isDesignTime() ? java.util.Collections.emptyList() : titreQuery.getResultList();
         jTabbedPane1 = new javax.swing.JTabbedPane();
         panneauAnalyse = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
@@ -179,6 +183,9 @@ public class InterfaceAnalyseur extends javax.swing.JFrame {
         jTextTitreEnLot = new javax.swing.JTextField();
         jTextTitreEnLotDesc = new javax.swing.JTextField();
         jButtonAjouter = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTableEnLot = new javax.swing.JTable();
+        jButtonSaveEnLot = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
@@ -405,20 +412,59 @@ public class InterfaceAnalyseur extends javax.swing.JFrame {
 
         jButtonAjouter.setText("Ajouter");
 
+        jTableEnLot.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_OFF);
+        jTableEnLot.setColumnSelectionAllowed(true);
+
+        org.jdesktop.swingbinding.JTableBinding jTableBinding = org.jdesktop.swingbinding.SwingBindings.createJTableBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, titreList, jTableEnLot);
+        org.jdesktop.swingbinding.JTableBinding.ColumnBinding columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${symbol}"));
+        columnBinding.setColumnName("Symbol");
+        columnBinding.setColumnClass(String.class);
+        columnBinding.setEditable(false);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${description}"));
+        columnBinding.setColumnName("Description");
+        columnBinding.setColumnClass(String.class);
+        columnBinding.setEditable(false);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${enlot}"));
+        columnBinding.setColumnName("Enlot");
+        columnBinding.setColumnClass(String.class);
+        bindingGroup.addBinding(jTableBinding);
+        jTableBinding.bind();
+        jScrollPane1.setViewportView(jTableEnLot);
+        jTableEnLot.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        jTableEnLot.getColumnModel().getColumn(0).setResizable(false);
+        jTableEnLot.getColumnModel().getColumn(0).setPreferredWidth(150);
+        jTableEnLot.getColumnModel().getColumn(1).setResizable(false);
+        jTableEnLot.getColumnModel().getColumn(1).setPreferredWidth(250);
+        jTableEnLot.getColumnModel().getColumn(2).setResizable(false);
+        jTableEnLot.getColumnModel().getColumn(2).setPreferredWidth(50);
+
+        jButtonSaveEnLot.setText("Sauvegarder");
+        jButtonSaveEnLot.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonSaveEnLotActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(24, 24, 24)
-                .addComponent(jLabel7)
-                .addGap(18, 18, 18)
-                .addComponent(jTextTitreEnLot, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButtonAjouter)
-                    .addComponent(jTextTitreEnLotDesc, javax.swing.GroupLayout.PREFERRED_SIZE, 281, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(753, Short.MAX_VALUE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jButtonSaveEnLot)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel7)
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jTextTitreEnLot, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jButtonAjouter)
+                                    .addComponent(jTextTitreEnLotDesc, javax.swing.GroupLayout.PREFERRED_SIZE, 281, javax.swing.GroupLayout.PREFERRED_SIZE))))))
+                .addContainerGap(670, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -430,7 +476,11 @@ public class InterfaceAnalyseur extends javax.swing.JFrame {
                     .addComponent(jTextTitreEnLotDesc, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButtonAjouter)
-                .addContainerGap(539, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jButtonSaveEnLot)
+                .addContainerGap(57, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Titres en lot", jPanel1);
@@ -488,6 +538,8 @@ public class InterfaceAnalyseur extends javax.swing.JFrame {
                 .addComponent(jTabbedPane1)
                 .addContainerGap())
         );
+
+        bindingGroup.bind();
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -681,6 +733,14 @@ public class InterfaceAnalyseur extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jTextTitreEnLotFocusLost
 
+    private void jButtonSaveEnLotActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSaveEnLotActionPerformed
+    // TODO add your handling code here:
+        titresboursiersPUEntityManager.getTransaction().begin();
+        titresboursiersPUEntityManager.getTransaction().commit();
+       javax.swing.JOptionPane.showMessageDialog(null, "Sélection de titres sauvegardée");
+
+    }//GEN-LAST:event_jButtonSaveEnLotActionPerformed
+
     private static JFreeChart creerGraphePrix() {
 
         JFreeChart jfreechart = null;
@@ -850,6 +910,7 @@ public class InterfaceAnalyseur extends javax.swing.JFrame {
     private javax.swing.JButton jButtonAjouter;
     private javax.swing.JButton jButtonAnalyser;
     private javax.swing.JButton jButtonSaveConfig;
+    private javax.swing.JButton jButtonSaveEnLot;
     private javax.swing.JButton jButtonTestMail;
     private javax.swing.JComboBox jComboPeriode;
     private javax.swing.JLabel jLabel1;
@@ -863,7 +924,9 @@ public class InterfaceAnalyseur extends javax.swing.JFrame {
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTabbedPane jTabbedPane1;
+    private javax.swing.JTable jTableEnLot;
     private javax.swing.JTextField jTextConnBD;
     private javax.swing.JTextField jTextCourriel;
     private javax.swing.JTextField jTextDesc;
@@ -878,5 +941,9 @@ public class InterfaceAnalyseur extends javax.swing.JFrame {
     private javax.swing.JPanel panneauConfiguration;
     private javax.swing.JPanel prixChartPanel;
     private javax.swing.JTextField texteRecommandation;
+    private java.util.List<analyseurtitresboursiers.Titre> titreList;
+    private javax.persistence.Query titreQuery;
+    private javax.persistence.EntityManager titresboursiersPUEntityManager;
+    private org.jdesktop.beansbinding.BindingGroup bindingGroup;
     // End of variables declaration//GEN-END:variables
 }
