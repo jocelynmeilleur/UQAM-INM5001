@@ -58,7 +58,7 @@ public class Main {
                 batch.traiter();
                 Date now = new Date();
                 SimpleDateFormat sdf = new SimpleDateFormat("EEEE, d MMM yyyy", Locale.CANADA_FRENCH);
-                batch.envoyerCourriel("AnalyseTitresBoursiers - rapport quotidien: " + sdf.format(now));
+                batch.envoyerCourriel("AnalyseurTitresBoursiers - rapport quotidien: " + sdf.format(now));
                     
             } catch (Exception exception) {
                 System.err.println(exception.getMessage());
