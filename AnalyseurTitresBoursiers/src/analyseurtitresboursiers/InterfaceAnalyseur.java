@@ -761,14 +761,14 @@ public class InterfaceAnalyseur extends javax.swing.JFrame {
 
             XYItemRenderer xyitemrenderer = xyplot.getRenderer();
             //Prix
-            xyitemrenderer.setSeriesStroke(0, new BasicStroke(1.5f));  // Set line thickness
-            xyitemrenderer.setSeriesPaint(0, Color.BLACK);             // Set line color
+            xyitemrenderer.setSeriesStroke(0, new BasicStroke(1.75f));  // Set line thickness
+            xyitemrenderer.setSeriesPaint(0, Color.CYAN);             // Set line color
             //Ema Max
             xyitemrenderer.setSeriesStroke(1, new BasicStroke(1.0f));
             xyitemrenderer.setSeriesPaint(1, Color.DARK_GRAY);
             //Ema Max
             xyitemrenderer.setSeriesStroke(2, new BasicStroke(1.0f));
-            xyitemrenderer.setSeriesPaint(2, Color.GRAY);
+            xyitemrenderer.setSeriesPaint(2, Color.GREEN);
 
             /*
              * xyitemrenderer.setBaseToolTipGenerator(new
@@ -870,8 +870,17 @@ public class InterfaceAnalyseur extends javax.swing.JFrame {
     }
 
     private void updateComponents() {
-
-        System.out.println("estAchatInteractif() " + analyste.estAchatInteractif());
+        
+        GregorianCalendar gc = new GregorianCalendar();
+        gc.add(Calendar.MONTH, -2);
+        Date debut = gc.getTime();
+        try {
+            historique = this.databaseLayor.obtenirHistorique(jTextTitre.getText(), debut);
+            analyste = new AnalysteMacd(historique);
+            System.out.println("Taille de l'historique - recommendation: " + historique.size());
+        } catch (IOException | ParseException | SQLException ex) {
+            Logger.getLogger(InterfaceAnalyseur.class.getName()).log(Level.SEVERE, null, ex);
+        }
 
         if (analyste.estAchatInteractif()) {
             Font font = new Font("Verdana", Font.BOLD, 12);
@@ -901,9 +910,6 @@ public class InterfaceAnalyseur extends javax.swing.JFrame {
                 texteRecommandation.setText("VENDRE");
             }
         }
-
-
-
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel indiceChartPanel;

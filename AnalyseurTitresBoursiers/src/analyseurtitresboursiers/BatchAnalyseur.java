@@ -35,7 +35,7 @@ public class BatchAnalyseur {
     public void traiter() throws IOException, MalformedURLException, ParseException, SQLException {
         
         GregorianCalendar gc = new GregorianCalendar();
-        gc.add(Calendar.MONTH, -6);
+        gc.add(Calendar.MONTH, -2);
         Date debut = gc.getTime();
         
         ArrayList<TitreBoursier> historique = this.databaseLayor.obtenirHistorique("POW.TO", debut);
