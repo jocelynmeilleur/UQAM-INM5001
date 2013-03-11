@@ -30,10 +30,12 @@ import org.jfree.chart.labels.XYItemLabelGenerator;
 import org.jfree.chart.plot.XYPlot;
 import org.jfree.chart.renderer.xy.XYBarRenderer;
 import org.jfree.chart.renderer.xy.XYItemRenderer;
+import org.jfree.chart.title.LegendTitle;
 import org.jfree.data.time.Day;
 import org.jfree.data.time.TimeSeries;
 import org.jfree.data.time.TimeSeriesCollection;
 import org.jfree.data.xy.XYDataset;
+import org.jfree.ui.RectangleEdge;
 
 /**
  *
@@ -749,7 +751,7 @@ public class InterfaceAnalyseur extends javax.swing.JFrame {
             XYDataset xydataset = creerDatasetPrix();
 
             String s = "Prix";
-            jfreechart = ChartFactory.createTimeSeriesChart(s, "date", "prix", xydataset, false, true, false);
+            jfreechart = ChartFactory.createTimeSeriesChart(s, "date", "prix", xydataset, true, true, false);
 
             XYPlot xyplot = (XYPlot) jfreechart.getPlot();
             NumberAxis numberaxis = (NumberAxis) xyplot.getRangeAxis();
@@ -769,6 +771,9 @@ public class InterfaceAnalyseur extends javax.swing.JFrame {
             //Ema Max
             xyitemrenderer.setSeriesStroke(2, new BasicStroke(1.0f));
             xyitemrenderer.setSeriesPaint(2, Color.GREEN);
+            
+            LegendTitle legend = jfreechart.getLegend();
+            legend.setPosition(RectangleEdge.BOTTOM);
 
             /*
              * xyitemrenderer.setBaseToolTipGenerator(new
@@ -798,7 +803,7 @@ public class InterfaceAnalyseur extends javax.swing.JFrame {
             XYDataset xydataset = creerDatasetIndice();
 
             String s = "Indice";
-            jfreechart = ChartFactory.createTimeSeriesChart(s, "date", "indice", xydataset, false, true, false);
+            jfreechart = ChartFactory.createTimeSeriesChart(s, "date", "indice", xydataset, true, true, false);
 
             XYPlot xyplot = (XYPlot) jfreechart.getPlot();
             NumberAxis numberaxis = (NumberAxis) xyplot.getRangeAxis();
@@ -815,7 +820,10 @@ public class InterfaceAnalyseur extends javax.swing.JFrame {
             //Ligne de signal
             xyitemrenderer.setSeriesStroke(2, new BasicStroke(1.0f));
             xyitemrenderer.setSeriesPaint(2, Color.RED);
-
+            
+            LegendTitle legend = jfreechart.getLegend();
+            legend.setPosition(RectangleEdge.BOTTOM);
+                  
             /*
              * xyitemrenderer.setBaseToolTipGenerator(new
              * StandardXYToolTipGenerator("{0}: ({1}, {2})", new
