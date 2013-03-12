@@ -151,7 +151,7 @@ public class AnalysteMacd {
         boolean decision = false;
                 
         if (0 < this.getDivergenceDernier()) {
-            if (0 >= getDivergenceAvantDernier()) {
+            if (0 >= this.getDivergenceAvantDernier()) {
                 decision = true;
             } 
         }
@@ -164,7 +164,7 @@ public class AnalysteMacd {
         boolean decision = false;
                 
         if (0 > this.getDivergenceDernier()) {
-            if (0 <= getDivergenceAvantDernier()) {
+            if (0 <= this.getDivergenceAvantDernier()) {
                 decision = true;
             } 
         }
