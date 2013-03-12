@@ -11,9 +11,7 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.sql.SQLException;
 import java.text.DecimalFormat;
-import java.text.NumberFormat;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -23,12 +21,9 @@ import java.util.logging.Logger;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
+import org.jfree.chart.axis.DateAxis;
 import org.jfree.chart.axis.NumberAxis;
-import org.jfree.chart.labels.StandardXYItemLabelGenerator;
-import org.jfree.chart.labels.StandardXYToolTipGenerator;
-import org.jfree.chart.labels.XYItemLabelGenerator;
 import org.jfree.chart.plot.XYPlot;
-import org.jfree.chart.renderer.xy.XYBarRenderer;
 import org.jfree.chart.renderer.xy.XYItemRenderer;
 import org.jfree.chart.title.LegendTitle;
 import org.jfree.data.time.Day;
@@ -52,7 +47,13 @@ public class InterfaceAnalyseur extends javax.swing.JFrame {
     private TitresBoursiers listeInitialisation;
     private static ArrayList<TitreBoursier> historique = null;
     private DatabaseLayor databaseLayor;
-
+    private static NumberAxis numberAxisPrix = null;
+    private static DateAxis dateAxisPrix = null;
+    private static NumberAxis numberAxisIndice = null;
+    private static DateAxis dateAxisIndice = null;
+    private static LegendTitle legendPrix;
+    private static LegendTitle legendIndice;
+            
     /**
      * Creates new form InterfaceAnalyseur
      */
@@ -602,7 +603,8 @@ public class InterfaceAnalyseur extends javax.swing.JFrame {
             //Ligne de signal
             dataset.addSeries(getSerieLigneSignal(analyste));
 
-            updateComponents();
+            updateRecommandation();
+            updateGraph();
 
         } catch (IOException | ParseException | SQLException ex) {
             Logger.getLogger(InterfaceAnalyseur.class.getName()).log(Level.SEVERE, null, ex);
@@ -754,12 +756,19 @@ public class InterfaceAnalyseur extends javax.swing.JFrame {
             jfreechart = ChartFactory.createTimeSeriesChart(s, "date", "prix", xydataset, true, true, false);
 
             XYPlot xyplot = (XYPlot) jfreechart.getPlot();
-            NumberAxis numberaxis = (NumberAxis) xyplot.getRangeAxis();
-            numberaxis.setUpperMargin(.05); // Distance de $.05 entre la + grande valeur et la fin du tableau
-            numberaxis.setLowerMargin(.05);
+            
+            numberAxisPrix = (NumberAxis) xyplot.getRangeAxis();
+            numberAxisPrix.setVisible(false);
+            numberAxisPrix.setUpperMargin(.05); // Distance de $.05 entre la + grande valeur et la fin du tableau
+            numberAxisPrix.setLowerMargin(.05);
+            
+            dateAxisPrix = (DateAxis) xyplot.getDomainAxis();
+            dateAxisPrix.setVisible(false);
+            dateAxisPrix.setUpperMargin(.05);
+            numberAxisPrix.setLowerMargin(.05);
 
             DecimalFormat decimalformat = new DecimalFormat("00.00");
-            numberaxis.setNumberFormatOverride(decimalformat);
+            numberAxisPrix.setNumberFormatOverride(decimalformat);
 
             XYItemRenderer xyitemrenderer = xyplot.getRenderer();
             //Prix
@@ -772,9 +781,10 @@ public class InterfaceAnalyseur extends javax.swing.JFrame {
             xyitemrenderer.setSeriesStroke(2, new BasicStroke(1.0f));
             xyitemrenderer.setSeriesPaint(2, Color.GREEN);
             
-            LegendTitle legend = jfreechart.getLegend();
-            legend.setPosition(RectangleEdge.BOTTOM);
-
+            legendPrix = jfreechart.getLegend();
+            legendPrix.setPosition(RectangleEdge.BOTTOM);
+            legendPrix.setVisible(false);
+            
             /*
              * xyitemrenderer.setBaseToolTipGenerator(new
              * StandardXYToolTipGenerator("{0}: ({1}, {2})", new
@@ -806,12 +816,19 @@ public class InterfaceAnalyseur extends javax.swing.JFrame {
             jfreechart = ChartFactory.createTimeSeriesChart(s, "date", "indice", xydataset, true, true, false);
 
             XYPlot xyplot = (XYPlot) jfreechart.getPlot();
-            NumberAxis numberaxis = (NumberAxis) xyplot.getRangeAxis();
-            numberaxis.setUpperMargin(.05); // Distance de $.05 entre la + grande valeur et la fin du tableau
-            numberaxis.setLowerMargin(.05);
+            
+            numberAxisIndice = (NumberAxis) xyplot.getRangeAxis();
+            numberAxisIndice.setVisible(false);
+            numberAxisIndice.setUpperMargin(.05); // Distance de $.05 entre la + grande valeur et la fin du tableau
+            numberAxisIndice.setLowerMargin(.05);
+            
+            dateAxisIndice = (DateAxis) xyplot.getDomainAxis();
+            dateAxisIndice.setVisible(false);
+            dateAxisIndice.setUpperMargin(.05);
+            numberAxisIndice.setLowerMargin(.05);
 
             DecimalFormat decimalformat = new DecimalFormat("00.00");
-            numberaxis.setNumberFormatOverride(decimalformat);
+            numberAxisIndice.setNumberFormatOverride(decimalformat);
 
             XYItemRenderer xyitemrenderer = xyplot.getRenderer();
             //Macd
@@ -821,8 +838,9 @@ public class InterfaceAnalyseur extends javax.swing.JFrame {
             xyitemrenderer.setSeriesStroke(2, new BasicStroke(1.0f));
             xyitemrenderer.setSeriesPaint(2, Color.RED);
             
-            LegendTitle legend = jfreechart.getLegend();
-            legend.setPosition(RectangleEdge.BOTTOM);
+            legendIndice = jfreechart.getLegend();
+            legendIndice.setPosition(RectangleEdge.BOTTOM);
+            legendIndice.setVisible(false);
                   
             /*
              * xyitemrenderer.setBaseToolTipGenerator(new
@@ -877,7 +895,7 @@ public class InterfaceAnalyseur extends javax.swing.JFrame {
         return dataset;
     }
 
-    private void updateComponents() {
+    private void updateRecommandation() {
         
         GregorianCalendar gc = new GregorianCalendar();
         gc.add(Calendar.MONTH, -2);
@@ -917,8 +935,20 @@ public class InterfaceAnalyseur extends javax.swing.JFrame {
                 texteRecommandation.setBackground(Color.RED);
                 texteRecommandation.setText("VENDRE");
             }
-        }
+        }  
     }
+    
+    private void updateGraph() {
+        numberAxisPrix.setVisible(true);
+        dateAxisPrix.setVisible(true);
+        numberAxisIndice.setVisible(true);
+        dateAxisIndice.setVisible(true);
+        legendPrix.setVisible(true);
+        legendIndice.setVisible(true);
+    }
+            
+            
+            
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel indiceChartPanel;
     private javax.swing.JButton jButtonAjouter;
