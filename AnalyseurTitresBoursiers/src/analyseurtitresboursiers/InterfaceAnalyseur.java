@@ -195,6 +195,12 @@ public class InterfaceAnalyseur extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
+        jTabbedPane1.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                jTabbedPane1FocusGained(evt);
+            }
+        });
+
         jLabel1.setText("Titre Boursier");
 
         jTextDesc.setEditable(false);
@@ -414,6 +420,11 @@ public class InterfaceAnalyseur extends javax.swing.JFrame {
         jTextTitreEnLotDesc.setEditable(false);
 
         jButtonAjouter.setText("Ajouter");
+        jButtonAjouter.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonAjouterActionPerformed(evt);
+            }
+        });
 
         jTableEnLot.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_OFF);
         jTableEnLot.setColumnSelectionAllowed(true);
@@ -745,6 +756,57 @@ public class InterfaceAnalyseur extends javax.swing.JFrame {
 
     }//GEN-LAST:event_jButtonSaveEnLotActionPerformed
 
+    private void jTabbedPane1FocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTabbedPane1FocusGained
+        // TODO add your handling code here:
+        refreshEnLot();
+      
+    }//GEN-LAST:event_jTabbedPane1FocusGained
+
+    private void jButtonAjouterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAjouterActionPerformed
+     
+        ArrayList<TitreBoursier> temp = new ArrayList<>();
+        
+        try {
+            // TODO add your handling code here:
+             temp = this.databaseLayor.obtenirHistorique(jTextTitreEnLot.getText(), new Date());
+        } catch (IOException | ParseException | SQLException ex) {
+            Logger.getLogger(InterfaceAnalyseur.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        refreshEnLot();
+        jTextTitreEnLot.setText("");
+        jTextTitreEnLotDesc.setText("");
+    }//GEN-LAST:event_jButtonAjouterActionPerformed
+
+    private void refreshEnLot() {
+        titreList = java.beans.Beans.isDesignTime() ? java.util.Collections.emptyList() : titreQuery.getResultList();
+        org.jdesktop.swingbinding.JTableBinding jTableBinding = org.jdesktop.swingbinding.SwingBindings.createJTableBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, titreList, jTableEnLot);
+        org.jdesktop.swingbinding.JTableBinding.ColumnBinding columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${symbol}"));
+        columnBinding.setColumnName("Symbol");
+        columnBinding.setColumnClass(String.class);
+        columnBinding.setEditable(false);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${description}"));
+        columnBinding.setColumnName("Description");
+        columnBinding.setColumnClass(String.class);
+        columnBinding.setEditable(false);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${enlot}"));
+        columnBinding.setColumnName("Enlot");
+        columnBinding.setColumnClass(String.class);
+        bindingGroup.addBinding(jTableBinding);
+        jTableBinding.bind();
+        jScrollPane1.setViewportView(jTableEnLot);
+        jTableEnLot.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        jTableEnLot.getColumnModel().getColumn(0).setResizable(false);
+        jTableEnLot.getColumnModel().getColumn(0).setPreferredWidth(150);
+        jTableEnLot.getColumnModel().getColumn(1).setResizable(false);
+        jTableEnLot.getColumnModel().getColumn(1).setPreferredWidth(250);
+        jTableEnLot.getColumnModel().getColumn(2).setResizable(false);
+        jTableEnLot.getColumnModel().getColumn(2).setPreferredWidth(50);
+        bindingGroup.bind();
+        jTableEnLot.revalidate();
+        
+    }
+    
+    
     private static JFreeChart creerGraphePrix() {
 
         JFreeChart jfreechart = null;
