@@ -802,7 +802,7 @@ public class InterfaceAnalyseur extends javax.swing.JFrame {
         jTableEnLot.getColumnModel().getColumn(1).setPreferredWidth(250);
         jTableEnLot.getColumnModel().getColumn(2).setResizable(false);
         jTableEnLot.getColumnModel().getColumn(2).setPreferredWidth(50);
-        bindingGroup.bind();
+        //bindingGroup.bind();
         jTableEnLot.revalidate();
         
     }
