@@ -778,6 +778,7 @@ public class InterfaceAnalyseur extends javax.swing.JFrame {
     }//GEN-LAST:event_jButtonAjouterActionPerformed
 
     private void refreshEnLot() {
+        titreQuery = java.beans.Beans.isDesignTime() ? null : titresboursiersPUEntityManager.createQuery("SELECT t FROM Titre t ORDER by t.symbol");
         titreList = java.beans.Beans.isDesignTime() ? java.util.Collections.emptyList() : titreQuery.getResultList();
         org.jdesktop.swingbinding.JTableBinding jTableBinding = org.jdesktop.swingbinding.SwingBindings.createJTableBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, titreList, jTableEnLot);
         org.jdesktop.swingbinding.JTableBinding.ColumnBinding columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${symbol}"));
