@@ -56,8 +56,8 @@ public class MailLayor {
                 // SMTP authentifié
                 Transport tr = session.getTransport("smtp");
                 properties.setProperty("mail.smtp.auth", "true");
-                properties.setProperty("mail.smtp.port", "587");
-                tr.connect(host, "pierforest@videotron.ca", "adjp4023");
+                properties.setProperty("mail.smtp.port", Main.config.getSmtpPort());
+                tr.connect(host, Main.config.getSmtpUserName(), Main.config.getSmtpPassword());
                 message.saveChanges();      // don't forget this
                 tr.sendMessage(message, message.getAllRecipients());
                 tr.close();
