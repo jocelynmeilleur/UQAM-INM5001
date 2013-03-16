@@ -56,7 +56,7 @@ public class InterfaceAnalyseur extends javax.swing.JFrame {
     private static DateAxis dateAxisIndice = null;
     private static LegendTitle legendPrix;
     private static LegendTitle legendIndice;
-            
+
     /**
      * Creates new form InterfaceAnalyseur
      */
@@ -187,10 +187,10 @@ public class InterfaceAnalyseur extends javax.swing.JFrame {
         jButtonTestMail = new javax.swing.JButton();
         jCheckBoxSMTP = new javax.swing.JCheckBox();
         jLabel8 = new javax.swing.JLabel();
-        jLabel9 = new javax.swing.JLabel();
-        jLabel10 = new javax.swing.JLabel();
+        jLabelUserName = new javax.swing.JLabel();
+        jLabelPassword = new javax.swing.JLabel();
         jTextUserName = new javax.swing.JTextField();
-        jLabel11 = new javax.swing.JLabel();
+        jLabelSMTPPort = new javax.swing.JLabel();
         jTextSMTPPort = new javax.swing.JTextField();
         jPasswordSMTP = new javax.swing.JPasswordField();
         jPanel1 = new javax.swing.JPanel();
@@ -356,6 +356,7 @@ public class InterfaceAnalyseur extends javax.swing.JFrame {
 
         jLabel4.setText("Ligne de connexion à la base de données locale:");
 
+        jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jLabel5.setText("Serveur sortant SMTP:");
 
         jLabel6.setText("Adresse courriel du destinataire des recommandations:");
@@ -376,60 +377,67 @@ public class InterfaceAnalyseur extends javax.swing.JFrame {
 
         jCheckBoxSMTP.setBackground(new java.awt.Color(255, 255, 255));
         jCheckBoxSMTP.setText("Mon serveur sortant (SMTP) requiert une authentification");
+        jCheckBoxSMTP.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jCheckBoxSMTPActionPerformed(evt);
+            }
+        });
 
         jLabel8.setText("Se connecter à l'aide de:");
 
-        jLabel9.setText("Nom d'utilisateur: ");
+        jLabelUserName.setText("Nom d'utilisateur:");
 
-        jLabel10.setText("Mot de passe: ");
+        jLabelPassword.setText("Mot de passe:");
 
-        jLabel11.setText("No. Port Serveur sortant (SMTP):");
+        jLabelSMTPPort.setText("No. Port Serveur sortant (SMTP):");
 
         javax.swing.GroupLayout panneauConfigurationLayout = new javax.swing.GroupLayout(panneauConfiguration);
         panneauConfiguration.setLayout(panneauConfigurationLayout);
         panneauConfigurationLayout.setHorizontalGroup(
             panneauConfigurationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panneauConfigurationLayout.createSequentialGroup()
+                .addGap(23, 23, 23)
                 .addGroup(panneauConfigurationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(panneauConfigurationLayout.createSequentialGroup()
-                        .addGap(23, 23, 23)
-                        .addGroup(panneauConfigurationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(panneauConfigurationLayout.createSequentialGroup()
-                                .addGap(21, 21, 21)
-                                .addComponent(jLabel8))
-                            .addGroup(panneauConfigurationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addGap(21, 21, 21)
+                        .addComponent(jLabel8))
+                    .addGroup(panneauConfigurationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addGroup(panneauConfigurationLayout.createSequentialGroup()
+                            .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 309, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                            .addComponent(jTextUrlHist, javax.swing.GroupLayout.PREFERRED_SIZE, 432, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(panneauConfigurationLayout.createSequentialGroup()
+                            .addGroup(panneauConfigurationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(jCheckBoxSMTP, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panneauConfigurationLayout.createSequentialGroup()
+                                    .addGap(0, 0, Short.MAX_VALUE)
+                                    .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 309, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jLabel6, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                            .addGroup(panneauConfigurationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(jTextUrlDesc, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 432, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jTextConnBD, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 432, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jTextSMTP, javax.swing.GroupLayout.PREFERRED_SIZE, 432, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jTextCourriel, javax.swing.GroupLayout.PREFERRED_SIZE, 432, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jButtonTestMail)
+                                .addComponent(jButtonSaveConfig)))
+                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, panneauConfigurationLayout.createSequentialGroup()
+                            .addGap(52, 52, 52)
+                            .addGroup(panneauConfigurationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addGroup(panneauConfigurationLayout.createSequentialGroup()
-                                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 309, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                    .addComponent(jTextUrlHist, javax.swing.GroupLayout.PREFERRED_SIZE, 432, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGroup(panneauConfigurationLayout.createSequentialGroup()
-                                    .addGroup(panneauConfigurationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                        .addComponent(jCheckBoxSMTP, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addGroup(panneauConfigurationLayout.createSequentialGroup()
-                                            .addGap(0, 0, Short.MAX_VALUE)
-                                            .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 309, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                     .addGroup(panneauConfigurationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(jTextUrlDesc, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 432, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(jTextConnBD, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 432, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(jTextSMTP, javax.swing.GroupLayout.PREFERRED_SIZE, 432, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(jTextUserName, javax.swing.GroupLayout.PREFERRED_SIZE, 270, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(jTextCourriel, javax.swing.GroupLayout.PREFERRED_SIZE, 432, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(jButtonTestMail)
-                                        .addComponent(jButtonSaveConfig))))))
-                    .addGroup(panneauConfigurationLayout.createSequentialGroup()
-                        .addGap(114, 114, 114)
-                        .addGroup(panneauConfigurationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jLabel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel11, javax.swing.GroupLayout.DEFAULT_SIZE, 218, Short.MAX_VALUE)
-                            .addComponent(jLabel10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(panneauConfigurationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jPasswordSMTP, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jTextSMTPPort, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                        .addComponent(jLabelPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(jLabelSMTPPort, javax.swing.GroupLayout.PREFERRED_SIZE, 198, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addGroup(panneauConfigurationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(jTextSMTPPort, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(jPasswordSMTP, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGroup(panneauConfigurationLayout.createSequentialGroup()
+                                    .addComponent(jLabelUserName, javax.swing.GroupLayout.PREFERRED_SIZE, 198, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(jTextUserName, javax.swing.GroupLayout.PREFERRED_SIZE, 270, javax.swing.GroupLayout.PREFERRED_SIZE))))))
                 .addContainerGap(454, Short.MAX_VALUE))
         );
         panneauConfigurationLayout.setVerticalGroup(
@@ -447,27 +455,28 @@ public class InterfaceAnalyseur extends javax.swing.JFrame {
                 .addGroup(panneauConfigurationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
                     .addComponent(jTextConnBD, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(panneauConfigurationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel5)
-                    .addComponent(jTextSMTP, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jCheckBoxSMTP)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel8)
+                .addGroup(panneauConfigurationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(panneauConfigurationLayout.createSequentialGroup()
+                        .addComponent(jLabel5)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jCheckBoxSMTP)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jLabel8))
+                    .addComponent(jTextSMTP, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(17, 17, 17)
                 .addGroup(panneauConfigurationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jTextUserName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel9))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                    .addComponent(jLabelUserName))
+                .addGap(14, 14, 14)
                 .addGroup(panneauConfigurationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel10)
+                    .addComponent(jLabelPassword)
                     .addComponent(jPasswordSMTP, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(panneauConfigurationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jTextSMTPPort, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel11))
-                .addGap(18, 18, Short.MAX_VALUE)
+                    .addComponent(jLabelSMTPPort))
+                .addGap(18, 25, Short.MAX_VALUE)
                 .addGroup(panneauConfigurationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(panneauConfigurationLayout.createSequentialGroup()
                         .addComponent(jTextCourriel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -476,7 +485,7 @@ public class InterfaceAnalyseur extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addComponent(jButtonSaveConfig))
                     .addComponent(jLabel6))
-                .addContainerGap(182, Short.MAX_VALUE))
+                .addContainerGap(185, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Configuration", panneauConfiguration);
@@ -714,7 +723,7 @@ public class InterfaceAnalyseur extends javax.swing.JFrame {
             Logger.getLogger(InterfaceAnalyseur.class.getName()).log(Level.SEVERE, null, ex);
         }
 
-     
+
 
     }//GEN-LAST:event_jButtonAnalyserActionPerformed
 
@@ -771,7 +780,7 @@ public class InterfaceAnalyseur extends javax.swing.JFrame {
         // Afficher la description du titre
         if (!jTextTitre.getText().isEmpty()) {
 
-             jTextTitre.setText(jTextTitre.getText().toUpperCase());
+            jTextTitre.setText(jTextTitre.getText().toUpperCase());
             try {
                 jTextDesc.setText(this.databaseLayor.getDesc(jTextTitre.getText()));
                 if (jTextDesc.getText().contains("N/A")) {
@@ -832,7 +841,7 @@ public class InterfaceAnalyseur extends javax.swing.JFrame {
         if (!jTextTitreEnLot.getText().isEmpty()) {
 
             jTextTitreEnLot.setText(jTextTitreEnLot.getText().toUpperCase());
-            
+
             try {
                 jTextTitreEnLotDesc.setText(this.databaseLayor.getDesc(jTextTitreEnLot.getText()));
                 if (jTextTitreEnLotDesc.getText().contains("N/A")) {
@@ -847,26 +856,26 @@ public class InterfaceAnalyseur extends javax.swing.JFrame {
     }//GEN-LAST:event_jTextTitreEnLotFocusLost
 
     private void jButtonSaveEnLotActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSaveEnLotActionPerformed
-    // TODO add your handling code here:
+        // TODO add your handling code here:
         titresboursiersPUEntityManager.getTransaction().begin();
         titresboursiersPUEntityManager.getTransaction().commit();
-       javax.swing.JOptionPane.showMessageDialog(null, "Sélection de titres sauvegardée");
+        javax.swing.JOptionPane.showMessageDialog(null, "Sélection de titres sauvegardée");
 
     }//GEN-LAST:event_jButtonSaveEnLotActionPerformed
 
     private void jTabbedPane1FocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTabbedPane1FocusGained
         // TODO add your handling code here:
         refreshEnLot();
-      
+
     }//GEN-LAST:event_jTabbedPane1FocusGained
 
     private void jButtonAjouterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAjouterActionPerformed
-     
+
         ArrayList<TitreBoursier> temp = new ArrayList<>();
-        
+
         try {
             // TODO add your handling code here:
-             temp = this.databaseLayor.obtenirHistorique(jTextTitreEnLot.getText(), new Date());
+            temp = this.databaseLayor.obtenirHistorique(jTextTitreEnLot.getText(), new Date());
         } catch (IOException | ParseException | SQLException ex) {
             Logger.getLogger(InterfaceAnalyseur.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -878,7 +887,7 @@ public class InterfaceAnalyseur extends javax.swing.JFrame {
     private void jButtonVoirTitreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonVoirTitreActionPerformed
         // TODO add your handling code here:
         YahooFinance.ShowSymbolFromYahoo();
-        
+
     }//GEN-LAST:event_jButtonVoirTitreActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
@@ -886,6 +895,25 @@ public class InterfaceAnalyseur extends javax.swing.JFrame {
         // TODO add your handling code here:
         YahooFinance.ShowSymbolFromYahoo();
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jCheckBoxSMTPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBoxSMTPActionPerformed
+        // TODO add your handling code here:
+        if (jCheckBoxSMTP.isSelected()) {
+            jLabelUserName.setEnabled(true);
+            jLabelSMTPPort.setEnabled(true);
+            jLabelPassword.setEnabled(true);
+            jTextUserName.setEnabled(true);
+            jPasswordSMTP.setEnabled(true);
+            jTextSMTPPort.setEnabled(true);
+        } else {
+            jLabelUserName.setEnabled(false);
+            jLabelSMTPPort.setEnabled(false);
+            jLabelPassword.setEnabled(false);
+            jTextUserName.setEnabled(false);
+            jPasswordSMTP.setEnabled(false);
+            jTextSMTPPort.setEnabled(false);
+        }
+    }//GEN-LAST:event_jCheckBoxSMTPActionPerformed
 
     private void refreshEnLot() {
         titreQuery = java.beans.Beans.isDesignTime() ? null : titresboursiersPUEntityManager.createQuery("SELECT t FROM Titre t ORDER by t.symbol");
@@ -918,10 +946,9 @@ public class InterfaceAnalyseur extends javax.swing.JFrame {
         comboBox.addItem("N");
         enLotColumn.setCellEditor(new DefaultCellEditor(comboBox));
         jTableEnLot.revalidate();
-        
+
     }
-    
-    
+
     private static JFreeChart creerGraphePrix() {
 
         JFreeChart jfreechart = null;
@@ -933,12 +960,12 @@ public class InterfaceAnalyseur extends javax.swing.JFrame {
             jfreechart = ChartFactory.createTimeSeriesChart(s, "date", "prix", xydataset, true, true, false);
 
             XYPlot xyplot = (XYPlot) jfreechart.getPlot();
-            
+
             numberAxisPrix = (NumberAxis) xyplot.getRangeAxis();
             numberAxisPrix.setVisible(false);
             numberAxisPrix.setUpperMargin(.05); // Distance de $.05 entre la + grande valeur et la fin du tableau
             numberAxisPrix.setLowerMargin(.05);
-            
+
             dateAxisPrix = (DateAxis) xyplot.getDomainAxis();
             dateAxisPrix.setVisible(false);
             dateAxisPrix.setUpperMargin(.05);
@@ -957,11 +984,11 @@ public class InterfaceAnalyseur extends javax.swing.JFrame {
             //Ema Max
             xyitemrenderer.setSeriesStroke(2, new BasicStroke(1.0f));
             xyitemrenderer.setSeriesPaint(2, Color.GREEN);
-            
+
             legendPrix = jfreechart.getLegend();
             legendPrix.setPosition(RectangleEdge.BOTTOM);
             legendPrix.setVisible(false);
-            
+
             /*
              * xyitemrenderer.setBaseToolTipGenerator(new
              * StandardXYToolTipGenerator("{0}: ({1}, {2})", new
@@ -993,12 +1020,12 @@ public class InterfaceAnalyseur extends javax.swing.JFrame {
             jfreechart = ChartFactory.createTimeSeriesChart(s, "date", "indice", xydataset, true, true, false);
 
             XYPlot xyplot = (XYPlot) jfreechart.getPlot();
-            
+
             numberAxisIndice = (NumberAxis) xyplot.getRangeAxis();
             numberAxisIndice.setVisible(false);
             numberAxisIndice.setUpperMargin(.05); // Distance de $.05 entre la + grande valeur et la fin du tableau
             numberAxisIndice.setLowerMargin(.05);
-            
+
             dateAxisIndice = (DateAxis) xyplot.getDomainAxis();
             dateAxisIndice.setVisible(false);
             dateAxisIndice.setUpperMargin(.05);
@@ -1014,11 +1041,11 @@ public class InterfaceAnalyseur extends javax.swing.JFrame {
             //Ligne de signal
             xyitemrenderer.setSeriesStroke(2, new BasicStroke(1.0f));
             xyitemrenderer.setSeriesPaint(2, Color.RED);
-            
+
             legendIndice = jfreechart.getLegend();
             legendIndice.setPosition(RectangleEdge.BOTTOM);
             legendIndice.setVisible(false);
-                  
+
             /*
              * xyitemrenderer.setBaseToolTipGenerator(new
              * StandardXYToolTipGenerator("{0}: ({1}, {2})", new
@@ -1073,7 +1100,7 @@ public class InterfaceAnalyseur extends javax.swing.JFrame {
     }
 
     private void updateRecommandation() {
-        
+
         GregorianCalendar gc = new GregorianCalendar();
         gc.add(Calendar.MONTH, -2);
         Date debut = gc.getTime();
@@ -1112,9 +1139,9 @@ public class InterfaceAnalyseur extends javax.swing.JFrame {
                 texteRecommandation.setBackground(Color.RED);
                 texteRecommandation.setText("VENDRE");
             }
-        }  
+        }
     }
-    
+
     private void updateGraph() {
         numberAxisPrix.setVisible(true);
         dateAxisPrix.setVisible(true);
@@ -1123,9 +1150,6 @@ public class InterfaceAnalyseur extends javax.swing.JFrame {
         legendPrix.setVisible(true);
         legendIndice.setVisible(true);
     }
-            
-            
-            
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel indiceChartPanel;
     private javax.swing.JButton jButton1;
@@ -1138,8 +1162,6 @@ public class InterfaceAnalyseur extends javax.swing.JFrame {
     private javax.swing.JCheckBox jCheckBoxSMTP;
     private javax.swing.JComboBox jComboPeriode;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel10;
-    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -1147,7 +1169,9 @@ public class InterfaceAnalyseur extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
-    private javax.swing.JLabel jLabel9;
+    private javax.swing.JLabel jLabelPassword;
+    private javax.swing.JLabel jLabelSMTPPort;
+    private javax.swing.JLabel jLabelUserName;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;

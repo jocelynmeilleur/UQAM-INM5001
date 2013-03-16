@@ -16,62 +16,60 @@ import javax.mail.internet.MimeMessage;
  *
  * @author ForestPierre
  */
-public  class MailLayor {
-    
-    public static void send( String sujet, String corps){
-    
+public class MailLayor {
+
+    public static void send(String sujet, String corps) {
+
         // inspiré de : http://www.tutorialspoint.com/java/java_sending_email.htm Mars 2013
-        
-      String host = Main.config.getSmtpServer();
 
-      // Get system properties
-      Properties properties = System.getProperties();
-      
-            // Setup mail server
-      
-      properties.setProperty("mail.smtp.host", host);
-     
+        String host = Main.config.getSmtpServer();
 
-      // Get the default Session object.
-      Session session = Session.getDefaultInstance(properties);
+        // Get system properties
+        Properties properties = System.getProperties();
 
-      try{
-         // Create a default MimeMessage object.
-         MimeMessage message = new MimeMessage(session);
+        // Setup mail server
 
-         // Set From: header field of the header.
-         message.setFrom(new InternetAddress("analyseur@maison.com"));
+        properties.setProperty("mail.smtp.host", host);
 
-         // Set To: header field of the header.
-         message.addRecipient(Message.RecipientType.TO,
-                                  new InternetAddress(Main.config.getCourrielDestinataire()));
 
-         // Set Subject: header field
-         message.setSubject(sujet);
+        // Get the default Session object.
+        Session session = Session.getDefaultInstance(properties);
 
-         // Now set the actual message
-         message.setText(corps);
-        
-         if (Main.config.isSmtpAuthenticated()){
-         // SMTP authentifié
-         Transport tr = session.getTransport("smtp");
-         properties.setProperty("mail.smtp.auth", "true");
-         properties.setProperty("mail.smtp.port", "587");
-         tr.connect(host, "pierforest@videotron.ca", "adjp4023");
-         message.saveChanges();      // don't forget this
-         tr.sendMessage(message, message.getAllRecipients());
-         tr.close();
-         }
-         else {
-         // Send message SMTP non authentifié
-         Transport.send(message);     
-         }
-         
-         System.out.println("Message envoyé....");
-      }catch (MessagingException mex) {
-         mex.printStackTrace();
-      }
-        
+        try {
+            // Create a default MimeMessage object.
+            MimeMessage message = new MimeMessage(session);
+
+            // Set From: header field of the header.
+            message.setFrom(new InternetAddress("analyseur@maison.com"));
+
+            // Set To: header field of the header.
+            message.addRecipient(Message.RecipientType.TO,
+                    new InternetAddress(Main.config.getCourrielDestinataire()));
+
+            // Set Subject: header field
+            message.setSubject(sujet);
+
+            // Now set the actual message
+            message.setText(corps);
+
+            if (Main.config.isSmtpAuthenticated()) {
+                // SMTP authentifié
+                Transport tr = session.getTransport("smtp");
+                properties.setProperty("mail.smtp.auth", "true");
+                properties.setProperty("mail.smtp.port", "587");
+                tr.connect(host, "pierforest@videotron.ca", "adjp4023");
+                message.saveChanges();      // don't forget this
+                tr.sendMessage(message, message.getAllRecipients());
+                tr.close();
+            } else {
+                // Send message SMTP non authentifié
+                Transport.send(message);
+            }
+
+            System.out.println("Message envoyé....");
+        } catch (MessagingException mex) {
+            mex.printStackTrace();
+        }
+
     }
-    
 }
