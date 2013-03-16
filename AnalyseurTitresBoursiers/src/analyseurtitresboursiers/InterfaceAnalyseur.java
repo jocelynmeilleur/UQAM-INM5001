@@ -18,6 +18,9 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.DefaultCellEditor;
+import javax.swing.JComboBox;
+import javax.swing.table.TableColumn;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
@@ -203,6 +206,8 @@ public class InterfaceAnalyseur extends javax.swing.JFrame {
             }
         });
 
+        panneauAnalyse.setBackground(new java.awt.Color(204, 204, 255));
+
         jLabel1.setText("Titre Boursier");
 
         jTextDesc.setEditable(false);
@@ -333,6 +338,8 @@ public class InterfaceAnalyseur extends javax.swing.JFrame {
 
         jTabbedPane1.addTab("Analyse", panneauAnalyse);
 
+        panneauConfiguration.setBackground(new java.awt.Color(204, 204, 255));
+
         jLabel2.setText("URL d'obtention de l'historique des titres boursiers: ");
 
         jLabel3.setText("URL d'obtention de la description des titres boursiers: ");
@@ -421,6 +428,8 @@ public class InterfaceAnalyseur extends javax.swing.JFrame {
         );
 
         jTabbedPane1.addTab("Configuration", panneauConfiguration);
+
+        jPanel1.setBackground(new java.awt.Color(204, 204, 255));
 
         jLabel7.setText("Titre boursier");
 
@@ -844,7 +853,11 @@ public class InterfaceAnalyseur extends javax.swing.JFrame {
         jTableEnLot.getColumnModel().getColumn(1).setPreferredWidth(250);
         jTableEnLot.getColumnModel().getColumn(2).setResizable(false);
         jTableEnLot.getColumnModel().getColumn(2).setPreferredWidth(50);
-        //bindingGroup.bind();
+        TableColumn enLotColumn = jTableEnLot.getColumnModel().getColumn(2);
+        JComboBox comboBox = new JComboBox();
+        comboBox.addItem("O");
+        comboBox.addItem("N");
+        enLotColumn.setCellEditor(new DefaultCellEditor(comboBox));
         jTableEnLot.revalidate();
         
     }
