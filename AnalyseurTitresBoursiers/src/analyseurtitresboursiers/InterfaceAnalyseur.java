@@ -185,6 +185,14 @@ public class InterfaceAnalyseur extends javax.swing.JFrame {
         jTextCourriel = new javax.swing.JTextField();
         jButtonSaveConfig = new javax.swing.JButton();
         jButtonTestMail = new javax.swing.JButton();
+        jCheckBoxSMTP = new javax.swing.JCheckBox();
+        jLabel8 = new javax.swing.JLabel();
+        jLabel9 = new javax.swing.JLabel();
+        jLabel10 = new javax.swing.JLabel();
+        jTextUserName = new javax.swing.JTextField();
+        jTextPassword = new javax.swing.JTextField();
+        jLabel11 = new javax.swing.JLabel();
+        jTextField1 = new javax.swing.JTextField();
         jPanel1 = new javax.swing.JPanel();
         jLabel7 = new javax.swing.JLabel();
         jTextTitreEnLot = new javax.swing.JTextField();
@@ -199,6 +207,7 @@ public class InterfaceAnalyseur extends javax.swing.JFrame {
         jMenuItem1 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setBackground(new java.awt.Color(255, 204, 0));
 
         jTabbedPane1.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
@@ -206,7 +215,7 @@ public class InterfaceAnalyseur extends javax.swing.JFrame {
             }
         });
 
-        panneauAnalyse.setBackground(new java.awt.Color(204, 204, 255));
+        panneauAnalyse.setBackground(new java.awt.Color(255, 255, 255));
 
         jLabel1.setText("Titre Boursier");
 
@@ -338,7 +347,7 @@ public class InterfaceAnalyseur extends javax.swing.JFrame {
 
         jTabbedPane1.addTab("Analyse", panneauAnalyse);
 
-        panneauConfiguration.setBackground(new java.awt.Color(204, 204, 255));
+        panneauConfiguration.setBackground(new java.awt.Color(255, 255, 255));
 
         jLabel2.setText("URL d'obtention de l'historique des titres boursiers: ");
 
@@ -346,7 +355,7 @@ public class InterfaceAnalyseur extends javax.swing.JFrame {
 
         jLabel4.setText("Ligne de connexion à la base de données locale:");
 
-        jLabel5.setText("Serveur SMTP:");
+        jLabel5.setText("Serveur sortant SMTP:");
 
         jLabel6.setText("Adresse courriel du destinataire des recommandations:");
 
@@ -364,38 +373,61 @@ public class InterfaceAnalyseur extends javax.swing.JFrame {
             }
         });
 
+        jCheckBoxSMTP.setBackground(new java.awt.Color(255, 255, 255));
+        jCheckBoxSMTP.setText("Mon serveur sortant (SMTP) requiert une authentification");
+
+        jLabel8.setText("Se connecter à l'aide de:");
+
+        jLabel9.setText("Nom d'utilisateur: ");
+
+        jLabel10.setText("Mot de passe: ");
+
+        jLabel11.setText("No. Port Serveur sortant (SMTP):");
+
         javax.swing.GroupLayout panneauConfigurationLayout = new javax.swing.GroupLayout(panneauConfiguration);
         panneauConfiguration.setLayout(panneauConfigurationLayout);
         panneauConfigurationLayout.setHorizontalGroup(
             panneauConfigurationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panneauConfigurationLayout.createSequentialGroup()
-                .addGap(23, 23, 23)
                 .addGroup(panneauConfigurationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(panneauConfigurationLayout.createSequentialGroup()
-                        .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 271, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextConnBD, javax.swing.GroupLayout.PREFERRED_SIZE, 432, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(23, 23, 23)
+                        .addGroup(panneauConfigurationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(panneauConfigurationLayout.createSequentialGroup()
+                                .addGap(21, 21, 21)
+                                .addComponent(jLabel8))
+                            .addGroup(panneauConfigurationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addGroup(panneauConfigurationLayout.createSequentialGroup()
+                                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 309, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                    .addComponent(jTextUrlHist, javax.swing.GroupLayout.PREFERRED_SIZE, 432, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGroup(panneauConfigurationLayout.createSequentialGroup()
+                                    .addGroup(panneauConfigurationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panneauConfigurationLayout.createSequentialGroup()
+                                            .addGap(0, 0, Short.MAX_VALUE)
+                                            .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 309, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(jLabel6, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                    .addGroup(panneauConfigurationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(jTextUrlDesc, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 432, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(jTextConnBD, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 432, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(jTextSMTP, javax.swing.GroupLayout.PREFERRED_SIZE, 432, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(jTextUserName, javax.swing.GroupLayout.PREFERRED_SIZE, 270, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(jTextPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 270, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(jTextCourriel, javax.swing.GroupLayout.PREFERRED_SIZE, 432, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(jButtonTestMail)
+                                        .addComponent(jButtonSaveConfig)))
+                                .addComponent(jCheckBoxSMTP, javax.swing.GroupLayout.Alignment.LEADING))))
                     .addGroup(panneauConfigurationLayout.createSequentialGroup()
-                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 272, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextUrlHist, javax.swing.GroupLayout.PREFERRED_SIZE, 432, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(panneauConfigurationLayout.createSequentialGroup()
-                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 271, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextUrlDesc, javax.swing.GroupLayout.PREFERRED_SIZE, 432, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(panneauConfigurationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addGroup(panneauConfigurationLayout.createSequentialGroup()
-                            .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 271, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(jTextSMTP, javax.swing.GroupLayout.PREFERRED_SIZE, 432, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(panneauConfigurationLayout.createSequentialGroup()
-                            .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 271, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addGroup(panneauConfigurationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jButtonTestMail)
-                                .addComponent(jTextCourriel, javax.swing.GroupLayout.PREFERRED_SIZE, 432, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jButtonSaveConfig)))))
-                .addContainerGap(497, Short.MAX_VALUE))
+                        .addGap(114, 114, 114)
+                        .addGroup(panneauConfigurationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jLabel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel11, javax.swing.GroupLayout.DEFAULT_SIZE, 218, Short.MAX_VALUE))))
+                .addContainerGap(454, Short.MAX_VALUE))
         );
         panneauConfigurationLayout.setVerticalGroup(
             panneauConfigurationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -404,11 +436,11 @@ public class InterfaceAnalyseur extends javax.swing.JFrame {
                 .addGroup(panneauConfigurationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(jTextUrlHist, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(panneauConfigurationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
                     .addComponent(jTextUrlDesc, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                .addGap(9, 9, 9)
                 .addGroup(panneauConfigurationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
                     .addComponent(jTextConnBD, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -416,20 +448,38 @@ public class InterfaceAnalyseur extends javax.swing.JFrame {
                 .addGroup(panneauConfigurationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
                     .addComponent(jTextSMTP, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(panneauConfigurationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextCourriel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel6))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jCheckBoxSMTP)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jButtonTestMail)
-                .addGap(68, 68, 68)
-                .addComponent(jButtonSaveConfig)
-                .addContainerGap(263, Short.MAX_VALUE))
+                .addComponent(jLabel8)
+                .addGap(17, 17, 17)
+                .addGroup(panneauConfigurationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jTextUserName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel9))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(panneauConfigurationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel10)
+                    .addGroup(panneauConfigurationLayout.createSequentialGroup()
+                        .addComponent(jTextPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(panneauConfigurationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel11))))
+                .addGap(18, 18, 18)
+                .addGroup(panneauConfigurationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(panneauConfigurationLayout.createSequentialGroup()
+                        .addComponent(jTextCourriel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(13, 13, 13)
+                        .addComponent(jButtonTestMail)
+                        .addGap(18, 18, 18)
+                        .addComponent(jButtonSaveConfig))
+                    .addComponent(jLabel6))
+                .addContainerGap(182, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Configuration", panneauConfiguration);
 
-        jPanel1.setBackground(new java.awt.Color(204, 204, 255));
+        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
         jLabel7.setText("Titre boursier");
 
@@ -1076,14 +1126,19 @@ public class InterfaceAnalyseur extends javax.swing.JFrame {
     private javax.swing.JButton jButtonSaveEnLot;
     private javax.swing.JButton jButtonTestMail;
     private javax.swing.JButton jButtonVoirTitre;
+    private javax.swing.JCheckBox jCheckBoxSMTP;
     private javax.swing.JComboBox jComboPeriode;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
@@ -1094,12 +1149,15 @@ public class InterfaceAnalyseur extends javax.swing.JFrame {
     private javax.swing.JTextField jTextConnBD;
     private javax.swing.JTextField jTextCourriel;
     private javax.swing.JTextField jTextDesc;
+    private javax.swing.JTextField jTextField1;
+    private javax.swing.JTextField jTextPassword;
     private javax.swing.JTextField jTextSMTP;
     private javax.swing.JTextField jTextTitre;
     private javax.swing.JTextField jTextTitreEnLot;
     private javax.swing.JTextField jTextTitreEnLotDesc;
     private javax.swing.JTextField jTextUrlDesc;
     private javax.swing.JTextField jTextUrlHist;
+    private javax.swing.JTextField jTextUserName;
     private javax.swing.JLabel labelRecommandation;
     private javax.swing.JPanel panneauAnalyse;
     private javax.swing.JPanel panneauConfiguration;
