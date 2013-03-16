@@ -132,7 +132,7 @@
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Group type="102" attributes="0">
                                       <Component id="prixChartPanel" min="-2" max="-2" attributes="0"/>
-                                      <EmptySpace pref="47" max="32767" attributes="0"/>
+                                      <EmptySpace pref="85" max="32767" attributes="0"/>
                                       <Component id="indiceChartPanel" min="-2" max="-2" attributes="0"/>
                                   </Group>
                                   <Group type="102" alignment="0" attributes="0">
@@ -329,61 +329,62 @@
                   <Group type="102" attributes="0">
                       <EmptySpace min="-2" pref="23" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="102" alignment="0" attributes="0">
-                              <EmptySpace min="21" pref="21" max="-2" attributes="0"/>
-                              <Component id="jLabel8" min="-2" max="-2" attributes="0"/>
+                          <Group type="102" attributes="0">
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Component id="jLabel2" alignment="0" max="32767" attributes="0"/>
+                                  <Component id="jLabel3" alignment="0" max="32767" attributes="0"/>
+                                  <Component id="jLabel4" alignment="0" max="32767" attributes="0"/>
+                                  <Component id="jLabel5" alignment="0" max="32767" attributes="0"/>
+                                  <Component id="jCheckBoxSMTP" alignment="0" max="32767" attributes="0"/>
+                                  <Component id="jLabel6" alignment="0" max="32767" attributes="0"/>
+                              </Group>
+                              <EmptySpace type="unrelated" min="-2" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Component id="jButtonTestMail" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="jButtonSaveConfig" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Group type="102" alignment="1" attributes="0">
+                                      <Group type="103" groupAlignment="1" attributes="0">
+                                          <Component id="jTextUrlHist" alignment="0" max="32767" attributes="0"/>
+                                          <Component id="jTextCourriel" alignment="0" pref="432" max="32767" attributes="0"/>
+                                          <Component id="jTextSMTP" alignment="0" pref="432" max="32767" attributes="0"/>
+                                          <Component id="jTextUrlDesc" alignment="0" pref="432" max="32767" attributes="0"/>
+                                          <Component id="jTextConnBD" alignment="0" pref="432" max="32767" attributes="0"/>
+                                      </Group>
+                                      <EmptySpace min="-2" pref="500" max="-2" attributes="0"/>
+                                  </Group>
+                              </Group>
                           </Group>
-                          <Group type="103" alignment="0" groupAlignment="1" max="-2" attributes="0">
-                              <Group type="102" attributes="0">
-                                  <Component id="jLabel2" min="-2" pref="309" max="-2" attributes="0"/>
-                                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                                  <Component id="jTextUrlHist" min="-2" pref="432" max="-2" attributes="0"/>
-                              </Group>
-                              <Group type="102" attributes="0">
-                                  <Group type="103" groupAlignment="0" attributes="0">
-                                      <Component id="jCheckBoxSMTP" alignment="0" max="32767" attributes="0"/>
-                                      <Group type="102" alignment="1" attributes="0">
-                                          <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                                          <Component id="jLabel5" min="-2" pref="309" max="-2" attributes="0"/>
-                                      </Group>
-                                      <Component id="jLabel4" alignment="1" max="32767" attributes="0"/>
-                                      <Component id="jLabel3" alignment="1" max="32767" attributes="0"/>
-                                      <Component id="jLabel6" alignment="1" max="32767" attributes="0"/>
+                          <Group type="102" attributes="0">
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Group type="102" alignment="0" attributes="0">
+                                      <EmptySpace min="21" pref="21" max="-2" attributes="0"/>
+                                      <Component id="jLabel8" min="-2" max="-2" attributes="0"/>
                                   </Group>
-                                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                                  <Group type="103" groupAlignment="0" attributes="0">
-                                      <Component id="jTextUrlDesc" alignment="1" min="-2" pref="432" max="-2" attributes="0"/>
-                                      <Component id="jTextConnBD" alignment="1" min="-2" pref="432" max="-2" attributes="0"/>
-                                      <Component id="jTextSMTP" min="-2" pref="432" max="-2" attributes="0"/>
-                                      <Component id="jTextCourriel" alignment="0" min="-2" pref="432" max="-2" attributes="0"/>
-                                      <Component id="jButtonTestMail" alignment="0" min="-2" max="-2" attributes="0"/>
-                                      <Component id="jButtonSaveConfig" alignment="0" min="-2" max="-2" attributes="0"/>
-                                  </Group>
-                              </Group>
-                              <Group type="102" alignment="0" attributes="0">
-                                  <EmptySpace min="-2" pref="52" max="-2" attributes="0"/>
-                                  <Group type="103" groupAlignment="0" attributes="0">
-                                      <Group type="102" alignment="0" attributes="0">
-                                          <Group type="103" groupAlignment="0" attributes="0">
-                                              <Component id="jLabelPassword" min="-2" pref="165" max="-2" attributes="0"/>
-                                              <Component id="jLabelSMTPPort" min="-2" pref="198" max="-2" attributes="0"/>
+                                  <Group type="102" alignment="0" attributes="0">
+                                      <EmptySpace min="-2" pref="52" max="-2" attributes="0"/>
+                                      <Group type="103" groupAlignment="0" attributes="0">
+                                          <Group type="102" alignment="0" attributes="0">
+                                              <Group type="103" groupAlignment="0" attributes="0">
+                                                  <Component id="jLabelPassword" min="-2" pref="165" max="-2" attributes="0"/>
+                                                  <Component id="jLabelSMTPPort" min="-2" pref="198" max="-2" attributes="0"/>
+                                              </Group>
+                                              <EmptySpace max="-2" attributes="0"/>
+                                              <Group type="103" groupAlignment="0" attributes="0">
+                                                  <Component id="jTextSMTPPort" min="-2" pref="75" max="-2" attributes="0"/>
+                                                  <Component id="jPasswordSMTP" min="-2" pref="147" max="-2" attributes="0"/>
+                                              </Group>
                                           </Group>
-                                          <EmptySpace max="-2" attributes="0"/>
-                                          <Group type="103" groupAlignment="0" attributes="0">
-                                              <Component id="jTextSMTPPort" min="-2" pref="75" max="-2" attributes="0"/>
-                                              <Component id="jPasswordSMTP" min="-2" pref="147" max="-2" attributes="0"/>
+                                          <Group type="102" alignment="0" attributes="0">
+                                              <Component id="jLabelUserName" min="-2" pref="198" max="-2" attributes="0"/>
+                                              <EmptySpace max="-2" attributes="0"/>
+                                              <Component id="jTextUserName" min="-2" pref="270" max="-2" attributes="0"/>
                                           </Group>
                                       </Group>
-                                      <Group type="102" alignment="0" attributes="0">
-                                          <Component id="jLabelUserName" min="-2" pref="198" max="-2" attributes="0"/>
-                                          <EmptySpace max="-2" attributes="0"/>
-                                          <Component id="jTextUserName" min="-2" pref="270" max="-2" attributes="0"/>
-                                      </Group>
                                   </Group>
                               </Group>
+                              <EmptySpace min="-2" pref="454" max="-2" attributes="0"/>
                           </Group>
                       </Group>
-                      <EmptySpace pref="454" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -581,7 +582,7 @@
                               </Group>
                           </Group>
                       </Group>
-                      <EmptySpace pref="598" max="32767" attributes="0"/>
+                      <EmptySpace pref="636" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
