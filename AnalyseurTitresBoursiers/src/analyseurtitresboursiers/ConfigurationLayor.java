@@ -24,6 +24,10 @@ public class ConfigurationLayor {
    private String smtpServer;
    private String courrielDestinataire;
    private String fichierConfig;
+   private boolean smtpAuthenticated;
+   private String smtpUserName;
+   private String smtpPassword;
+   private String smtpPort;
    
     public ConfigurationLayor(String fichierConfig){
         
@@ -39,6 +43,10 @@ public class ConfigurationLayor {
            connexionString = configuration.getConnexionString();
            smtpServer      = configuration.getSmtpServer();
            courrielDestinataire = configuration.getCourrielDestinataire();
+           smtpAuthenticated = configuration.isSmtpAuthenticated();
+           smtpUserName = configuration.getSmtpUserName();
+           smtpPassword = configuration.getSmtpPassword();
+           smtpPort    = configuration.getSmtpPort();
            
 
 	} catch (IOException e) {
@@ -86,7 +94,40 @@ public class ConfigurationLayor {
 
     public void setUrlDescTitre(String urlDescTitre) {
         this.urlDescTitre = urlDescTitre;
-    }  
+    }
+
+    public String getSmtpPort() {
+        return smtpPort;
+    }
+
+    public void setSmtpPort(String SmtpPort) {
+        this.smtpPort = SmtpPort;
+    }
+
+    public boolean isSmtpAuthenticated() {
+        return smtpAuthenticated;
+    }
+
+    public void setSmtpAuthenticated(boolean smtpAuthenticated) {
+        this.smtpAuthenticated = smtpAuthenticated;
+    }
+
+    public String getSmtpPassword() {
+        return smtpPassword;
+    }
+
+    public void setSmtpPassword(String smtpPassword) {
+        this.smtpPassword = smtpPassword;
+    }
+
+    public String getSmtpUserName() {
+        return smtpUserName;
+    }
+
+    public void setSmtpUserName(String smtpUserName) {
+        this.smtpUserName = smtpUserName;
+    }
+    
     
     public void saveConfig(){
         
@@ -95,6 +136,10 @@ public class ConfigurationLayor {
         configuration.setUrlDescTitre(urlDescTitre);
         configuration.setConnexionString(connexionString);
         configuration.setSmtpServer(smtpServer);
+        configuration.setSmtpUserName(smtpUserName);
+        configuration.setSmtpPassword(smtpPassword);
+        configuration.setSmtpAuthenticated(smtpAuthenticated);
+        configuration.setSmtpPort(smtpPort);
         
          Gson gson = new GsonBuilder().setPrettyPrinting().create();
             String json = gson.toJson(configuration);

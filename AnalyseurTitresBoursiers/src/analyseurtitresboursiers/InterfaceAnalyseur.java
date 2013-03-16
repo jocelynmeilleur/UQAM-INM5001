@@ -191,7 +191,7 @@ public class InterfaceAnalyseur extends javax.swing.JFrame {
         jLabel10 = new javax.swing.JLabel();
         jTextUserName = new javax.swing.JTextField();
         jLabel11 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        jTextSMTPPort = new javax.swing.JTextField();
         jPasswordSMTP = new javax.swing.JPasswordField();
         jPanel1 = new javax.swing.JPanel();
         jLabel7 = new javax.swing.JLabel();
@@ -429,7 +429,7 @@ public class InterfaceAnalyseur extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(panneauConfigurationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jPasswordSMTP, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(jTextSMTPPort, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap(454, Short.MAX_VALUE))
         );
         panneauConfigurationLayout.setVerticalGroup(
@@ -465,7 +465,7 @@ public class InterfaceAnalyseur extends javax.swing.JFrame {
                     .addComponent(jPasswordSMTP, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(panneauConfigurationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTextSMTPPort, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel11))
                 .addGap(18, 18, Short.MAX_VALUE)
                 .addGroup(panneauConfigurationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -657,7 +657,10 @@ public class InterfaceAnalyseur extends javax.swing.JFrame {
         jTextConnBD.setText(Main.config.getConnexionString());
         jTextSMTP.setText(Main.config.getSmtpServer());
         jTextCourriel.setText(Main.config.getCourrielDestinataire());
-
+        jCheckBoxSMTP.setSelected(Main.config.isSmtpAuthenticated());
+        jTextUserName.setText(Main.config.getSmtpUserName());
+        jPasswordSMTP.setText(Main.config.getSmtpPassword());
+        jTextSMTPPort.setText(Main.config.getSmtpPort());
     }
 
     private void jButtonAnalyserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAnalyserActionPerformed
@@ -797,6 +800,10 @@ public class InterfaceAnalyseur extends javax.swing.JFrame {
         Main.config.setConnexionString(jTextConnBD.getText());
         Main.config.setSmtpServer(jTextSMTP.getText());
         Main.config.setCourrielDestinataire(jTextCourriel.getText());
+        Main.config.setSmtpAuthenticated(jCheckBoxSMTP.isSelected());
+        Main.config.setSmtpUserName(jTextUserName.getText());
+        Main.config.setSmtpPassword(jPasswordSMTP.getText());
+        Main.config.setSmtpPort(jTextSMTPPort.getText());
         Main.config.saveConfig();
 
         javax.swing.JOptionPane.showMessageDialog(null, "Configuration sauvegardée");
@@ -1152,8 +1159,8 @@ public class InterfaceAnalyseur extends javax.swing.JFrame {
     private javax.swing.JTextField jTextConnBD;
     private javax.swing.JTextField jTextCourriel;
     private javax.swing.JTextField jTextDesc;
-    private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextSMTP;
+    private javax.swing.JTextField jTextSMTPPort;
     private javax.swing.JTextField jTextTitre;
     private javax.swing.JTextField jTextTitreEnLot;
     private javax.swing.JTextField jTextTitreEnLotDesc;

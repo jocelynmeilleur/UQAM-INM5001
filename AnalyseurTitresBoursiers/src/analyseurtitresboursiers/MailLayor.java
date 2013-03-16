@@ -30,6 +30,7 @@ public  class MailLayor {
             // Setup mail server
       
       properties.setProperty("mail.smtp.host", host);
+     
 
       // Get the default Session object.
       Session session = Session.getDefaultInstance(properties);
@@ -50,9 +51,22 @@ public  class MailLayor {
 
          // Now set the actual message
          message.setText(corps);
-
-         // Send message
-         Transport.send(message);
+        
+         if (Main.config.isSmtpAuthenticated()){
+         // SMTP authentifié
+         Transport tr = session.getTransport("smtp");
+         properties.setProperty("mail.smtp.auth", "true");
+         properties.setProperty("mail.smtp.port", "587");
+         tr.connect(host, "pierforest@videotron.ca", "adjp4023");
+         message.saveChanges();      // don't forget this
+         tr.sendMessage(message, message.getAllRecipients());
+         tr.close();
+         }
+         else {
+         // Send message SMTP non authentifié
+         Transport.send(message);     
+         }
+         
          System.out.println("Message envoyé....");
       }catch (MessagingException mex) {
          mex.printStackTrace();

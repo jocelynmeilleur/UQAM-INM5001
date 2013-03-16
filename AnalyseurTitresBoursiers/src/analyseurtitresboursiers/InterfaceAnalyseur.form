@@ -376,7 +376,7 @@
                               <EmptySpace type="unrelated" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Component id="jPasswordSMTP" min="-2" pref="147" max="-2" attributes="0"/>
-                                  <Component id="jTextField1" min="-2" pref="75" max="-2" attributes="0"/>
+                                  <Component id="jTextSMTPPort" min="-2" pref="75" max="-2" attributes="0"/>
                               </Group>
                           </Group>
                       </Group>
@@ -423,7 +423,7 @@
                       </Group>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="jTextField1" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="jTextSMTPPort" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="jLabel11" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace type="separate" max="32767" attributes="0"/>
@@ -525,7 +525,7 @@
                 <Property name="text" type="java.lang.String" value="No. Port Serveur sortant (SMTP):"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JTextField" name="jTextField1">
+            <Component class="javax.swing.JTextField" name="jTextSMTPPort">
             </Component>
             <Component class="javax.swing.JPasswordField" name="jPasswordSMTP">
             </Component>
