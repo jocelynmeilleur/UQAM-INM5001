@@ -8,6 +8,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.MalformedURLException;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -91,12 +92,37 @@ public class YahooFinance {
                 return(champs[0].replace("\"", ""));
             }
             
-            
-        
-            
-            
     }
     
+    public static void ShowSymbolFromYahoo(){
+        
+     // inspiré de http://johnbokma.com/mexit/2008/08/19/java-open-url-default-browser.html 16 mars 2013
+
+      if( !java.awt.Desktop.isDesktopSupported() ) {
+
+            System.err.println( "Desktop is not supported (fatal)" );
+            System.exit( 1 );
+        }
+
+        java.awt.Desktop desktop = java.awt.Desktop.getDesktop();
+
+        if( !desktop.isSupported( java.awt.Desktop.Action.BROWSE ) ) {
+
+            System.err.println( "Desktop doesn't support the browse action (fatal)" );
+            System.exit( 1 );
+        }
+
+            try {
+
+                java.net.URI uri = new java.net.URI( "http://ca.finance.yahoo.com/lookup?s=.to" );
+                desktop.browse( uri );
+            }
+            catch ( URISyntaxException | IOException e ) {
+
+                System.err.println( e.getMessage() );
+            }
+                
+    }
     
     
 }

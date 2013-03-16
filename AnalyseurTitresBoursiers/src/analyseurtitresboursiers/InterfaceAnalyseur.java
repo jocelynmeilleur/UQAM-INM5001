@@ -168,6 +168,7 @@ public class InterfaceAnalyseur extends javax.swing.JFrame {
         indiceChartPanel = new ChartPanel(indiceJFreechart, true, true, true, false, true);
         jTextTitre = new javax.swing.JTextField();
         jComboPeriode = new javax.swing.JComboBox();
+        jButtonVoirTitre = new javax.swing.JButton();
         panneauConfiguration = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         jTextUrlHist = new javax.swing.JTextField();
@@ -189,6 +190,7 @@ public class InterfaceAnalyseur extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         jTableEnLot = new javax.swing.JTable();
         jButtonSaveEnLot = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
@@ -207,6 +209,7 @@ public class InterfaceAnalyseur extends javax.swing.JFrame {
         jTextDesc.setFocusable(false);
 
         jButtonAnalyser.setText("Analyser");
+        jButtonAnalyser.setNextFocusableComponent(jTextTitre);
         jButtonAnalyser.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonAnalyserActionPerformed(evt);
@@ -240,6 +243,7 @@ public class InterfaceAnalyseur extends javax.swing.JFrame {
             .addGap(0, 413, Short.MAX_VALUE)
         );
 
+        jTextTitre.setNextFocusableComponent(jComboPeriode);
         jTextTitre.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextTitreActionPerformed(evt);
@@ -255,9 +259,17 @@ public class InterfaceAnalyseur extends javax.swing.JFrame {
         });
 
         jComboPeriode.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "1 mois", "6 mois", "1 an", "5 ans", "10 ans" }));
+        jComboPeriode.setNextFocusableComponent(jButtonAnalyser);
         jComboPeriode.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jComboPeriodeActionPerformed(evt);
+            }
+        });
+
+        jButtonVoirTitre.setText("Voir titres disponibles...");
+        jButtonVoirTitre.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonVoirTitreActionPerformed(evt);
             }
         });
 
@@ -282,8 +294,11 @@ public class InterfaceAnalyseur extends javax.swing.JFrame {
                                     .addComponent(jComboPeriode, 0, 85, Short.MAX_VALUE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(panneauAnalyseLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jTextDesc, javax.swing.GroupLayout.PREFERRED_SIZE, 280, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jButtonAnalyser, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(jButtonAnalyser, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(panneauAnalyseLayout.createSequentialGroup()
+                                        .addComponent(jTextDesc, javax.swing.GroupLayout.PREFERRED_SIZE, 280, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(jButtonVoirTitre)))
                                 .addGap(0, 0, Short.MAX_VALUE))))
                     .addGroup(panneauAnalyseLayout.createSequentialGroup()
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -295,11 +310,12 @@ public class InterfaceAnalyseur extends javax.swing.JFrame {
         panneauAnalyseLayout.setVerticalGroup(
             panneauAnalyseLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panneauAnalyseLayout.createSequentialGroup()
-                .addGap(26, 26, 26)
+                .addGap(25, 25, 25)
                 .addGroup(panneauAnalyseLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(jTextDesc, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextTitre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jTextTitre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButtonVoirTitre))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(panneauAnalyseLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jComboPeriode, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -308,7 +324,7 @@ public class InterfaceAnalyseur extends javax.swing.JFrame {
                 .addGroup(panneauAnalyseLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(prixChartPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(indiceChartPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 49, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 47, Short.MAX_VALUE)
                 .addGroup(panneauAnalyseLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(labelRecommandation)
                     .addComponent(texteRecommandation, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -408,6 +424,7 @@ public class InterfaceAnalyseur extends javax.swing.JFrame {
 
         jLabel7.setText("Titre boursier");
 
+        jTextTitreEnLot.setNextFocusableComponent(jButtonAjouter);
         jTextTitreEnLot.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
                 jTextTitreEnLotFocusGained(evt);
@@ -420,6 +437,7 @@ public class InterfaceAnalyseur extends javax.swing.JFrame {
         jTextTitreEnLotDesc.setEditable(false);
 
         jButtonAjouter.setText("Ajouter");
+        jButtonAjouter.setNextFocusableComponent(jTextTitreEnLot);
         jButtonAjouter.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonAjouterActionPerformed(evt);
@@ -459,6 +477,13 @@ public class InterfaceAnalyseur extends javax.swing.JFrame {
             }
         });
 
+        jButton1.setText("Voir titres disposibles...");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -477,8 +502,11 @@ public class InterfaceAnalyseur extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jButtonAjouter)
-                                    .addComponent(jTextTitreEnLotDesc, javax.swing.GroupLayout.PREFERRED_SIZE, 281, javax.swing.GroupLayout.PREFERRED_SIZE))))))
-                .addContainerGap(670, Short.MAX_VALUE))
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addComponent(jTextTitreEnLotDesc, javax.swing.GroupLayout.PREFERRED_SIZE, 281, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(jButton1)))))))
+                .addContainerGap(598, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -487,14 +515,15 @@ public class InterfaceAnalyseur extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jTextTitreEnLot, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextTitreEnLotDesc, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jTextTitreEnLotDesc, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton1))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButtonAjouter)
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jButtonSaveEnLot)
-                .addContainerGap(57, Short.MAX_VALUE))
+                .addContainerGap(56, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Titres en lot", jPanel1);
@@ -678,7 +707,7 @@ public class InterfaceAnalyseur extends javax.swing.JFrame {
         // Afficher la description du titre
         if (!jTextTitre.getText().isEmpty()) {
 
-
+             jTextTitre.setText(jTextTitre.getText().toUpperCase());
             try {
                 jTextDesc.setText(this.databaseLayor.getDesc(jTextTitre.getText()));
                 if (jTextDesc.getText().contains("N/A")) {
@@ -734,7 +763,8 @@ public class InterfaceAnalyseur extends javax.swing.JFrame {
         // Afficher la description du titre
         if (!jTextTitreEnLot.getText().isEmpty()) {
 
-
+            jTextTitreEnLot.setText(jTextTitreEnLot.getText().toUpperCase());
+            
             try {
                 jTextTitreEnLotDesc.setText(this.databaseLayor.getDesc(jTextTitreEnLot.getText()));
                 if (jTextTitreEnLotDesc.getText().contains("N/A")) {
@@ -776,6 +806,18 @@ public class InterfaceAnalyseur extends javax.swing.JFrame {
         jTextTitreEnLot.setText("");
         jTextTitreEnLotDesc.setText("");
     }//GEN-LAST:event_jButtonAjouterActionPerformed
+
+    private void jButtonVoirTitreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonVoirTitreActionPerformed
+        // TODO add your handling code here:
+        YahooFinance.ShowSymbolFromYahoo();
+        
+    }//GEN-LAST:event_jButtonVoirTitreActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+
+        // TODO add your handling code here:
+        YahooFinance.ShowSymbolFromYahoo();
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     private void refreshEnLot() {
         titreQuery = java.beans.Beans.isDesignTime() ? null : titresboursiersPUEntityManager.createQuery("SELECT t FROM Titre t ORDER by t.symbol");
@@ -1014,11 +1056,13 @@ public class InterfaceAnalyseur extends javax.swing.JFrame {
             
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel indiceChartPanel;
+    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButtonAjouter;
     private javax.swing.JButton jButtonAnalyser;
     private javax.swing.JButton jButtonSaveConfig;
     private javax.swing.JButton jButtonSaveEnLot;
     private javax.swing.JButton jButtonTestMail;
+    private javax.swing.JButton jButtonVoirTitre;
     private javax.swing.JComboBox jComboPeriode;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
