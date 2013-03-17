@@ -38,19 +38,21 @@ public class BatchAnalyseur {
         gc.add(Calendar.MONTH, -2);
         Date debut = gc.getTime();
         
-        for (TitreBoursier titreAnalyse : this.databaseLayor.obtenirTitreEnLot()) {
+        for (TitreBoursier titreAnalyse : Main.dbAccess.obtenirTitreEnLot()) {
             
-            ArrayList<TitreBoursier> historique = this.databaseLayor.obtenirHistorique(titreAnalyse.getTitre(), debut);
+            ArrayList<TitreBoursier> historique = Main.dbAccess.obtenirHistorique(titreAnalyse.getTitre(), debut);
             AnalysteMacd analyste = new AnalysteMacd(historique);
-            //System.out.println("Taille de l'historique: " + historique.size());
-            //System.out.println("Taille de l'analyste: " + analyste.getCotesBoursieres().size());
+         //   System.out.println("Taille de l'historique: " + historique.size());
+         //   System.out.println("Taille de l'analyste: " + analyste.getCotesBoursieres().size());
             TitreBoursier titreBoursier = historique.get(historique.size() - 1);
-
+          
             if (analyste.estAchatBatch()) {
+                System.out.println(titreBoursier.getTitre());
                 recommendationsAchat.add(titreBoursier);
             } 
 
             if (analyste.estVenteBatch()) {
+                System.out.println(titreBoursier.getTitre());
                 recommendationsVente.add(titreBoursier);
             } 
         }

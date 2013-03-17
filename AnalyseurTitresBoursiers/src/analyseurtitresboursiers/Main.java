@@ -4,6 +4,9 @@
  */
 package analyseurtitresboursiers;
 
+import java.io.IOException;
+import java.sql.SQLException;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
@@ -60,7 +63,7 @@ public class Main {
                 SimpleDateFormat sdf = new SimpleDateFormat("EEEE, d MMM yyyy", Locale.CANADA_FRENCH);
                 batch.envoyerCourriel("AnalyseurTitresBoursiers - rapport quotidien: " + sdf.format(now));
                     
-            } catch (Exception exception) {
+            } catch (IOException | ParseException | SQLException exception) {
                 System.err.println(exception.getMessage());
             }
             
