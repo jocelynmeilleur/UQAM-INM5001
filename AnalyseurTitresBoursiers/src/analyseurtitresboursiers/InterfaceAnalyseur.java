@@ -6,6 +6,7 @@ package analyseurtitresboursiers;
 
 import java.awt.BasicStroke;
 import java.awt.Color;
+import java.awt.Cursor;
 import java.awt.Font;
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -560,22 +561,21 @@ public class InterfaceAnalyseur extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(24, 24, 24)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jButtonSaveEnLot)
+                .addComponent(jLabel7)
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel7)
-                        .addGap(18, 18, 18)
+                        .addComponent(jTextTitreEnLot, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jButtonAjouter)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jTextTitreEnLot, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jButtonAjouter)
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addComponent(jTextTitreEnLotDesc, javax.swing.GroupLayout.PREFERRED_SIZE, 281, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(jButton1)))))))
+                                .addComponent(jTextTitreEnLotDesc, javax.swing.GroupLayout.PREFERRED_SIZE, 281, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jButton1))))
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addComponent(jButtonSaveEnLot)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(636, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -591,9 +591,9 @@ public class InterfaceAnalyseur extends javax.swing.JFrame {
                 .addComponent(jButtonAjouter)
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jButtonSaveEnLot)
-                .addContainerGap(56, Short.MAX_VALUE))
+                .addContainerGap(63, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Titres en lot", jPanel1);
@@ -621,12 +621,12 @@ public class InterfaceAnalyseur extends javax.swing.JFrame {
             }
         });
         jMenuItem1.addMenuKeyListener(new javax.swing.event.MenuKeyListener() {
-            public void menuKeyPressed(javax.swing.event.MenuKeyEvent evt) {
-                jMenuItem1MenuKeyPressed(evt);
-            }
             public void menuKeyReleased(javax.swing.event.MenuKeyEvent evt) {
             }
             public void menuKeyTyped(javax.swing.event.MenuKeyEvent evt) {
+            }
+            public void menuKeyPressed(javax.swing.event.MenuKeyEvent evt) {
+                jMenuItem1MenuKeyPressed(evt);
             }
         });
         jMenu1.add(jMenuItem1);
@@ -681,6 +681,8 @@ public class InterfaceAnalyseur extends javax.swing.JFrame {
 
         Date debut;
         debut = getDateDebut(jComboPeriode.getSelectedIndex());
+        setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
+        jButtonAnalyser.setEnabled(false);
 
         try {
             historique = this.databaseLayor.obtenirHistorique(jTextTitre.getText(), debut);
@@ -722,7 +724,8 @@ public class InterfaceAnalyseur extends javax.swing.JFrame {
         } catch (IOException | ParseException | SQLException ex) {
             Logger.getLogger(InterfaceAnalyseur.class.getName()).log(Level.SEVERE, null, ex);
         }
-
+        setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
+        jButtonAnalyser.setEnabled(true);
 
 
     }//GEN-LAST:event_jButtonAnalyserActionPerformed
@@ -872,6 +875,8 @@ public class InterfaceAnalyseur extends javax.swing.JFrame {
     private void jButtonAjouterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAjouterActionPerformed
 
         ArrayList<TitreBoursier> temp = new ArrayList<>();
+        setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
+        jButtonAjouter.setEnabled(false);
 
         try {
             // TODO add your handling code here:
@@ -882,6 +887,9 @@ public class InterfaceAnalyseur extends javax.swing.JFrame {
         refreshEnLot();
         jTextTitreEnLot.setText("");
         jTextTitreEnLotDesc.setText("");
+        setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
+        jButtonAjouter.setEnabled(true);
+
     }//GEN-LAST:event_jButtonAjouterActionPerformed
 
     private void jButtonVoirTitreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonVoirTitreActionPerformed
