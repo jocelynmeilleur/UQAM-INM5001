@@ -21,6 +21,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultCellEditor;
 import javax.swing.JComboBox;
+import javax.swing.UIManager;
 import javax.swing.table.TableColumn;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
@@ -66,6 +67,9 @@ public class InterfaceAnalyseur extends javax.swing.JFrame {
         listeInitialisation = new TitresBoursiers();
         initComponents();
         setConfigTab();
+        UIManager.put("Button.defaultButtonFollowsFocus", Boolean.TRUE);
+        jTextTitre.requestFocus();
+        
     }
 
     private static TimeSeries getSeriePrixFermeture(AnalysteMacd analyste) {
