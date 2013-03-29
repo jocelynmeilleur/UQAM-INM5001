@@ -50,7 +50,7 @@ public class MailLayor {
             message.setSubject(sujet);
 
             // Now set the actual message
-            message.setText(corps);
+            message.setContent(corps,"text/html");
 
             if (Main.config.isSmtpAuthenticated()) {
                 // SMTP authentifié

@@ -859,7 +859,7 @@ public class InterfaceAnalyseur extends javax.swing.JFrame {
 
     private void jButtonTestMailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonTestMailActionPerformed
         // TODO add your handling code here:
-        MailLayor.send("Analyseur de titre", "Bravo, vous avez bien configuré vos paramètres de communication!");
+        MailLayor.send("Analyseur de titre", "<h1>Bravo, vous avez bien configur&eacute; vos param&egrave;tres de communication!</h1>");
     }//GEN-LAST:event_jButtonTestMailActionPerformed
 
     private void jTextTitreEnLotFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextTitreEnLotFocusGained
