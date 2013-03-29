@@ -119,7 +119,7 @@ public class YahooFinance {
 
             try {
 
-                java.net.URI uri = new java.net.URI( "http://ca.finance.yahoo.com/lookup?s=.to" );
+                java.net.URI uri = new java.net.URI( "http://ca.finance.yahoo.com/lookup?s=*.to" );
                 desktop.browse( uri );
             }
             catch ( URISyntaxException | IOException e ) {
