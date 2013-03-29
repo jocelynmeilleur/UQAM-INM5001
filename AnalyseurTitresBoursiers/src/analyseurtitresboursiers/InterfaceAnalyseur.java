@@ -546,7 +546,6 @@ public class InterfaceAnalyseur extends javax.swing.JFrame {
         org.jdesktop.swingbinding.JTableBinding.ColumnBinding columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${symbol}"));
         columnBinding.setColumnName("Symbol");
         columnBinding.setColumnClass(String.class);
-        columnBinding.setEditable(false);
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${description}"));
         columnBinding.setColumnName("Description");
         columnBinding.setColumnClass(String.class);
@@ -846,6 +845,7 @@ public class InterfaceAnalyseur extends javax.swing.JFrame {
         Main.config.setSmtpPassword(jPasswordSMTP.getText());
         Main.config.setSmtpPort(jTextSMTPPort.getText());
         Main.config.saveConfig();
+        Main.config = new ConfigurationLayor(Main.config.getFichierConfig());
 
         javax.swing.JOptionPane.showMessageDialog(null, "Configuration sauvegardée");
 

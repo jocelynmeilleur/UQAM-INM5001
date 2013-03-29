@@ -137,6 +137,10 @@ public class ConfigurationLayor {
     public void setUrlTitresDispo(String urlTitresDispo) {
         this.urlTitresDispo = urlTitresDispo;
     }
+
+    public String getFichierConfig() {
+        return fichierConfig;
+    }
     
     
     public void saveConfig(){

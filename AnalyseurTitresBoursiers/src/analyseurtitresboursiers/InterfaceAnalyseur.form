@@ -713,7 +713,6 @@
                       <Subbinding sourcePath="${symbol}">
                         <BindingParameter name="NAME" value="Symbol"/>
                         <BindingParameter name="javax.swing.binding.ParameterKeys.COLUMN_CLASS" value="String.class"/>
-                        <BindingParameter name="javax.swing.binding.ParameterKeys.EDITABLE" value="false"/>
                       </Subbinding>
                       <Subbinding sourcePath="${description}">
                         <BindingParameter name="NAME" value="Description"/>
