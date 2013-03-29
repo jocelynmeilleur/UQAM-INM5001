@@ -325,8 +325,9 @@ public class InterfaceAnalyseur extends javax.swing.JFrame {
                     .addGroup(panneauAnalyseLayout.createSequentialGroup()
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(labelRecommandation)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(texteRecommandation, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(18, 18, 18)
+                        .addComponent(texteRecommandation, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)))
                 .addGap(26, 26, 26))
         );
         panneauAnalyseLayout.setVerticalGroup(
@@ -352,11 +353,11 @@ public class InterfaceAnalyseur extends javax.swing.JFrame {
                 .addGroup(panneauAnalyseLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(prixChartPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(indiceChartPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 92, Short.MAX_VALUE)
+                .addGap(92, 92, 92)
                 .addGroup(panneauAnalyseLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(labelRecommandation)
                     .addComponent(texteRecommandation, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(23, 23, 23))
+                .addContainerGap(23, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Analyse", panneauAnalyse);
@@ -644,12 +645,12 @@ public class InterfaceAnalyseur extends javax.swing.JFrame {
             }
         });
         jMenuItem1.addMenuKeyListener(new javax.swing.event.MenuKeyListener() {
+            public void menuKeyPressed(javax.swing.event.MenuKeyEvent evt) {
+                jMenuItem1MenuKeyPressed(evt);
+            }
             public void menuKeyReleased(javax.swing.event.MenuKeyEvent evt) {
             }
             public void menuKeyTyped(javax.swing.event.MenuKeyEvent evt) {
-            }
-            public void menuKeyPressed(javax.swing.event.MenuKeyEvent evt) {
-                jMenuItem1MenuKeyPressed(evt);
             }
         });
         jMenu1.add(jMenuItem1);
