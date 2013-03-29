@@ -4,10 +4,7 @@
  */
 package analyseurtitresboursiers;
 
-import java.awt.BasicStroke;
-import java.awt.Color;
-import java.awt.Cursor;
-import java.awt.Font;
+import java.awt.*;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.sql.SQLException;
@@ -19,9 +16,8 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.DefaultCellEditor;
-import javax.swing.JComboBox;
-import javax.swing.UIManager;
+import javax.swing.*;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableColumn;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
@@ -69,7 +65,7 @@ public class InterfaceAnalyseur extends javax.swing.JFrame {
         setConfigTab();
         UIManager.put("Button.defaultButtonFollowsFocus", Boolean.TRUE);
         jTextTitre.requestFocus();
-        
+
     }
 
     private static TimeSeries getSeriePrixFermeture(AnalysteMacd analyste) {
@@ -701,7 +697,7 @@ public class InterfaceAnalyseur extends javax.swing.JFrame {
 
         try {
             historique = this.databaseLayor.obtenirHistorique(jTextTitre.getText(), debut);
-            if (historique.isEmpty()){
+            if (historique.isEmpty()) {
                 javax.swing.JOptionPane.showMessageDialog(null, "Avertissement: Pas d'historique pour la période à analyser");
             }
             analyste = new AnalysteMacd(historique);
@@ -967,9 +963,18 @@ public class InterfaceAnalyseur extends javax.swing.JFrame {
         jTableEnLot.getColumnModel().getColumn(2).setResizable(false);
         jTableEnLot.getColumnModel().getColumn(2).setPreferredWidth(50);
         TableColumn enLotColumn = jTableEnLot.getColumnModel().getColumn(2);
+        DefaultTableCellRenderer rightRenderer = new DefaultTableCellRenderer();
+        rightRenderer.setHorizontalAlignment( JLabel.CENTER );
+        jTableEnLot.getColumnModel().getColumn(2).setCellRenderer( rightRenderer );
         JComboBox comboBox = new JComboBox();
         comboBox.addItem("O");
         comboBox.addItem("N");
+        DefaultListCellRenderer dlcr = new DefaultListCellRenderer();
+        //DefaultListCellRenderer.LEFT;
+        //DefaultListCellRenderer.CENTER;
+        //DefaultListCellRenderer.RIGHT;
+        dlcr.setHorizontalAlignment(DefaultListCellRenderer.CENTER);
+        comboBox.setRenderer(dlcr);
         enLotColumn.setCellEditor(new DefaultCellEditor(comboBox));
         jTableEnLot.revalidate();
 
