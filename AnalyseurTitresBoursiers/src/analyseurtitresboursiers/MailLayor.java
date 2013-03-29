@@ -40,7 +40,7 @@ public class MailLayor {
             MimeMessage message = new MimeMessage(session);
 
             // Set From: header field of the header.
-            message.setFrom(new InternetAddress("analyseur@maison.com"));
+            message.setFrom(new InternetAddress("analyseur@inm5001.uqam.ca"));
 
             // Set To: header field of the header.
             message.addRecipient(Message.RecipientType.TO,
