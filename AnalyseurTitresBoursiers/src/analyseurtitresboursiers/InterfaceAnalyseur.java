@@ -690,6 +690,9 @@ public class InterfaceAnalyseur extends javax.swing.JFrame {
 
         try {
             historique = this.databaseLayor.obtenirHistorique(jTextTitre.getText(), debut);
+            if (historique.isEmpty()){
+                javax.swing.JOptionPane.showMessageDialog(null, "Avertissement: Pas d'historique pour la période à analyser");
+            }
             analyste = new AnalysteMacd(historique);
             System.out.println("Taille de l'historique: " + historique.size());
             System.out.println("Taille de l'analyste: " + analyste.getCotesBoursieres().size());
