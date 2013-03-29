@@ -47,14 +47,16 @@ public class BatchAnalyseur {
 
             actionsSuivis.add(titreBoursier);
 
-            if (analyste.estAchatBatch()) {
-                System.out.println(titreBoursier.getTitre());
+            if (analyste.estAchatInteractif()) {
                 recommendationsAchat.add(titreBoursier);
-            }
-
-            if (analyste.estVenteBatch()) {
-                System.out.println(titreBoursier.getTitre());
-                recommendationsVente.add(titreBoursier);
+            } else {
+                if (analyste.estGardeInteractif()) {
+                    ;
+                } else if (analyste.estNeutreInteractif()) {
+                    ;
+                } else {
+                    recommendationsVente.add(titreBoursier);
+                }
             }
         }
     }
@@ -81,7 +83,7 @@ public class BatchAnalyseur {
 
         if (0 < this.getRecommandationsAchat().size()) {
             for (TitreBoursier titreBoursier : this.getRecommandationsAchat()) {
-                String msg = String.format("%s (%s): %.2f$ | %s", titreBoursier.getTitre(), titreBoursier.getDescription(), titreBoursier.getValeurFermeture(), titreBoursier.getDateFermeture());
+                String msg = String.format("%s (%s): %.2f$ | %s\n", titreBoursier.getTitre(), titreBoursier.getDescription(), titreBoursier.getValeurFermeture(), titreBoursier.getDateFermeture());
                 msgBody = msgBody + msg;
             }
         } else {
@@ -94,7 +96,7 @@ public class BatchAnalyseur {
 
         if (0 < this.getRecommandationsVente().size()) {
             for (TitreBoursier titreBoursier : this.getRecommandationsVente()) {
-                String msg = String.format("%s (%s): %.2f$ | %s", titreBoursier.getTitre(), titreBoursier.getDescription(), titreBoursier.getValeurFermeture(), titreBoursier.getDateFermeture());
+                String msg = String.format("%s (%s): %.2f$ | %s\n", titreBoursier.getTitre(), titreBoursier.getDescription(), titreBoursier.getValeurFermeture(), titreBoursier.getDateFermeture());
                 msgBody = msgBody + msg;
             }
         } else {
