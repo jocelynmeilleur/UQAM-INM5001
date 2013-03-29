@@ -20,6 +20,7 @@ public class ConfigurationLayor {
    private AppConfiguration configuration;
    private String urlHistoriqueTitres;
    private String urlDescTitre;
+   private String urlTitresDispo;
    private String connexionString;
    private String smtpServer;
    private String courrielDestinataire;
@@ -40,6 +41,7 @@ public class ConfigurationLayor {
            configuration = new Gson().fromJson(br,AppConfiguration.class);
            urlHistoriqueTitres = configuration.getUrlHistoriqueTitres();
            urlDescTitre = configuration.getUrlDescTitre();
+           urlTitresDispo = configuration.getUrlTitresDispo();
            connexionString = configuration.getConnexionString();
            smtpServer      = configuration.getSmtpServer();
            courrielDestinataire = configuration.getCourrielDestinataire();
@@ -127,12 +129,21 @@ public class ConfigurationLayor {
     public void setSmtpUserName(String smtpUserName) {
         this.smtpUserName = smtpUserName;
     }
+
+    public String getUrlTitresDispo() {
+        return urlTitresDispo;
+    }
+
+    public void setUrlTitresDispo(String urlTitresDispo) {
+        this.urlTitresDispo = urlTitresDispo;
+    }
     
     
     public void saveConfig(){
         
         configuration.setCourrielDestinataire(courrielDestinataire);
         configuration.setUrlHistoriqueTitres(urlHistoriqueTitres);
+        configuration.setUrlTitresDispo(urlTitresDispo);
         configuration.setUrlDescTitre(urlDescTitre);
         configuration.setConnexionString(connexionString);
         configuration.setSmtpServer(smtpServer);

@@ -13,6 +13,7 @@ public class AppConfiguration {
     
     private String urlHistoriqueTitres;
     private String urlDescTitre;
+    private String urlTitresDispo;
     private String connexionString;
     private String smtpServer;
     private String courrielDestinataire;
@@ -92,6 +93,14 @@ public class AppConfiguration {
 
     public void setSmtpUserName(String smtpUserName) {
         this.smtpUserName = smtpUserName;
+    }
+
+    public String getUrlTitresDispo() {
+        return urlTitresDispo;
+    }
+
+    public void setUrlTitresDispo(String urlTitresDispo) {
+        this.urlTitresDispo = urlTitresDispo;
     }
     
     
