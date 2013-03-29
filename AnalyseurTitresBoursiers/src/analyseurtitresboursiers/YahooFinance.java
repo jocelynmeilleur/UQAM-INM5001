@@ -4,10 +4,7 @@
  */
 package analyseurtitresboursiers;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.net.MalformedURLException;
 import java.net.URISyntaxException;
 import java.net.URL;
@@ -59,8 +56,14 @@ public class YahooFinance {
            
      
             url = new URL(Main.config.getUrlHistoriqueTitres() + symbol + periode);
-           
-            InputStream myStream = url.openStream();
+            InputStream myStream = null;
+
+            try {
+                myStream = url.openStream();
+            }
+             catch( FileNotFoundException z){
+                 return historique;
+             }
             InputStreamReader myStreamReader = new InputStreamReader(myStream);       
             reader = new BufferedReader(myStreamReader);
             reader.readLine(); // skip header
