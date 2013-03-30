@@ -15,13 +15,20 @@ import javax.mail.internet.MimeMessage;
 /**
  *
  * @author ForestPierre
+ *  
  */
+
+
 public class MailLayor {
 
-    public static void send(String sujet, String corps) {
+       
+    public static void send(String sujet, String corps, String contentType) {
 
         // inspiré de : http://www.tutorialspoint.com/java/java_sending_email.htm Mars 2013
+        
+        // contentType peut être: "text/html" ou "text/plain"
 
+      
         String host = Main.config.getSmtpServer();
 
         // Get system properties
@@ -50,7 +57,7 @@ public class MailLayor {
             message.setSubject(sujet);
 
             // Now set the actual message
-            message.setContent(corps,"text/html");
+            message.setContent(corps, contentType);
 
             if (Main.config.isSmtpAuthenticated()) {
                 // SMTP authentifié
@@ -71,5 +78,9 @@ public class MailLayor {
             mex.printStackTrace();
         }
 
+    }
+    
+    public static void send(String sujet, String corps){
+        send(sujet,corps,"text/plain");
     }
 }
