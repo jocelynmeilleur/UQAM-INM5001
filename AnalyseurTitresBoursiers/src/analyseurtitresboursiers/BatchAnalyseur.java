@@ -9,6 +9,7 @@ import java.net.MalformedURLException;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.util.*;
+import org.apache.log4j.Logger;
 
 /**
  *
@@ -27,8 +28,10 @@ public class BatchAnalyseur {
     private List<TitreBoursier> recommendationsVente = new ArrayList();
     private List<TitreBoursier> actionsSuivis = new ArrayList();
     private DatabaseLayor databaseLayor;
+    static Logger logger = Logger.getLogger(BatchAnalyseur.class);
 
     public BatchAnalyseur(DatabaseLayor databaseLayor) {
+        logger.info("BatchAnalyseur");
         this.databaseLayor = databaseLayor;
     }
 
@@ -114,8 +117,13 @@ public class BatchAnalyseur {
 
         msgBody = msgBody + MSG_SAUT_SECTION;
         msgBody = msgBody + MSG_FOOTER;
-
-        MailLayor.send(titre, msgBody);
-        //System.out.println(titre + "\n" + msgBody);
+        
+        try {
+            MailLayor.send(titre, msgBody);
+            //System.out.println(titre + "\n" + msgBody);
+        } catch (Exception exception) {
+        
+        }
+        
     }
 }

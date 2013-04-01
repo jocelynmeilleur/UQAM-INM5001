@@ -13,7 +13,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-
+import org.apache.log4j.Logger;
 
 /**
  *
@@ -21,7 +21,8 @@ import java.util.Date;
  */
 public class YahooFinance {
     
-    
+    static Logger logger = Logger.getLogger(YahooFinance.class);
+        
     public static ArrayList<TitreBoursier> getValeurFermeture(String symbol, Date debut) throws MalformedURLException, IOException, ParseException{
         
             URL url;
@@ -62,6 +63,8 @@ public class YahooFinance {
                 myStream = url.openStream();
             }
              catch( FileNotFoundException z){
+                 logger.warn("Fichier inexistant", z);
+                 logger.warn(z.getMessage());
                  return historique;
              }
             InputStreamReader myStreamReader = new InputStreamReader(myStream);       
@@ -105,7 +108,8 @@ public class YahooFinance {
 
       if( !java.awt.Desktop.isDesktopSupported() ) {
 
-            System.err.println( "Desktop is not supported (fatal)" );
+            //System.err.println( "Desktop is not supported (fatal)" );
+            logger.fatal("Desktop is not supported (fatal)");
             System.exit( 1 );
         }
 
@@ -113,7 +117,8 @@ public class YahooFinance {
 
         if( !desktop.isSupported( java.awt.Desktop.Action.BROWSE ) ) {
 
-            System.err.println( "Desktop doesn't support the browse action (fatal)" );
+            //System.err.println( "Desktop doesn't support the browse action (fatal)" );
+            logger.fatal("Desktop doesn't support the browse action (fatal)");
             System.exit( 1 );
         }
 
@@ -123,8 +128,9 @@ public class YahooFinance {
                 desktop.browse( uri );
             }
             catch ( URISyntaxException | IOException e ) {
-
-                System.err.println( e.getMessage() );
+                logger.warn("Problème input", e);
+                logger.warn(e.getMessage());
+                //System.err.println( e.getMessage() );
             }
                 
     }

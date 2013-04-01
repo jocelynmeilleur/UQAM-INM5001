@@ -10,6 +10,7 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import org.apache.log4j.Logger;
 
 /**
  *
@@ -29,6 +30,7 @@ public class ConfigurationLayor {
    private String smtpUserName;
    private String smtpPassword;
    private String smtpPort;
+   static Logger logger = Logger.getLogger(ConfigurationLayor.class);
    
     public ConfigurationLayor(String fichierConfig){
         
@@ -52,7 +54,8 @@ public class ConfigurationLayor {
            
 
 	} catch (IOException e) {
-		e.printStackTrace();
+                logger.error("Erreur de configuration", e);
+		//e.printStackTrace();
                 throw new UnsupportedOperationException("Not yet implemented");
         }
     }
@@ -165,7 +168,8 @@ public class ConfigurationLayor {
             }
 
             } catch (IOException e) {
-                e.printStackTrace();
+                logger.error("Erreur de configuration", e);
+                //e.printStackTrace();
                 throw new UnsupportedOperationException("Not yet implemented");
             }
               

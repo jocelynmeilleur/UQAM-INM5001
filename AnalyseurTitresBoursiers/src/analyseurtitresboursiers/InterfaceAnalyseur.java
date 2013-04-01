@@ -14,8 +14,6 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.*;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableColumn;
@@ -32,6 +30,7 @@ import org.jfree.data.time.TimeSeries;
 import org.jfree.data.time.TimeSeriesCollection;
 import org.jfree.data.xy.XYDataset;
 import org.jfree.ui.RectangleEdge;
+import org.apache.log4j.Logger;
 
 /**
  *
@@ -54,11 +53,13 @@ public class InterfaceAnalyseur extends javax.swing.JFrame {
     private static DateAxis dateAxisIndice = null;
     private static LegendTitle legendPrix;
     private static LegendTitle legendIndice;
+    static Logger logger = Logger.getLogger(InterfaceAnalyseur.class);
 
     /**
      * Creates new form InterfaceAnalyseur
      */
     public InterfaceAnalyseur(DatabaseLayor databaseLayor) throws ParseException {
+        logger.info("InterfaceAnalyseur");
         this.databaseLayor = databaseLayor;
         listeInitialisation = new TitresBoursiers();
         initComponents();
@@ -197,6 +198,7 @@ public class InterfaceAnalyseur extends javax.swing.JFrame {
         jPasswordSMTP = new javax.swing.JPasswordField();
         jLabel10 = new javax.swing.JLabel();
         jTextTitresDispo = new javax.swing.JTextField();
+        messageErreur = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         jLabel7 = new javax.swing.JLabel();
         jTextTitreEnLot = new javax.swing.JTextField();
@@ -408,6 +410,8 @@ public class InterfaceAnalyseur extends javax.swing.JFrame {
 
         jLabel10.setText("Ligne pour affichage des titres disponibles:");
 
+        messageErreur.setText("Afficher message d'erreur si nécessaire");
+
         javax.swing.GroupLayout panneauConfigurationLayout = new javax.swing.GroupLayout(panneauConfiguration);
         panneauConfiguration.setLayout(panneauConfigurationLayout);
         panneauConfigurationLayout.setHorizontalGroup(
@@ -419,13 +423,13 @@ public class InterfaceAnalyseur extends javax.swing.JFrame {
                         .addGroup(panneauConfigurationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(panneauConfigurationLayout.createSequentialGroup()
                                 .addGroup(panneauConfigurationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jCheckBoxSMTP, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(jCheckBoxSMTP, javax.swing.GroupLayout.DEFAULT_SIZE, 458, Short.MAX_VALUE)
                                     .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addGroup(panneauConfigurationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jButtonTestMail)
                                     .addComponent(jButtonSaveConfig)
-                                    .addComponent(jTextCourriel, javax.swing.GroupLayout.DEFAULT_SIZE, 444, Short.MAX_VALUE)))
+                                    .addComponent(jTextCourriel, javax.swing.GroupLayout.DEFAULT_SIZE, 288, Short.MAX_VALUE)))
                             .addGroup(panneauConfigurationLayout.createSequentialGroup()
                                 .addGroup(panneauConfigurationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(panneauConfigurationLayout.createSequentialGroup()
@@ -451,18 +455,22 @@ public class InterfaceAnalyseur extends javax.swing.JFrame {
                         .addGap(19, 19, 19)
                         .addGroup(panneauConfigurationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, 300, Short.MAX_VALUE)
+                            .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jLabel10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(panneauConfigurationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jTextUrlHist, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jTextUrlDesc, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 437, Short.MAX_VALUE)
-                            .addComponent(jTextConnBD, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 437, Short.MAX_VALUE)
-                            .addComponent(jTextSMTP, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 437, Short.MAX_VALUE)
-                            .addComponent(jTextTitresDispo, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 437, Short.MAX_VALUE))))
+                            .addComponent(jTextUrlDesc, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jTextConnBD, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jTextSMTP, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jTextTitresDispo, javax.swing.GroupLayout.Alignment.LEADING))))
                 .addGap(500, 500, 500))
+            .addGroup(panneauConfigurationLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(messageErreur, javax.swing.GroupLayout.PREFERRED_SIZE, 974, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
         panneauConfigurationLayout.setVerticalGroup(
             panneauConfigurationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -511,8 +519,12 @@ public class InterfaceAnalyseur extends javax.swing.JFrame {
                 .addComponent(jButtonTestMail)
                 .addGap(18, 18, 18)
                 .addComponent(jButtonSaveConfig)
-                .addGap(186, 186, 186))
+                .addGap(161, 161, 161)
+                .addComponent(messageErreur)
+                .addContainerGap())
         );
+
+        messageErreur.getAccessibleContext().setAccessibleName("|");
 
         jTabbedPane1.addTab("Configuration", panneauConfiguration);
 
@@ -617,16 +629,16 @@ public class InterfaceAnalyseur extends javax.swing.JFrame {
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jButtonSaveEnLot)
-                .addContainerGap(108, Short.MAX_VALUE))
+                .addContainerGap(104, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Titres en lot", jPanel1);
 
         jMenu1.setText("Fichier");
         jMenu1.addMenuListener(new javax.swing.event.MenuListener() {
-            public void menuCanceled(javax.swing.event.MenuEvent evt) {
-            }
             public void menuDeselected(javax.swing.event.MenuEvent evt) {
+            }
+            public void menuCanceled(javax.swing.event.MenuEvent evt) {
             }
             public void menuSelected(javax.swing.event.MenuEvent evt) {
                 jMenu1MenuSelected(evt);
@@ -695,6 +707,8 @@ public class InterfaceAnalyseur extends javax.swing.JFrame {
         jTextUserName.setText(Main.config.getSmtpUserName());
         jPasswordSMTP.setText(Main.config.getSmtpPassword());
         jTextSMTPPort.setText(Main.config.getSmtpPort());
+        
+        messageErreur.setText("");
     }
 
     private void jButtonAnalyserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAnalyserActionPerformed
@@ -750,7 +764,9 @@ public class InterfaceAnalyseur extends javax.swing.JFrame {
             updateGraph();
 
         } catch (IOException | ParseException | SQLException ex) {
-            Logger.getLogger(InterfaceAnalyseur.class.getName()).log(Level.SEVERE, null, ex);
+            //Logger.getLogger(InterfaceAnalyseur.class.getName()).log(Level.SEVERE, null, ex);
+            logger.error("Erreur accès historique des données", ex);
+            logger.error(ex.getMessage());
         }
         setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
         jButtonAnalyser.setEnabled(true);
@@ -818,9 +834,13 @@ public class InterfaceAnalyseur extends javax.swing.JFrame {
                     jButtonAnalyser.setEnabled(false);
                 }
             } catch (MalformedURLException ex) {
-                Logger.getLogger(InterfaceAnalyseur.class.getName()).log(Level.SEVERE, null, ex);
+                //Logger.getLogger(InterfaceAnalyseur.class.getName()).log(Level.SEVERE, null, ex);
+                logger.error("Erreur accès aux données - Titre boursier", ex);
+                logger.error(ex.getMessage());
             } catch (IOException | SQLException ex) {
-                Logger.getLogger(InterfaceAnalyseur.class.getName()).log(Level.SEVERE, null, ex);
+                //Logger.getLogger(InterfaceAnalyseur.class.getName()).log(Level.SEVERE, null, ex);
+                logger.error("Erreur accès aux données - Titre boursier", ex);
+                logger.error(ex.getMessage());
             }
         }
     }//GEN-LAST:event_jTextTitreFocusLost
@@ -835,6 +855,8 @@ public class InterfaceAnalyseur extends javax.swing.JFrame {
 
     private void jButtonSaveConfigActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSaveConfigActionPerformed
 
+        messageErreur.setText("");
+        
         Main.config.setUrlHistoriqueTitres(jTextUrlHist.getText());
         Main.config.setUrlDescTitre(jTextUrlDesc.getText());
         Main.config.setUrlTitresDispo(jTextTitresDispo.getText());
@@ -860,7 +882,15 @@ public class InterfaceAnalyseur extends javax.swing.JFrame {
 
     private void jButtonTestMailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonTestMailActionPerformed
         // TODO add your handling code here:
-        MailLayor.send("Analyseur de titre", "<h1>Bravo, vous avez bien configur&eacute; vos param&egrave;tres de communication!</h1>");
+        messageErreur.setText("");
+        
+        try {
+            MailLayor.send("Analyseur de titre", "<h1>Bravo, vous avez bien configur&eacute; vos param&egrave;tres de communication!</h1>");
+        } catch (Exception exception) {
+            messageErreur.setText(exception.getMessage());
+            messageErreur.setForeground(Color.red);
+        }
+        
     }//GEN-LAST:event_jButtonTestMailActionPerformed
 
     private void jTextTitreEnLotFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextTitreEnLotFocusGained
@@ -881,9 +911,13 @@ public class InterfaceAnalyseur extends javax.swing.JFrame {
                     jButtonAjouter.setEnabled(false);
                 }
             } catch (MalformedURLException ex) {
-                Logger.getLogger(InterfaceAnalyseur.class.getName()).log(Level.SEVERE, null, ex);
+                //Logger.getLogger(InterfaceAnalyseur.class.getName()).log(Level.SEVERE, null, ex);
+                logger.error("Erreur accès aux données - Description titre boursier", ex);
+                logger.error(ex.getMessage());
             } catch (IOException | SQLException ex) {
-                Logger.getLogger(InterfaceAnalyseur.class.getName()).log(Level.SEVERE, null, ex);
+                //Logger.getLogger(InterfaceAnalyseur.class.getName()).log(Level.SEVERE, null, ex);
+                logger.error("Erreur accès aux données - Description titre boursier", ex);
+                logger.error(ex.getMessage());
             }
         }
     }//GEN-LAST:event_jTextTitreEnLotFocusLost
@@ -912,7 +946,9 @@ public class InterfaceAnalyseur extends javax.swing.JFrame {
             // TODO add your handling code here:
             temp = this.databaseLayor.obtenirHistorique(jTextTitreEnLot.getText(), new Date());
         } catch (IOException | ParseException | SQLException ex) {
-            Logger.getLogger(InterfaceAnalyseur.class.getName()).log(Level.SEVERE, null, ex);
+            //Logger.getLogger(InterfaceAnalyseur.class.getName()).log(Level.SEVERE, null, ex);
+            logger.error("Erreur accès historique des données", ex);
+            logger.error(ex.getMessage());
         }
         refreshEnLot();
         jTextTitreEnLot.setText("");
@@ -951,6 +987,8 @@ public class InterfaceAnalyseur extends javax.swing.JFrame {
             jPasswordSMTP.setEnabled(false);
             jTextSMTPPort.setEnabled(false);
         }
+        
+        messageErreur.setText("");
     }//GEN-LAST:event_jCheckBoxSMTPActionPerformed
 
     private void refreshEnLot() {
@@ -1156,7 +1194,9 @@ public class InterfaceAnalyseur extends javax.swing.JFrame {
             analyste = new AnalysteMacd(historique);
             System.out.println("Taille de l'historique - recommendation: " + historique.size());
         } catch (IOException | ParseException | SQLException ex) {
-            Logger.getLogger(InterfaceAnalyseur.class.getName()).log(Level.SEVERE, null, ex);
+            //Logger.getLogger(InterfaceAnalyseur.class.getName()).log(Level.SEVERE, null, ex);
+            logger.error("Erreur accès historique des données", ex);
+            logger.error(ex.getMessage());
         }
 
         if (analyste.estAchatInteractif()) {
@@ -1242,6 +1282,7 @@ public class InterfaceAnalyseur extends javax.swing.JFrame {
     private javax.swing.JTextField jTextUrlHist;
     private javax.swing.JTextField jTextUserName;
     private javax.swing.JLabel labelRecommandation;
+    private javax.swing.JLabel messageErreur;
     private javax.swing.JPanel panneauAnalyse;
     private javax.swing.JPanel panneauConfiguration;
     private javax.swing.JPanel prixChartPanel;

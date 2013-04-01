@@ -8,7 +8,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-//import java.util.List;
+import org.apache.log4j.Logger;
 
 /**
  *
@@ -17,6 +17,7 @@ import java.util.Date;
 public class TitresBoursiers {
 
     private static ArrayList<TitreBoursier> listeTitresBouriers = new ArrayList<>();
+    static Logger logger = Logger.getLogger(DatabaseLayor.class);
 
     public TitresBoursiers()  {
 
@@ -195,7 +196,9 @@ public class TitresBoursiers {
             System.out.println("Taille " + listeTitresBouriers.size());
 
         } catch (ParseException exception) {
-            System.err.println(exception.getMessage());
+            logger.error("Erreur de parser", exception);
+            logger.error(exception.getMessage());
+            //System.err.println(exception.getMessage());
         }
 
     }

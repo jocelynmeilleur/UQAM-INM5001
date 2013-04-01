@@ -7,6 +7,7 @@ package analyseurtitresboursiers;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import org.apache.log4j.Logger;
 
 /**
  *
@@ -16,6 +17,7 @@ public class CoteBoursiere {
    
     private Date date;
     private double prixCloture;
+    static Logger logger = Logger.getLogger(CoteBoursiere.class);
     
 //    public CoteBoursiere(String date, String prixCloture) throws ParseException {
 //        
@@ -77,6 +79,8 @@ public class CoteBoursiere {
             format.parse(date);
             valide = true;
         }  catch (ParseException e) {
+            logger.error("Erreur de parser", e);
+            logger.error(e.getMessage());
             valide = false;
         }
 

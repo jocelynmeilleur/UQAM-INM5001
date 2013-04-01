@@ -11,6 +11,7 @@ import javax.mail.Session;
 import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
+import org.apache.log4j.Logger;
 
 /**
  *
@@ -20,9 +21,10 @@ import javax.mail.internet.MimeMessage;
 
 
 public class MailLayor {
-
-       
-    public static void send(String sujet, String corps, String contentType) {
+    
+    static Logger logger = Logger.getLogger(MailLayor.class);
+      
+    public static void send(String sujet, String corps, String contentType) throws Exception{
 
         // inspiré de : http://www.tutorialspoint.com/java/java_sending_email.htm Mars 2013
         
@@ -75,12 +77,14 @@ public class MailLayor {
 
             System.out.println("Message envoyé....");
         } catch (MessagingException mex) {
-            mex.printStackTrace();
+            //mex.printStackTrace();
+            logger.error("Erreur de configuration courriel", mex);
+            throw new Exception("Erreur de configuration courriel");
         }
 
     }
     
-    public static void send(String sujet, String corps){
+    public static void send(String sujet, String corps) throws Exception {
         send(sujet,corps,"text/plain");
     }
 }

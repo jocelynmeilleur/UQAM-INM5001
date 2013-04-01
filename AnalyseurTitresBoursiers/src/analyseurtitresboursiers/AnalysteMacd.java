@@ -7,6 +7,7 @@ package analyseurtitresboursiers;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import org.apache.log4j.Logger;
 
 /**
  *
@@ -23,8 +24,11 @@ public class AnalysteMacd {
     private GestionHistorique historiqueCoteEmaMax;
     private GestionHistorique historiqueIndiceMacd;
     private GestionHistorique historiqueIndiceSignal;
+    static Logger logger = Logger.getLogger(AnalysteMacd.class);
 
     public AnalysteMacd(ArrayList<TitreBoursier> liste) {
+        
+        logger.info("AnalysteMacd");
         
         historiqueCoteBoursiere = new GestionHistorique();
        
@@ -37,7 +41,9 @@ public class AnalysteMacd {
                     historiqueCoteBoursiere.ajouterAHistorique(cote);
                 }
             } catch (Exception e) {
-                System.err.println(e.getMessage());
+                //System.err.println(e.getMessage());
+                logger.error("Erreur accès CoteBoursiere", e);
+                logger.error(e.getMessage());
             }     
         }
         

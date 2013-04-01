@@ -12,6 +12,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import org.apache.log4j.Logger;
 
 /**
  *
@@ -22,6 +23,7 @@ public class DatabaseLayor {
     private Connection connexion;
     private String connexionString;
     private ArrayList<TitreBoursier> titresBoursiers = new ArrayList<>();
+    static Logger logger = Logger.getLogger(DatabaseLayor.class);
 
     public DatabaseLayor() {
     }
@@ -34,9 +36,13 @@ public class DatabaseLayor {
 
         } catch (SQLException ex) {
             // handle any errors
-            System.out.println("SQLException: " + ex.getMessage());
-            System.out.println("SQLState: " + ex.getSQLState());
-            System.out.println("VendorError: " + ex.getErrorCode());
+            logger.warn("Erreur de connection", ex);
+            logger.warn("SQLException: " + ex.getMessage());
+            logger.warn("SQLState: " + ex.getSQLState());
+            logger.warn("VendorError: " + ex.getErrorCode());
+            //System.out.println("SQLException: " + ex.getMessage());
+            //System.out.println("SQLState: " + ex.getSQLState());
+            //System.out.println("VendorError: " + ex.getErrorCode());
         }
 
         return true;
@@ -77,9 +83,13 @@ public class DatabaseLayor {
 
         } catch (SQLException ex) {
             // handle any errors
-            System.out.println("SQLException: " + ex.getMessage());
-            System.out.println("SQLState: " + ex.getSQLState());
-            System.out.println("VendorError: " + ex.getErrorCode());
+            logger.warn("Erreur de connection", ex);
+            logger.warn("SQLException: " + ex.getMessage());
+            logger.warn("SQLState: " + ex.getSQLState());
+            logger.warn("VendorError: " + ex.getErrorCode());
+            //System.out.println("SQLException: " + ex.getMessage());
+            //System.out.println("SQLState: " + ex.getSQLState());
+            //System.out.println("VendorError: " + ex.getErrorCode());
         } finally {
             // it is a good idea to release
             // resources in a finally{} block
@@ -89,12 +99,14 @@ public class DatabaseLayor {
                 try {
                     rs.close();
                 } catch (SQLException sqlEx) {
+                    logger.warn("Erreur de connection", sqlEx);
                 } // ignore
             }
             if (stmt != null) {
                 try {
                     stmt.close();
                 } catch (SQLException sqlEx) {
+                    logger.warn("Erreur de connection", sqlEx);
                 } // ignore
             }
         }
@@ -156,9 +168,14 @@ public class DatabaseLayor {
 
         } catch (SQLException ex) {
             // handle any errors
-            System.out.println("SQLException: " + ex.getMessage());
-            System.out.println("SQLState: " + ex.getSQLState());
-            System.out.println("VendorError: " + ex.getErrorCode());
+            logger.warn("Erreur de connection", ex);
+            logger.warn("Erreur de connection", ex);
+            logger.warn("SQLException: " + ex.getMessage());
+            logger.warn("SQLState: " + ex.getSQLState());
+            logger.warn("VendorError: " + ex.getErrorCode());
+            //System.out.println("SQLException: " + ex.getMessage());
+            //System.out.println("SQLState: " + ex.getSQLState());
+            //System.out.println("VendorError: " + ex.getErrorCode());
         } finally {
             // it is a good idea to release
             // resources in a finally{} block
@@ -168,12 +185,14 @@ public class DatabaseLayor {
                 try {
                     rs.close();
                 } catch (SQLException sqlEx) {
+                    logger.warn("Erreur de connection", sqlEx);
                 } // ignore
             }
             if (stmt != null) {
                 try {
                     stmt.close();
                 } catch (SQLException sqlEx) {
+                    logger.warn("Erreur de connection", sqlEx);
                 } // ignore
             }
         }
@@ -204,9 +223,13 @@ public class DatabaseLayor {
 
         } catch (SQLException ex) {
             // handle any errors
-            System.out.println("SQLException: " + ex.getMessage());
-            System.out.println("SQLState: " + ex.getSQLState());
-            System.out.println("VendorError: " + ex.getErrorCode());
+            logger.warn("Erreur de connection", ex);
+            logger.warn("SQLException: " + ex.getMessage());
+            logger.warn("SQLState: " + ex.getSQLState());
+            logger.warn("VendorError: " + ex.getErrorCode());
+            //System.out.println("SQLException: " + ex.getMessage());
+            //System.out.println("SQLState: " + ex.getSQLState());
+            //System.out.println("VendorError: " + ex.getErrorCode());
         } finally {
             // it is a good idea to release
             // resources in a finally{} block
@@ -216,12 +239,14 @@ public class DatabaseLayor {
                 try {
                     rs.close();
                 } catch (SQLException sqlEx) {
+                    logger.warn("Erreur de connection", sqlEx);
                 } // ignore
             }
             if (stmt != null) {
                 try {
                     stmt.close();
                 } catch (SQLException sqlEx) {
+                    logger.warn("Erreur de connection", sqlEx);
                 } // ignore
             }
         }
@@ -250,9 +275,13 @@ public class DatabaseLayor {
 
         } catch (SQLException ex) {
             // handle any errors
-            System.out.println("SQLException: " + ex.getMessage());
-            System.out.println("SQLState: " + ex.getSQLState());
-            System.out.println("VendorError: " + ex.getErrorCode());
+            logger.warn("Erreur de connection", ex);
+            logger.warn("SQLException: " + ex.getMessage());
+            logger.warn("SQLState: " + ex.getSQLState());
+            logger.warn("VendorError: " + ex.getErrorCode());
+            //System.out.println("SQLException: " + ex.getMessage());
+            //System.out.println("SQLState: " + ex.getSQLState());
+            //System.out.println("VendorError: " + ex.getErrorCode());
         } finally {
             // it is a good idea to release
             // resources in a finally{} block
@@ -262,12 +291,14 @@ public class DatabaseLayor {
                 try {
                     rs.close();
                 } catch (SQLException sqlEx) {
+                    logger.warn("Erreur de connection", sqlEx);
                 } // ignore
             }
             if (stmt != null) {
                 try {
                     stmt.close();
                 } catch (SQLException sqlEx) {
+                    logger.warn("Erreur de connection", sqlEx);
                 } // ignore
             }
         }
@@ -297,9 +328,13 @@ public class DatabaseLayor {
 
         } catch (SQLException ex) {
             // handle any errors
-            System.out.println("SQLException: " + ex.getMessage());
-            System.out.println("SQLState: " + ex.getSQLState());
-            System.out.println("VendorError: " + ex.getErrorCode());
+            logger.warn("Erreur de connection", ex);
+            logger.warn("SQLException: " + ex.getMessage());
+            logger.warn("SQLState: " + ex.getSQLState());
+            logger.warn("VendorError: " + ex.getErrorCode());
+            //System.out.println("SQLException: " + ex.getMessage());
+            //System.out.println("SQLState: " + ex.getSQLState());
+            //System.out.println("VendorError: " + ex.getErrorCode());
         } finally {
             // it is a good idea to release
             // resources in a finally{} block
@@ -309,12 +344,14 @@ public class DatabaseLayor {
                 try {
                     rs.close();
                 } catch (SQLException sqlEx) {
+                    logger.warn("Erreur de connection", sqlEx);
                 } // ignore
             }
             if (stmt != null) {
                 try {
                     stmt.close();
                 } catch (SQLException sqlEx) {
+                    logger.warn("Erreur de connection", sqlEx);
                 } // ignore
             }
         }
