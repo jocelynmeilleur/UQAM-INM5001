@@ -713,12 +713,12 @@ public class InterfaceAnalyseur extends javax.swing.JFrame {
 
     private void jButtonAnalyserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAnalyserActionPerformed
 
-        if (estUneRequeteValide()) {
+        // Le titre est dans jTextTitre
+        // La période est dans jComboPeriode
+        XYDataset data;
+        TimeSeriesCollection dataset;
 
-            // Le titre est dans jTextTitre
-            // La période est dans jComboPeriode
-            XYDataset data;
-            TimeSeriesCollection dataset;
+        if (estUneRequeteValide()) {
 
             Date debut;
             debut = getDateDebut(jComboPeriode.getSelectedIndex());
@@ -774,6 +774,7 @@ public class InterfaceAnalyseur extends javax.swing.JFrame {
 
         } else {
             javax.swing.JOptionPane.showMessageDialog(null, "Avertissement: Pas d'historique pour la période à analyser");
+            resetGraph();
         }
 
 
@@ -836,6 +837,7 @@ public class InterfaceAnalyseur extends javax.swing.JFrame {
             try {
                 jTextDesc.setText(this.databaseLayor.getDesc(jTextTitre.getText()));
                 if (jTextDesc.getText().contains("N/A")) {
+                    resetGraph();
                     jButtonAnalyser.setEnabled(false);
                 }
             } catch (MalformedURLException ex) {
@@ -1194,7 +1196,7 @@ public class InterfaceAnalyseur extends javax.swing.JFrame {
         GregorianCalendar gc = new GregorianCalendar();
         gc.add(Calendar.MONTH, -2);
         Date debut = gc.getTime();
-        
+
         try {
             historique = this.databaseLayor.obtenirHistorique(jTextTitre.getText(), debut);
             analyste = new AnalysteMacd(historique);
@@ -1231,7 +1233,7 @@ public class InterfaceAnalyseur extends javax.swing.JFrame {
                 texteRecommandation.setBackground(Color.RED);
                 texteRecommandation.setText("VENDRE");
             }
-            
+
         } catch (IOException | ParseException | SQLException ex) {
             //Logger.getLogger(InterfaceAnalyseur.class.getName()).log(Level.SEVERE, null, ex);
             logger.error("Erreur accès historique des données", ex);
@@ -1246,6 +1248,55 @@ public class InterfaceAnalyseur extends javax.swing.JFrame {
         dateAxisIndice.setVisible(true);
         legendPrix.setVisible(true);
         legendIndice.setVisible(true);
+    }
+
+    private void resetGraph() {
+
+        XYDataset data;
+        TimeSeriesCollection dataset;
+
+        XYPlot prixPlot = (XYPlot) prixJFreechart.getPlot();
+        data = prixPlot.getDataset();
+        dataset = (TimeSeriesCollection) data;
+        dataset.removeSeries(2);
+        dataset.removeSeries(1);
+        dataset.removeSeries(0);
+        
+        analyste = new AnalysteMacd(TitresBoursiers.getListeInitialisation());
+
+        // Prix fermeture
+        dataset.addSeries(getSeriePrixFermeture(analyste));
+
+        // EMA Max
+        dataset.addSeries(getSerieEmaMax(analyste));
+
+        // EMA Min
+        dataset.addSeries(getSerieEmaMin(analyste));
+        
+        XYPlot indicePlot = (XYPlot) indiceJFreechart.getPlot();
+        data = indicePlot.getDataset();
+        dataset = (TimeSeriesCollection) data;
+        dataset.removeSeries(1);
+        dataset.removeSeries(0);
+        
+        analyste = new AnalysteMacd(TitresBoursiers.getListeInitialisation());
+
+        // MACD
+        dataset.addSeries(getSerieMacd(analyste));
+
+        // Ligne Signal
+        dataset.addSeries(getSerieLigneSignal(analyste));
+        
+        numberAxisPrix.setVisible(false);
+        dateAxisPrix.setVisible(false);
+        legendPrix.setVisible(false);
+        numberAxisIndice.setVisible(false);
+        dateAxisIndice.setVisible(false);
+        legendIndice.setVisible(false);
+        
+        texteRecommandation.setBackground(new java.awt.Color(204, 204, 204));
+        texteRecommandation.setText("");
+        
     }
 
     private boolean estUneRequeteValide() {
