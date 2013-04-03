@@ -75,10 +75,9 @@ public class MailLayor {
                 Transport.send(message);
             }
 
-            System.out.println("Message envoyé....");
-        } catch (MessagingException mex) {
-            //mex.printStackTrace();
-            logger.error("Erreur de configuration courriel", mex);
+            logger.info("Message envoyé....");
+        } catch (MessagingException ex) {
+            logger.error("Erreur de configuration courriel", ex);
             throw new Exception("Erreur de configuration courriel");
         }
 

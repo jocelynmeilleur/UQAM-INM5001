@@ -20,7 +20,7 @@ public class BatchAnalyseur {
     private final static String MSG_HEADER = "Bonjour, \n\nVoici votre rapport quotidien\n\n";
     private final static String MSG_ACHAT = "Recommandations ACHAT:\n";
     private final static String MSG_VENTE = "Recommandations VENTE:\n";
-    private final static String MSG_PROBLEME = "Problemes:\n";
+    private final static String MSG_PROBLEME = "Problèmes:\n";
     private final static String MSG_SAUT_SECTION = "\n\n";
     private final static String MSG_ACTION_REQUISE = "Aucune action suggérée";
     private final static String MSG_ACTIONS_SUIVIS = "Liste des actions suivis:\n";
@@ -51,8 +51,11 @@ public class BatchAnalyseur {
                 actionsProblemes.add(titreAnalyse);
             } else {
                 AnalysteMacd analyste = new AnalysteMacd(historique);
-
+             
                 TitreBoursier titreBoursier = historique.get(historique.size() - 1);
+                
+                logger.info(titreBoursier.getTitre() + " taille de l'historique: " + historique.size());
+                logger.info(titreBoursier.getTitre() + " taille de l'analyste: " + analyste.getCotesBoursieres().size());
 
                 actionsSuivis.add(titreBoursier);
 
@@ -147,7 +150,6 @@ public class BatchAnalyseur {
             //System.out.println(titre + "\n" + msgBody);
         } catch (Exception ex) {
             logger.error("Erreur envoi du courriel", ex);
-            logger.error(ex.getMessage());
         }
 
     }

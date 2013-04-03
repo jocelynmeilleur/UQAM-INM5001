@@ -20,121 +20,109 @@ import org.apache.log4j.Logger;
  * @author ForestPierre
  */
 public class YahooFinance {
-    
+
     static Logger logger = Logger.getLogger(YahooFinance.class);
-        
-    public static ArrayList<TitreBoursier> getValeurFermeture(String symbol, Date debut) throws MalformedURLException, IOException, ParseException{
-        
-            URL url;
-            BufferedReader reader;
-            String sCurrentLine;
-            String descTitre;
-            ArrayList<TitreBoursier> historique = new ArrayList<>();
-                      
-             descTitre = getDescFromYahoo(symbol);
-             
-             SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-          
-             Date aujourdhui = new Date();
-             Calendar cal = Calendar.getInstance();
 
-             cal.setTime(debut);
-             String a = String.valueOf(cal.get(Calendar.MONTH));
-             String b =String.valueOf(cal.get(Calendar.DAY_OF_MONTH));
-             String c = String.valueOf(cal.get(Calendar.YEAR));
-              
-             cal.setTime(aujourdhui);
-             String d = String.valueOf(cal.get(Calendar.MONTH));
-             String e = String.valueOf(cal.get(Calendar.DAY_OF_MONTH));
-             String f = String.valueOf(cal.get(Calendar.YEAR));
-             
-             String periode = "&a=" + a + "&b=" + b + "&c=" + c + "&d=" + d + "&e=" + e + "&f=" + f;
-            //System.out.println("From date (a: month-1, b: day, c: year) - To date (d: month-1, e: day, f: year) - Trading period (g: (d)aily)");
-            // selon http://code.google.com/p/yahoo-finance-managed/wiki/csvHistQuotesDownload
-            // 9 Fev 2003
-                    
-            //url = new URL("http://ichart.finance.yahoo.com/table.csv?s=" + ticker + "&a=06&b=9&c=1996&d=06&e=20&f=2010&g=d");
-           
-     
-            url = new URL(Main.config.getUrlHistoriqueTitres() + symbol + periode);
-            InputStream myStream = null;
+    public static ArrayList<TitreBoursier> getValeurFermeture(String symbol, Date debut) throws MalformedURLException, IOException, ParseException {
 
-            try {
-                myStream = url.openStream();
-            }
-             catch( FileNotFoundException z){
-                 logger.warn("Fichier inexistant", z);
-                 logger.warn(z.getMessage());
-                 return historique;
-             }
-            InputStreamReader myStreamReader = new InputStreamReader(myStream);       
-            reader = new BufferedReader(myStreamReader);
-            reader.readLine(); // skip header
-            while ((sCurrentLine = reader.readLine()) != null) {
-                String delims = "[,]+";
-                String[] champs = sCurrentLine.split(delims);
-                TitreBoursier titre = new TitreBoursier();
-                titre.setTitre(symbol);
-                titre.setDescription(descTitre);
-                titre.setDateFermeture(formatter.parse(champs[0]));
-                titre.setValeurFermeture(Double.parseDouble(champs[4]));
-                historique.add(titre);
-             }
+        URL url;
+        BufferedReader reader;
+        String sCurrentLine;
+        String descTitre;
+        ArrayList<TitreBoursier> historique = new ArrayList<>();
+
+        descTitre = getDescFromYahoo(symbol);
+
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+
+        Date aujourdhui = new Date();
+        Calendar cal = Calendar.getInstance();
+
+        cal.setTime(debut);
+        String a = String.valueOf(cal.get(Calendar.MONTH));
+        String b = String.valueOf(cal.get(Calendar.DAY_OF_MONTH));
+        String c = String.valueOf(cal.get(Calendar.YEAR));
+
+        cal.setTime(aujourdhui);
+        String d = String.valueOf(cal.get(Calendar.MONTH));
+        String e = String.valueOf(cal.get(Calendar.DAY_OF_MONTH));
+        String f = String.valueOf(cal.get(Calendar.YEAR));
+
+        String periode = "&a=" + a + "&b=" + b + "&c=" + c + "&d=" + d + "&e=" + e + "&f=" + f;
+        //System.out.println("From date (a: month-1, b: day, c: year) - To date (d: month-1, e: day, f: year) - Trading period (g: (d)aily)");
+        // selon http://code.google.com/p/yahoo-finance-managed/wiki/csvHistQuotesDownload
+        // 9 Fev 2003
+
+        //url = new URL("http://ichart.finance.yahoo.com/table.csv?s=" + ticker + "&a=06&b=9&c=1996&d=06&e=20&f=2010&g=d");
+
+
+        url = new URL(Main.config.getUrlHistoriqueTitres() + symbol + periode);
+        InputStream myStream = null;
+
+        try {
+            myStream = url.openStream();
+        } catch (FileNotFoundException ex) {
+            logger.warn("Données inexistantes", ex);
             return historique;
-        
-    }
-    
-    public static String getDescFromYahoo(String symbol) throws MalformedURLException, IOException{
-           
-            URL url;
-            BufferedReader reader;
-                          
-            url = new URL(Main.config.getUrlDescTitre() + symbol);
-            reader = new BufferedReader(new InputStreamReader(url.openStream()));
+        }
+        InputStreamReader myStreamReader = new InputStreamReader(myStream);
+        reader = new BufferedReader(myStreamReader);
+        reader.readLine(); // skip header
+        while ((sCurrentLine = reader.readLine()) != null) {
             String delims = "[,]+";
-            String[] champs = reader.readLine().split(delims);
-            if (champs[1].contains("N/A")){
-               return("N/A");
-            }
-            else {
-                return(champs[0].replace("\"", ""));
-            }
-            
-    }
-    
-    public static void ShowSymbolFromYahoo(){
-        
-     // inspiré de http://johnbokma.com/mexit/2008/08/19/java-open-url-default-browser.html 16 mars 2013
+            String[] champs = sCurrentLine.split(delims);
+            TitreBoursier titre = new TitreBoursier();
+            titre.setTitre(symbol);
+            titre.setDescription(descTitre);
+            titre.setDateFermeture(formatter.parse(champs[0]));
+            titre.setValeurFermeture(Double.parseDouble(champs[4]));
+            historique.add(titre);
+        }
+        return historique;
 
-      if( !java.awt.Desktop.isDesktopSupported() ) {
+    }
+
+    public static String getDescFromYahoo(String symbol) throws MalformedURLException, IOException {
+
+        URL url;
+        BufferedReader reader;
+
+        url = new URL(Main.config.getUrlDescTitre() + symbol);
+        reader = new BufferedReader(new InputStreamReader(url.openStream()));
+        String delims = "[,]+";
+        String[] champs = reader.readLine().split(delims);
+        if (champs[1].contains("N/A")) {
+            return ("N/A");
+        } else {
+            return (champs[0].replace("\"", ""));
+        }
+    }
+
+    public static void ShowSymbolFromYahoo() {
+
+        // inspiré de http://johnbokma.com/mexit/2008/08/19/java-open-url-default-browser.html 16 mars 2013
+
+        if (!java.awt.Desktop.isDesktopSupported()) {
 
             //System.err.println( "Desktop is not supported (fatal)" );
             logger.fatal("Desktop is not supported (fatal)");
-            System.exit( 1 );
+            System.exit(1);
         }
 
         java.awt.Desktop desktop = java.awt.Desktop.getDesktop();
 
-        if( !desktop.isSupported( java.awt.Desktop.Action.BROWSE ) ) {
+        if (!desktop.isSupported(java.awt.Desktop.Action.BROWSE)) {
 
             //System.err.println( "Desktop doesn't support the browse action (fatal)" );
             logger.fatal("Desktop doesn't support the browse action (fatal)");
-            System.exit( 1 );
+            System.exit(1);
         }
 
-            try {
-
-                java.net.URI uri = new java.net.URI( Main.config.getUrlTitresDispo() );
-                desktop.browse( uri );
-            }
-            catch ( URISyntaxException | IOException e ) {
-                logger.warn("Problème input", e);
-                logger.warn(e.getMessage());
-                //System.err.println( e.getMessage() );
-            }
-                
+        try {
+            java.net.URI uri = new java.net.URI(Main.config.getUrlTitresDispo());
+            desktop.browse(uri);
+        } catch (URISyntaxException | IOException ex) {
+            logger.warn("Problème input", ex);
+        }
     }
-    
-    
 }
-

@@ -728,8 +728,10 @@ public class InterfaceAnalyseur extends javax.swing.JFrame {
             try {
                 historique = this.databaseLayor.obtenirHistorique(jTextTitre.getText(), debut);
                 analyste = new AnalysteMacd(historique);
-                logger.info("Taille de l'historique: " + historique.size());
-                logger.info("Taille de l'analyste: " + analyste.getCotesBoursieres().size());
+                
+                TitreBoursier titreBoursier = historique.get(historique.size() - 1);
+                logger.info(titreBoursier.getTitre() + " taille de l'historique: " + historique.size());
+                logger.info(titreBoursier.getTitre() + " taille de l'analyste: " + analyste.getCotesBoursieres().size());
 
                 XYPlot prixPlot = (XYPlot) prixJFreechart.getPlot();
                 data = prixPlot.getDataset();
@@ -765,7 +767,6 @@ public class InterfaceAnalyseur extends javax.swing.JFrame {
             } catch (IOException | ParseException | SQLException ex) {
                 //Logger.getLogger(InterfaceAnalyseur.class.getName()).log(Level.SEVERE, null, ex);
                 logger.error("Erreur accès historique des données", ex);
-                logger.error(ex.getMessage());
             }
             
             setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
