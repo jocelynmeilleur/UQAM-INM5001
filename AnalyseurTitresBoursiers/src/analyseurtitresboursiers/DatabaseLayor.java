@@ -40,9 +40,6 @@ public class DatabaseLayor {
             logger.warn("SQLException: " + ex.getMessage());
             logger.warn("SQLState: " + ex.getSQLState());
             logger.warn("VendorError: " + ex.getErrorCode());
-            //System.out.println("SQLException: " + ex.getMessage());
-            //System.out.println("SQLState: " + ex.getSQLState());
-            //System.out.println("VendorError: " + ex.getErrorCode());
         }
 
         return true;
@@ -87,9 +84,6 @@ public class DatabaseLayor {
             logger.warn("SQLException: " + ex.getMessage());
             logger.warn("SQLState: " + ex.getSQLState());
             logger.warn("VendorError: " + ex.getErrorCode());
-            //System.out.println("SQLException: " + ex.getMessage());
-            //System.out.println("SQLState: " + ex.getSQLState());
-            //System.out.println("VendorError: " + ex.getErrorCode());
         } finally {
             // it is a good idea to release
             // resources in a finally{} block
@@ -173,9 +167,6 @@ public class DatabaseLayor {
             logger.warn("SQLException: " + ex.getMessage());
             logger.warn("SQLState: " + ex.getSQLState());
             logger.warn("VendorError: " + ex.getErrorCode());
-            //System.out.println("SQLException: " + ex.getMessage());
-            //System.out.println("SQLState: " + ex.getSQLState());
-            //System.out.println("VendorError: " + ex.getErrorCode());
         } finally {
             // it is a good idea to release
             // resources in a finally{} block
@@ -227,9 +218,6 @@ public class DatabaseLayor {
             logger.warn("SQLException: " + ex.getMessage());
             logger.warn("SQLState: " + ex.getSQLState());
             logger.warn("VendorError: " + ex.getErrorCode());
-            //System.out.println("SQLException: " + ex.getMessage());
-            //System.out.println("SQLState: " + ex.getSQLState());
-            //System.out.println("VendorError: " + ex.getErrorCode());
         } finally {
             // it is a good idea to release
             // resources in a finally{} block
@@ -279,9 +267,6 @@ public class DatabaseLayor {
             logger.warn("SQLException: " + ex.getMessage());
             logger.warn("SQLState: " + ex.getSQLState());
             logger.warn("VendorError: " + ex.getErrorCode());
-            //System.out.println("SQLException: " + ex.getMessage());
-            //System.out.println("SQLState: " + ex.getSQLState());
-            //System.out.println("VendorError: " + ex.getErrorCode());
         } finally {
             // it is a good idea to release
             // resources in a finally{} block
@@ -332,9 +317,6 @@ public class DatabaseLayor {
             logger.warn("SQLException: " + ex.getMessage());
             logger.warn("SQLState: " + ex.getSQLState());
             logger.warn("VendorError: " + ex.getErrorCode());
-            //System.out.println("SQLException: " + ex.getMessage());
-            //System.out.println("SQLState: " + ex.getSQLState());
-            //System.out.println("VendorError: " + ex.getErrorCode());
         } finally {
             // it is a good idea to release
             // resources in a finally{} block
@@ -427,13 +409,7 @@ public class DatabaseLayor {
             sql = sql.replace("%histMaxDate%", formatter.format(historique.get(0).getDateFermeture()));
 
             stmt.executeUpdate(sql);
-
-
         }
-
-
-
-
     }
 
     public String getConnexionString() {
