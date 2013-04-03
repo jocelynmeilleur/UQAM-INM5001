@@ -18,29 +18,7 @@ public class CoteBoursiere {
     private Date date;
     private double prixCloture;
     static Logger logger = Logger.getLogger(CoteBoursiere.class);
-    
-//    public CoteBoursiere(String date, String prixCloture) throws ParseException {
-//        
-//         if (!this.anneeMoisJourValide(date)) {
-//            throw new IllegalArgumentException("probleme avec le format de la date, yyyy-MM-dd");
-//        }
-//
-//        if (!this.prixClotureValide(prixCloture)) {
-//            throw new IllegalArgumentException("prix de cloture non valide");
-//        }
-//        
-//        String patronDate = "yyyy-MM-dd";
-//        SimpleDateFormat format  = new SimpleDateFormat(patronDate);
-//        
-//        this.date = format.parse(date);
-//        this.prixCloture = Double.parseDouble(prixCloture);
-//    }
-    
-//    public CoteBoursiere(Date date, String prixCloture) {
-//        this.date = date;
-//        this.prixCloture = Double.parseDouble(prixCloture);
-//    }
-    
+        
     public CoteBoursiere(Date date, double prixCloture) {
         this.date = date;
         this.prixCloture = prixCloture; 
