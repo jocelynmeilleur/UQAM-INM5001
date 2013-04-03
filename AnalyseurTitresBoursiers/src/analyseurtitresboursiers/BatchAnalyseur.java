@@ -20,6 +20,7 @@ public class BatchAnalyseur {
     private final static String MSG_HEADER = "Bonjour, \n\nVoici votre rapport quotidien\n\n";
     private final static String MSG_ACHAT = "Recommandations ACHAT:\n";
     private final static String MSG_VENTE = "Recommandations VENTE:\n";
+    private final static String MSG_PROBLEME = "Problemes:\n";
     private final static String MSG_SAUT_SECTION = "\n\n";
     private final static String MSG_ACTION_REQUISE = "Aucune action suggérée";
     private final static String MSG_ACTIONS_SUIVIS = "Liste des actions suivis:\n";
@@ -27,6 +28,7 @@ public class BatchAnalyseur {
     private List<TitreBoursier> recommendationsAchat = new ArrayList();
     private List<TitreBoursier> recommendationsVente = new ArrayList();
     private List<TitreBoursier> actionsSuivis = new ArrayList();
+    private List<TitreBoursier> actionsProblemes = new ArrayList();
     private DatabaseLayor databaseLayor;
     static Logger logger = Logger.getLogger(BatchAnalyseur.class);
 
@@ -44,21 +46,26 @@ public class BatchAnalyseur {
         for (TitreBoursier titreAnalyse : this.databaseLayor.obtenirTitreEnLot()) {
 
             ArrayList<TitreBoursier> historique = this.databaseLayor.obtenirHistorique(titreAnalyse.getTitre(), debut);
-            AnalysteMacd analyste = new AnalysteMacd(historique);
 
-            TitreBoursier titreBoursier = historique.get(historique.size() - 1);
-
-            actionsSuivis.add(titreBoursier);
-
-            if (analyste.estAchatInteractif()) {
-                recommendationsAchat.add(titreBoursier);
+            if (historique.isEmpty()) {
+                actionsProblemes.add(titreAnalyse);
             } else {
-                if (analyste.estGardeInteractif()) {
-                    ;
-                } else if (analyste.estNeutreInteractif()) {
-                    ;
+                AnalysteMacd analyste = new AnalysteMacd(historique);
+
+                TitreBoursier titreBoursier = historique.get(historique.size() - 1);
+
+                actionsSuivis.add(titreBoursier);
+
+                if (analyste.estAchatInteractif()) {
+                    recommendationsAchat.add(titreBoursier);
                 } else {
-                    recommendationsVente.add(titreBoursier);
+                    if (analyste.estGardeInteractif()) {
+                        ;
+                    } else if (analyste.estNeutreInteractif()) {
+                        ;
+                    } else {
+                        recommendationsVente.add(titreBoursier);
+                    }
                 }
             }
         }
@@ -70,6 +77,10 @@ public class BatchAnalyseur {
 
     public List<TitreBoursier> getRecommandationsVente() {
         return recommendationsVente;
+    }
+    
+    public List<TitreBoursier> getListeActionProblemes() {
+        return actionsProblemes;
     }
 
     public List<TitreBoursier> getListeActionSuivis() {
@@ -105,6 +116,19 @@ public class BatchAnalyseur {
         } else {
             msgBody = msgBody + MSG_ACTION_REQUISE;
         }
+        
+        msgBody = msgBody + MSG_SAUT_SECTION;
+
+        msgBody = msgBody + MSG_PROBLEME;
+
+        if (0 < this.getListeActionProblemes().size()) {
+            for (TitreBoursier titreBoursier : this.getListeActionProblemes()) {
+                String msg = String.format("%s (%s)\n", titreBoursier.getTitre(), titreBoursier.getDescription());
+                msgBody = msgBody + msg;
+            }
+        } else {
+            msgBody = msgBody + MSG_ACTION_REQUISE;
+        }
 
         msgBody = msgBody + MSG_SAUT_SECTION;
 
@@ -117,13 +141,14 @@ public class BatchAnalyseur {
 
         msgBody = msgBody + MSG_SAUT_SECTION;
         msgBody = msgBody + MSG_FOOTER;
-        
+
         try {
             MailLayor.send(titre, msgBody);
             //System.out.println(titre + "\n" + msgBody);
-        } catch (Exception exception) {
-        
+        } catch (Exception ex) {
+            logger.error("Erreur envoi du courriel", ex);
+            logger.error(ex.getMessage());
         }
-        
+
     }
 }

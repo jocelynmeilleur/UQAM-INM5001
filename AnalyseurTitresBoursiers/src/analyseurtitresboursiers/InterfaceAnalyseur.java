@@ -707,69 +707,73 @@ public class InterfaceAnalyseur extends javax.swing.JFrame {
         jTextUserName.setText(Main.config.getSmtpUserName());
         jPasswordSMTP.setText(Main.config.getSmtpPassword());
         jTextSMTPPort.setText(Main.config.getSmtpPort());
-        
+
         messageErreur.setText("");
     }
 
     private void jButtonAnalyserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAnalyserActionPerformed
-        // Le titre est dans jTextTitre
-        // La période est dans jComboPeriode
+        
+        if (estUneRequeteValide()) {
+            
+            // Le titre est dans jTextTitre
+            // La période est dans jComboPeriode
+            XYDataset data;
+            TimeSeriesCollection dataset;
 
-        XYDataset data;
-        TimeSeriesCollection dataset;
+            Date debut;
+            debut = getDateDebut(jComboPeriode.getSelectedIndex());
+            setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
+            jButtonAnalyser.setEnabled(false);
 
-        Date debut;
-        debut = getDateDebut(jComboPeriode.getSelectedIndex());
-        setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
-        jButtonAnalyser.setEnabled(false);
+            try {
+                historique = this.databaseLayor.obtenirHistorique(jTextTitre.getText(), debut);
+                analyste = new AnalysteMacd(historique);
+                logger.info("Taille de l'historique: " + historique.size());
+                logger.info("Taille de l'analyste: " + analyste.getCotesBoursieres().size());
 
-        try {
-            historique = this.databaseLayor.obtenirHistorique(jTextTitre.getText(), debut);
-            if (historique.isEmpty()) {
-                javax.swing.JOptionPane.showMessageDialog(null, "Avertissement: Pas d'historique pour la période à analyser");
+                XYPlot prixPlot = (XYPlot) prixJFreechart.getPlot();
+                data = prixPlot.getDataset();
+                dataset = (TimeSeriesCollection) data;
+                dataset.removeSeries(2);
+                dataset.removeSeries(1);
+                dataset.removeSeries(0);
+
+                // Prix fermeture
+                dataset.addSeries(getSeriePrixFermeture(analyste));
+
+                // EMA Max
+                dataset.addSeries(getSerieEmaMax(analyste));
+
+                // EMA Min
+                dataset.addSeries(getSerieEmaMin(analyste));
+
+                XYPlot indicePlot = (XYPlot) indiceJFreechart.getPlot();
+                data = indicePlot.getDataset();
+                dataset = (TimeSeriesCollection) data;
+                dataset.removeSeries(1);
+                dataset.removeSeries(0);
+
+                // MACD
+                dataset.addSeries(getSerieMacd(analyste));
+
+                //Ligne de signal
+                dataset.addSeries(getSerieLigneSignal(analyste));
+
+                updateRecommandation();
+                updateGraph();
+
+            } catch (IOException | ParseException | SQLException ex) {
+                //Logger.getLogger(InterfaceAnalyseur.class.getName()).log(Level.SEVERE, null, ex);
+                logger.error("Erreur accès historique des données", ex);
+                logger.error(ex.getMessage());
             }
-            analyste = new AnalysteMacd(historique);
-            System.out.println("Taille de l'historique: " + historique.size());
-            System.out.println("Taille de l'analyste: " + analyste.getCotesBoursieres().size());
+            
+            setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
+            jButtonAnalyser.setEnabled(true);
 
-            XYPlot prixPlot = (XYPlot) prixJFreechart.getPlot();
-            data = prixPlot.getDataset();
-            dataset = (TimeSeriesCollection) data;
-            dataset.removeSeries(2);
-            dataset.removeSeries(1);
-            dataset.removeSeries(0);
-
-            // Prix fermeture
-            dataset.addSeries(getSeriePrixFermeture(analyste));
-
-            // EMA Max
-            dataset.addSeries(getSerieEmaMax(analyste));
-
-            // EMA Min
-            dataset.addSeries(getSerieEmaMin(analyste));
-
-            XYPlot indicePlot = (XYPlot) indiceJFreechart.getPlot();
-            data = indicePlot.getDataset();
-            dataset = (TimeSeriesCollection) data;
-            dataset.removeSeries(1);
-            dataset.removeSeries(0);
-
-            // MACD
-            dataset.addSeries(getSerieMacd(analyste));
-
-            //Ligne de signal
-            dataset.addSeries(getSerieLigneSignal(analyste));
-
-            updateRecommandation();
-            updateGraph();
-
-        } catch (IOException | ParseException | SQLException ex) {
-            //Logger.getLogger(InterfaceAnalyseur.class.getName()).log(Level.SEVERE, null, ex);
-            logger.error("Erreur accès historique des données", ex);
-            logger.error(ex.getMessage());
+        } else {
+            javax.swing.JOptionPane.showMessageDialog(null, "Avertissement: Pas d'historique pour la période à analyser");
         }
-        setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
-        jButtonAnalyser.setEnabled(true);
 
 
     }//GEN-LAST:event_jButtonAnalyserActionPerformed
@@ -856,7 +860,7 @@ public class InterfaceAnalyseur extends javax.swing.JFrame {
     private void jButtonSaveConfigActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSaveConfigActionPerformed
 
         messageErreur.setText("");
-        
+
         Main.config.setUrlHistoriqueTitres(jTextUrlHist.getText());
         Main.config.setUrlDescTitre(jTextUrlDesc.getText());
         Main.config.setUrlTitresDispo(jTextTitresDispo.getText());
@@ -883,14 +887,14 @@ public class InterfaceAnalyseur extends javax.swing.JFrame {
     private void jButtonTestMailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonTestMailActionPerformed
         // TODO add your handling code here:
         messageErreur.setText("");
-        
+
         try {
             MailLayor.send("Analyseur de titre", "<h1>Bravo, vous avez bien configur&eacute; vos param&egrave;tres de communication!</h1>");
         } catch (Exception exception) {
             messageErreur.setText(exception.getMessage());
             messageErreur.setForeground(Color.red);
         }
-        
+
     }//GEN-LAST:event_jButtonTestMailActionPerformed
 
     private void jTextTitreEnLotFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextTitreEnLotFocusGained
@@ -987,7 +991,7 @@ public class InterfaceAnalyseur extends javax.swing.JFrame {
             jPasswordSMTP.setEnabled(false);
             jTextSMTPPort.setEnabled(false);
         }
-        
+
         messageErreur.setText("");
     }//GEN-LAST:event_jCheckBoxSMTPActionPerformed
 
@@ -1018,8 +1022,8 @@ public class InterfaceAnalyseur extends javax.swing.JFrame {
         jTableEnLot.getColumnModel().getColumn(2).setPreferredWidth(50);
         TableColumn enLotColumn = jTableEnLot.getColumnModel().getColumn(2);
         DefaultTableCellRenderer rightRenderer = new DefaultTableCellRenderer();
-        rightRenderer.setHorizontalAlignment( JLabel.CENTER );
-        jTableEnLot.getColumnModel().getColumn(2).setCellRenderer( rightRenderer );
+        rightRenderer.setHorizontalAlignment(JLabel.CENTER);
+        jTableEnLot.getColumnModel().getColumn(2).setCellRenderer(rightRenderer);
         JComboBox comboBox = new JComboBox();
         comboBox.addItem("O");
         comboBox.addItem("N");
@@ -1192,7 +1196,7 @@ public class InterfaceAnalyseur extends javax.swing.JFrame {
         try {
             historique = this.databaseLayor.obtenirHistorique(jTextTitre.getText(), debut);
             analyste = new AnalysteMacd(historique);
-            System.out.println("Taille de l'historique - recommendation: " + historique.size());
+            logger.info("updateRecommandation() - Taille de l'historique: " + historique.size());
         } catch (IOException | ParseException | SQLException ex) {
             //Logger.getLogger(InterfaceAnalyseur.class.getName()).log(Level.SEVERE, null, ex);
             logger.error("Erreur accès historique des données", ex);
@@ -1236,6 +1240,27 @@ public class InterfaceAnalyseur extends javax.swing.JFrame {
         dateAxisIndice.setVisible(true);
         legendPrix.setVisible(true);
         legendIndice.setVisible(true);
+    }
+
+    private boolean estUneRequeteValide() {
+
+        boolean valide = false;
+
+        GregorianCalendar gc = new GregorianCalendar();
+        gc.add(Calendar.MONTH, -2);
+        Date debut = gc.getTime();
+
+        try {
+            historique = this.databaseLayor.obtenirHistorique(jTextTitre.getText(), debut);
+            if (0 < historique.size()) {
+                valide = true;
+            }
+        } catch (IOException | ParseException | SQLException | ArrayIndexOutOfBoundsException ex) {
+            logger.error("estUneRequeteValide() - Erreur accès historique des données", ex);
+        }
+
+        return valide;
+
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel indiceChartPanel;
