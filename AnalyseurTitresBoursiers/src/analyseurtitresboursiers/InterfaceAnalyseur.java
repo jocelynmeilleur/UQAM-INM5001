@@ -712,9 +712,9 @@ public class InterfaceAnalyseur extends javax.swing.JFrame {
     }
 
     private void jButtonAnalyserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAnalyserActionPerformed
-        
+
         if (estUneRequeteValide()) {
-            
+
             // Le titre est dans jTextTitre
             // La période est dans jComboPeriode
             XYDataset data;
@@ -728,7 +728,7 @@ public class InterfaceAnalyseur extends javax.swing.JFrame {
             try {
                 historique = this.databaseLayor.obtenirHistorique(jTextTitre.getText(), debut);
                 analyste = new AnalysteMacd(historique);
-                
+
                 TitreBoursier titreBoursier = historique.get(historique.size() - 1);
                 logger.info(titreBoursier.getTitre() + " taille de l'historique: " + historique.size());
                 logger.info(titreBoursier.getTitre() + " taille de l'analyste: " + analyste.getCotesBoursieres().size());
@@ -768,7 +768,7 @@ public class InterfaceAnalyseur extends javax.swing.JFrame {
                 //Logger.getLogger(InterfaceAnalyseur.class.getName()).log(Level.SEVERE, null, ex);
                 logger.error("Erreur accès historique des données", ex);
             }
-            
+
             setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
             jButtonAnalyser.setEnabled(true);
 
@@ -1194,23 +1194,19 @@ public class InterfaceAnalyseur extends javax.swing.JFrame {
         GregorianCalendar gc = new GregorianCalendar();
         gc.add(Calendar.MONTH, -2);
         Date debut = gc.getTime();
+        
         try {
             historique = this.databaseLayor.obtenirHistorique(jTextTitre.getText(), debut);
             analyste = new AnalysteMacd(historique);
             logger.info("updateRecommandation() - Taille de l'historique: " + historique.size());
-        } catch (IOException | ParseException | SQLException ex) {
-            //Logger.getLogger(InterfaceAnalyseur.class.getName()).log(Level.SEVERE, null, ex);
-            logger.error("Erreur accès historique des données", ex);
-            logger.error(ex.getMessage());
-        }
 
-        if (analyste.estAchatInteractif()) {
-            Font font = new Font("Verdana", Font.BOLD, 12);
-            texteRecommandation.setFont(font);
-            texteRecommandation.setForeground(Color.WHITE);
-            texteRecommandation.setBackground(Color.GREEN);
-            texteRecommandation.setText("ACHAT");
-        } else {
+            if (analyste.estAchatInteractif()) {
+                Font font = new Font("Verdana", Font.BOLD, 12);
+                texteRecommandation.setFont(font);
+                texteRecommandation.setForeground(Color.WHITE);
+                texteRecommandation.setBackground(Color.GREEN);
+                texteRecommandation.setText("ACHAT");
+            }
 
             if (analyste.estGardeInteractif()) {
                 Font font = new Font("Verdana", Font.BOLD, 12);
@@ -1218,19 +1214,28 @@ public class InterfaceAnalyseur extends javax.swing.JFrame {
                 texteRecommandation.setForeground(Color.WHITE);
                 texteRecommandation.setBackground(new Color(224, 217, 27));
                 texteRecommandation.setText("GARDE");
-            } else if (analyste.estNeutreInteractif()) {
+            }
+
+            if (analyste.estNeutreInteractif()) {
                 Font font = new Font("Verdana", Font.BOLD, 12);
                 texteRecommandation.setFont(font);
                 texteRecommandation.setForeground(Color.WHITE);
                 texteRecommandation.setBackground(Color.GRAY);
                 texteRecommandation.setText("NEUTRE");
-            } else {
+            }
+
+            if (analyste.estVenteInteractif()) {
                 Font font = new Font("Verdana", Font.BOLD, 12);
                 texteRecommandation.setFont(font);
                 texteRecommandation.setForeground(Color.WHITE);
                 texteRecommandation.setBackground(Color.RED);
                 texteRecommandation.setText("VENDRE");
             }
+            
+        } catch (IOException | ParseException | SQLException ex) {
+            //Logger.getLogger(InterfaceAnalyseur.class.getName()).log(Level.SEVERE, null, ex);
+            logger.error("Erreur accès historique des données", ex);
+            logger.error(ex.getMessage());
         }
     }
 

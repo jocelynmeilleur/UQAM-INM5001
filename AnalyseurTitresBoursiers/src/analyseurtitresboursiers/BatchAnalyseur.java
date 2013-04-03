@@ -46,29 +46,25 @@ public class BatchAnalyseur {
         for (TitreBoursier titreAnalyse : this.databaseLayor.obtenirTitreEnLot()) {
 
             ArrayList<TitreBoursier> historique = this.databaseLayor.obtenirHistorique(titreAnalyse.getTitre(), debut);
+            
+            actionsSuivis.add(titreAnalyse);
 
             if (historique.isEmpty()) {
                 actionsProblemes.add(titreAnalyse);
             } else {
                 AnalysteMacd analyste = new AnalysteMacd(historique);
-             
+
                 TitreBoursier titreBoursier = historique.get(historique.size() - 1);
-                
+
                 logger.info(titreBoursier.getTitre() + " taille de l'historique: " + historique.size());
                 logger.info(titreBoursier.getTitre() + " taille de l'analyste: " + analyste.getCotesBoursieres().size());
 
-                actionsSuivis.add(titreBoursier);
-
                 if (analyste.estAchatInteractif()) {
                     recommendationsAchat.add(titreBoursier);
-                } else {
-                    if (analyste.estGardeInteractif()) {
-                        ;
-                    } else if (analyste.estNeutreInteractif()) {
-                        ;
-                    } else {
-                        recommendationsVente.add(titreBoursier);
-                    }
+                }
+                
+                if (analyste.estVenteInteractif()) {
+                    recommendationsVente.add(titreBoursier);
                 }
             }
         }
@@ -81,7 +77,7 @@ public class BatchAnalyseur {
     public List<TitreBoursier> getRecommandationsVente() {
         return recommendationsVente;
     }
-    
+
     public List<TitreBoursier> getListeActionProblemes() {
         return actionsProblemes;
     }
@@ -119,7 +115,7 @@ public class BatchAnalyseur {
         } else {
             msgBody = msgBody + MSG_ACTION_REQUISE;
         }
-        
+
         msgBody = msgBody + MSG_SAUT_SECTION;
 
         msgBody = msgBody + MSG_PROBLEME;
