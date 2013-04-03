@@ -41,12 +41,12 @@ public class Main {
             arg = args[i];
 
             if (arg.equals("-batch")) {
-                //System.out.println("set batch mode on");
+                logger.info("set batch mode on");
                 modeBatch = true;
             }
 
             if (arg.equals("-cfg")) {
-                //System.out.println("lire fichier de config");
+                logger.info("lire fichier de config");
                 cfg = args[i + 1];
             }
 
@@ -54,7 +54,6 @@ public class Main {
         }
 
         // Lire le fichier de configuration 
-        //config = new ConfigurationLayor(args[0]);
         config = new ConfigurationLayor(cfg);
         // Connexion à la base de données
         dbAccess = new DatabaseLayor();
@@ -70,7 +69,6 @@ public class Main {
                 SimpleDateFormat sdf = new SimpleDateFormat("EEEE, d MMM yyyy", Locale.CANADA_FRENCH);
                 batch.envoyerCourriel("AnalyseurTitresBoursiers - rapport quotidien: " + sdf.format(now));
             } catch (IOException | ParseException | SQLException exception) {
-                //System.err.println(exception.getMessage());
                 logger.error("Erreur traitement du mode batch!", exception);
             }
 
@@ -83,7 +81,6 @@ public class Main {
                     try {
                         new InterfaceAnalyseur(dbAccess).setVisible(true);
                     } catch (Exception exception) {
-                        //System.err.println(exception.getMessage());
                         logger.error("Erreur traitement du mode interface!", exception);
                     }
                 }
